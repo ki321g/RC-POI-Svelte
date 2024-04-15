@@ -1,9 +1,12 @@
 import axios from "axios";
+import { user } from "../stores";
 import type { LoggedInUser, User } from "$lib/types/rugby-club-poi-types";
 
 export const RugbyClubPOIService = {
-    baseUrl: process.env.PUBLIC_BACKEND_API,
-  
+    //baseUrl: process.env.PUBLIC_BACKEND_API,
+    //baseUrl: "http://rugbyclubpoi-f3ce2fe5ab82.herokuapp.com",
+    baseUrl: "http://localhost:3000",
+
     async signup(user: User): Promise<boolean> {
       try {
         const response = await axios.post(`${this.baseUrl}/api/users`, user);
@@ -16,11 +19,42 @@ export const RugbyClubPOIService = {
   
     async login(email: string, password: string): Promise<LoggedInUser | null> {
       try {
-        const response = await axios.post(`${this.baseUrl}/api/auth`, {
+        console.log('email: ', email);
+        console.log('password: ', password);
+      //  axios.defaults.headers.common["Accept"] = "application/json";
+       // axios.defaults.headers.common["Content-Type"] = "application/json";
+        const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+       /*
+        const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
           email,
           password,
+        }, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
         });
-        return response.data;
+        */
+        console.log(response.data);
+        if (response.data.success) {          
+          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+          const userID = await axios.get(`${this.baseUrl}/api/users/${response.data._id}`);
+          user.set({ _id: response.data._id, email: response.data.email, token: response.data.token });
+          
+          const session: LoggedInUser = {
+            _id: response.data._id, 
+            email: response.data.email, 
+            token: response.data.token 
+          };
+          
+          localStorage.RugbyClubPOI = JSON.stringify({
+            _id: response.data._id,
+            email,
+            token: response.data.token,
+          });
+          return session;
+        }
+        return null;
       } catch (error) {
         console.log(error);
         return null;
@@ -29,8 +63,9 @@ export const RugbyClubPOIService = {
   
     async logout(): Promise<boolean> {
       try {
-        await axios.delete(`${this.baseUrl}/api/auth`);
-        return true;
+        axios.defaults.headers.common["Authorization"] = "";
+        user.set({ _id: "", email: "", token: "" });
+
       } catch (error) {
         console.log(error);
         return false;
