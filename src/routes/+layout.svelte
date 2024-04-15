@@ -1,11 +1,10 @@
 <script lang="ts">
 	// import { user } from '$lib/stores/user';]
     import { user } from "$lib/stores";
-    import WelcomeNav from '$lib/ui/menu/WelcomeNav.svelte';
-    import MemberNav from '$lib/ui/menu/MemberNav.svelte';
-    // import AdminNav from '$lib/ui/menu/AdminNav.svelte';
-    import Header from "$lib/ui/Header.svelte";
-    // import WelcomeNav from '$lib/components/WelcomeNav.svelte';
+    import WelcomeNav from '$lib/ui/header/menu/WelcomeNav.svelte';
+    import MemberNav from '$lib/ui/header/menu/MemberNav.svelte';
+    // import AdminNav from '$lib/ui/header/menu//AdminNav.svelte';
+    import Header from "$lib/ui/header/Header.svelte";
 
 </script>
 

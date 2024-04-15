@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Brand from '$lib/ui/Brand.svelte';	
+	import Brand from '$lib/ui/header/Brand.svelte';	
 </script>
 
 <nav class="navbar is-fixed-top has-shadow is-info px-6" style="z-index: 999999;">
