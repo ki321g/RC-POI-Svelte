@@ -1,0 +1,41 @@
+
+<section class="section page-margin">
+    <h1 class="title page-heading is-2 is-uppercase mb-3">Log in</h1>
+    <form action="/authenticate" method="POST">
+      <div class="columns">
+    <div class="column is-2">
+      <!-- First column content goes here -->
+    </div>
+    <div class="column is-8">    
+   <div class="field">
+    <label class="label">Email</label>
+    <p class="control has-icons-left">
+      <input class="input" type="email" placeholder="Enter email" name="email">
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <label class="label">Password</label>
+    <p class="control has-icons-left">
+      <input class="input" type="password" placeholder="Enter password" name="password">
+      <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <p class="control">
+      <button class="button is-primary is-large is-fullwidth">
+        Login
+      </button>
+    </p>
+  </div>
+  </div>
+    <div class="column is-2">
+      <!-- empty column -->
+    </div>
+  </div>
+    </form>
+  </section>
