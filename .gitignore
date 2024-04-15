@@ -1,16 +1,10 @@
-# Node modules
+.DS_Store
 node_modules
-
-# Build directory
 /build
-
-# SvelteKit output
-.svelte-kit
-
-# Environment files
+/.svelte-kit
+/package
 .env
 .env.*
 !.env.example
-
-# Editor directories and files
-/.vscode
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
