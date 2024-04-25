@@ -1,16 +1,26 @@
 <script lang="ts">
-	// import { user } from '$lib/stores/user';]
-    import { user } from "$lib/stores";
-    import WelcomeNav from '$lib/ui/header/menu/WelcomeNav.svelte';
-    import MemberNav from '$lib/ui/header/menu/MemberNav.svelte';
-    // import AdminNav from '$lib/ui/header/menu//AdminNav.svelte';
-    import Header from "$lib/ui/header/Header.svelte";
+	import { currentLoggedInUser } from '$lib/stores';
+	import WelcomeNav from '$lib/ui/header/menu/WelcomeNav.svelte';
+	import MemberNav from '$lib/ui/header/menu/MemberNav.svelte';
+	import AdminNav from '$lib/ui/header/menu//AdminNav.svelte';
+	import Header from '$lib/ui/header/Header.svelte';
 
+	export let data: any;
+	if (data.session) {
+		currentLoggedInUser.set(data.session);
+	} else {
+		currentLoggedInUser.set({ firstName: '', lastName: '', email: '', accountType: '', _id: '', token: '' });
+	}
 </script>
 
+
 <Header>
-	{#if $user?._id}
-		<MemberNav />
+	{#if $currentLoggedInUser._id}
+		{#if $currentLoggedInUser.accountType === 'superadmin'}
+			<AdminNav />
+		{:else}			
+			<MemberNav />
+		{/if}
 	{:else}
 		<WelcomeNav />
 	{/if}

@@ -1,10 +1,10 @@
-
-
-
 // User Types
 
 export interface LoggedInUser {
+	firstName: string;
+	lastName: string;
 	email: string;
+	accountType: string;
 	token: string;
 	_id: string;
 };
@@ -13,7 +13,23 @@ export interface User {
 	firstName: string;
 	lastName: string;
 	email: string;
-    accountType: string;
 	password?: string;
-	_id: string;
+    accountType: string;
+	_id?: string;
+	//__v?: string;
 };
+
+export interface Club {
+	club: String,
+	address: String, 
+	phone: String,
+	email: String,
+	website: String,
+	latitude: String,
+	longitude: String,
+	description: String,
+	category: String,
+	img?: String,
+	userId: User["_id"],
+	_id?: string;
+}

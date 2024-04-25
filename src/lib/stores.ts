@@ -4,4 +4,4 @@ import type { LoggedInUser } from "$lib/types/rugby-club-poi-types";
 
 
 // export const subTitle = writable<string>();
-export const user = writable<LoggedInUser>();
+export const currentLoggedInUser = writable<LoggedInUser>();

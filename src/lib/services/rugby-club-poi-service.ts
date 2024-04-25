@@ -1,11 +1,14 @@
 import axios from "axios";
-import { user } from "../stores";
+//import { user } from "../stores";
+import { userStore } from "$lib/models/mongo/user-store";
 import type { LoggedInUser, User } from "$lib/types/rugby-club-poi-types";
+import { PUBLIC_BACKEND_API } from "$env/static/public";
 
 export const RugbyClubPOIService = {
-    //baseUrl: process.env.PUBLIC_BACKEND_API,
+    baseUrl: PUBLIC_BACKEND_API,
+    //baseUrl: process.env.PUBLIC_BACKEND_API
     //baseUrl: "http://rugbyclubpoi-f3ce2fe5ab82.herokuapp.com",
-    baseUrl: "http://localhost:3000",
+   // baseUrl: "http://localhost:3000",
 
     async signup(user: User): Promise<boolean> {
       try {
@@ -16,42 +19,24 @@ export const RugbyClubPOIService = {
         return false;
       }
     },
-  
     async login(email: string, password: string): Promise<LoggedInUser | null> {
       try {
         console.log('email: ', email);
         console.log('password: ', password);
-      //  axios.defaults.headers.common["Accept"] = "application/json";
-       // axios.defaults.headers.common["Content-Type"] = "application/json";
+        const user = await userStore.findBy(email);
         const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
-       /*
-        const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
-          email,
-          password,
-        }, {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        });
-        */
-        console.log(response.data);
-        if (response.data.success) {          
-          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-          const userID = await axios.get(`${this.baseUrl}/api/users/${response.data._id}`);
-          user.set({ _id: response.data._id, email: response.data.email, token: response.data.token });
-          
+
+        console.log('user: ', user);
+        if (user !== null && user.password === password) {
           const session: LoggedInUser = {
-            _id: response.data._id, 
-            email: response.data.email, 
-            token: response.data.token 
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            accountType: user.accountType,
+            _id: user._id!.toString(), 
+            // token: user._id!.toString()
+            token: response.data.token
           };
-          
-          localStorage.RugbyClubPOI = JSON.stringify({
-            _id: response.data._id,
-            email,
-            token: response.data.token,
-          });
           return session;
         }
         return null;
