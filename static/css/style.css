@@ -186,3 +186,8 @@ button {
 .table-centered th {
 	text-align: center !important;
 }
+
+/* Gallery top */
+.pswp__top-bar {
+	top: 70px !important;
+}

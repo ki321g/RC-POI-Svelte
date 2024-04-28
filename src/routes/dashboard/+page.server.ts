@@ -16,3 +16,36 @@ export const load: PageServerLoad = async ({ request, cookies }) => {
 	clubs: await RugbyClubPOIService.getClubByUserId(UserId),
   	};
 };
+
+
+export const actions = {
+    addClub: async ({ request, cookies }) => {
+      const form = await request.formData();
+      const firstName = form.get("firstName") as string;
+      const lastName = form.get("lastName") as string;
+      const email = form.get("email") as string;
+      const password = form.get("password") as string;
+      const accountType = form.get("accountType") as string;
+
+      const user = {
+        firstName,
+        lastName,
+        email,
+        password,
+        accountType
+      };
+
+      if (email === "" || password === "" || firstName === "" || lastName === "") {
+        throw redirect(307, "/");
+      } else {
+        console.log(`attemting to sign up user firstName: ${firstName}, lastName: ${lastName} & email: ${email} with password: ${password}`);
+        const newUser = await RugbyClubPOIService.signup(user);
+  
+         if (newUser) {
+          throw redirect(303, "/login");
+        } else {
+          throw redirect(307, "/");
+        }
+      }
+    }
+  };

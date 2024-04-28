@@ -3,6 +3,7 @@
     import type { Club } from "$lib/types/rugby-club-poi-types";     
 	import UploadWidget from './UploadWidget.svelte';
     import LeafletMap from "$lib/ui/LeafletMap.svelte";
+    import SimpleGallery from '$lib/ui/SimpleGallery.svelte'
     import { onMount } from "svelte";
     // let renderMAP: boolean = false;
 	  
@@ -12,6 +13,32 @@
     let lat: any; 
     let lng: any;
     
+    const images = [
+            {
+              largeURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg',
+              thumbnailURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg',
+              width: 1875,
+              height: 2500,
+            },
+            {
+              largeURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg',
+              thumbnailURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg',
+              width: 1669,
+              height: 2500,
+            },
+            {
+              largeURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg',
+              thumbnailURL:
+                'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg',
+              width: 2500,
+              height: 1666,
+            },
+          ]
 
     onMount(async () => {        
         // renderMAP = true;
@@ -100,7 +127,38 @@
     </div>   
 </div>  
 
-<UploadWidget />
-<!-- {#if renderMAP} -->
-<!-- <LeafletMap height={40} bind:this={map} /> -->
-<!-- {/if} -->
+<div class="blog-posts">
+    <div class="box box-link-hover-shadow">
+        <div class="columns is-fullwidth p-0 mb-0">
+            <div class="column has-text-left">
+                <h2 class="title page-heading is-2 is-uppercase mb-0">
+                    Club Gallery
+                </h2>
+            </div>
+            <div class="column has-text-right">
+                <h2 class="title page-heading is-2 is-uppercase mb-0">
+                    
+                </h2>
+            </div>
+        </div>                    
+        <div class="columns featured-post is-multiline">
+            <div class="column is-12 post">
+                <article class="columns featured is-multiline pt-0">
+                        <div class="column is-12">                            
+                            <!-- MAP WAS HERE -->
+                            <UploadWidget club={club} />
+                        </div>
+                    <div class="column is-12 pb-0">
+                        <!-- BELLOW MAP WAS HERE -->
+                    </div>       
+                    <div class="column is-12 pt-0">
+                        <div class="is-fullwidth">
+                           <!-- GALLERY GOES HERE -->
+                           <SimpleGallery galleryID="my-test-gallery" {images} />
+                        </div>                                   
+                    </div>
+                </article>
+            </div>
+        </div>        
+    </div>   
+</div>  

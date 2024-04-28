@@ -55,16 +55,16 @@ export const RugbyClubPOIService = {
       }
     },
   
-    async logout(): Promise<boolean> {
-      try {
-        axios.defaults.headers.common["Authorization"] = "";
-        user.set({ _id: "", email: "", token: "" });
+    // async logout(): Promise<boolean> {
+    //   try {
+    //     axios.defaults.headers.common["Authorization"] = "";
+    //     user.set({ _id: "", email: "", token: "" });
 
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    },
+    //   } catch (error) {
+    //     console.log(error);
+    //     return false;
+    //   }
+    // },
   
     async getLoggedInUser(): Promise<LoggedInUser | null> {
       try {
@@ -126,4 +126,14 @@ export const RugbyClubPOIService = {
         return [];
       }
     },
+    
+    async addClubImage(id: string, image: string): Promise<Club[]> {
+      try {
+        const clubs = await clubStore.addClubImage(id, image);
+        return JSON.parse(JSON.stringify(clubs));
+      } catch (error) {
+        return [];
+      }
+    },
+
   };

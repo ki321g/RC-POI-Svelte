@@ -90,5 +90,47 @@ export const clubStore = {
           console.log(error);
           return null;
         }
+      },
+
+      // async addClubImage (id: string, image: string): Promise<Club | null> {
+      //   try {
+      //     const club = await ClubMongoose.findOne({ id: id });
+      //     if (club) {
+      //       club.updateOne(
+      //         { $push: {img: image}},
+      //         function(err, result) {
+      //           if (err) {
+      //             console.error(err);
+      //           } else {
+      //             console.log(result);
+      //           }
+      //         });
+      //       const updatedClubObj = await ClubMongoose.findOne({ id: id });
+      //       return updatedClubObj;
+      //     }
+      //     return null;
+      //   }
+      //   catch (error) {
+      //     console.log(error);
+      //     return null;
+      //   }
+      // }
+      async addClubImage (id: string, image: string): Promise<Club | null> {
+        try {
+          const club = await ClubMongoose.findOne({ id: id });
+          console.log(club);
+          if (club) {
+            await club.updateOne({ $push: {img: image}});
+            const updatedClubObj = await ClubMongoose.findOne({ id: id });
+            console.log("AFTER UPDATE");
+            console.log(updatedClubObj);
+            return updatedClubObj;
+          }
+          return null;
+        }
+        catch (error) {
+          console.log(error);
+          return null;
+        }
       }
 }

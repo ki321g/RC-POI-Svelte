@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">    
+    import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
+    import type { Club } from "$lib/types/rugby-club-poi-types";     
 	import { CldUploadWidget } from 'svelte-cloudinary';
 	import { env } from '$env/dynamic/public';
 	// import { env } from '$env/static/public';
@@ -7,10 +9,13 @@
 	let info;
 	let error;
 
-	function onUpload(result, widget){
+	export let club: Club[];
+
+	const onUpload = async (result, widget) => {
 		if(result.event === "success"){
 			info = result.info;
 			console.log(info);
+			const testing = await RugbyClubPOIService.addClubImage(club._id, info.secure_url);  
 		}else if(result.event === "error"){
 			error = result.error;
 			console.log(error);
@@ -18,16 +23,28 @@
 		widget.close();
 	}
 
+	// function onUpload(result, widget){
+	// 	if(result.event === "success"){
+	// 		info = result.info;
+	// 		console.log(info);
+	// 		const testing = await RugbyClubPOIService.addClubImage(UserId);	
+	// 	}else if(result.event === "error"){
+	// 		error = result.error;
+	// 		console.log(error);
+	// 	}
+	// 	widget.close();
+	// }
+
 </script>
 
-<CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
+<!-- <CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
 	sources: ['local'],
     cloudName: env.PUBLIC_CLOUDINARY_CLOUD_NAME,
     uploadPreset: env.PUBLIC_CLOUDINARY_UPLOAD_PRESET
 }}>
 	<a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="" on:click={open}>Add Image</a>
-</CldUploadWidget>
-
+</CldUploadWidget> -->
+<!-- 
 {#if error}
 	<p class="has-text-danger">{error.status}</p>
 {/if}
@@ -35,4 +52,51 @@
 {#if info}
 	<img width={info.width} height={info.height} src={info.secure_url} alt="Uploaded Asset" />
 	<p>{info.secure_url}</p>
-{/if}
+{/if} -->
+
+
+
+
+<CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
+    sources: ['local'],
+    cloudName: env.PUBLIC_CLOUDINARY_CLOUD_NAME,
+    uploadPreset: env.PUBLIC_CLOUDINARY_UPLOAD_PRESET
+}}>	
+    <div class="columns is-vcentered">
+        <div class="column">
+        <div class="tile is-parent is-vertical">
+            <div class="tile is-child">
+            <!-- Content for first row in first column -->
+            <a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="" on:click={open}>Upload Image</a>
+            </div>
+            <div class="tile is-child">
+            <!-- Content for second row in first column -->
+            <a class="button imgBtn is-danger is-fullwidth is-medium is-uppercase has-text-grey" href="/dashboard/deleteimage/">Delete Image</a>
+            </div>
+        </div>
+        </div>
+        <div class="column">
+        <div class="tile is-parent">
+            <div class="tile is-child">
+            <!-- Content for the row in second column -->
+            <figure class="image is-520x360">                                                    
+                <div class="column">										
+                    {#if error}
+                    <div style="position: relative;">
+                        <img src="/images/club-image.png" alt="">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+                        <p class="has-text-danger" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; padding: 10px;">{error.status}</p>
+                      </div>
+                    {/if}
+                    {#if info}
+                    <img width={info.width} height={info.height} src={info.secure_url} alt="Uploaded Asset" />					
+                    {:else}
+                        <img src="/images/club-image.png" alt="">						
+                    {/if}
+                </div>                                
+            </figure>   
+            </div>
+        </div>
+        </div>
+    </div>
+</CldUploadWidget>

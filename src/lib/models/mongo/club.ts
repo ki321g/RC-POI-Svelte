@@ -11,7 +11,7 @@ const clubSchema = new Schema<Club>({
   longitude: String,
   description: String,
   category: String,
-  img: String,
+  img: [String],
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",

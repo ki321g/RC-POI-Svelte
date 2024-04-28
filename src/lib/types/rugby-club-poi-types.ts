@@ -29,7 +29,7 @@ export interface Club {
 	longitude: String,
 	description: String,
 	category: String,
-	img?: String,
+	img?: [String],
 	userId: User["_id"],
 	_id?: string;
 }

@@ -27,17 +27,6 @@ export const actions = {
         const newUser = await RugbyClubPOIService.signup(user);
   
          if (newUser) {
-        //   const session = await RugbyClubPOIService.login(email, password);
-          
-        //   currentLoggedInUser.set(session);
-        //   const userJson = JSON.stringify(session);
-        //   cookies.set("RugbyClubPOI", userJson, {
-        //     path: "/",
-        //     httpOnly: true,
-        //     sameSite: "strict",
-        //     secure: !dev,
-        //     maxAge: 60 * 60 * 24 * 7 // one week
-        //   });
           throw redirect(303, "/login");
         } else {
           throw redirect(307, "/");
