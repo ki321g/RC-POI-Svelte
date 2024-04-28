@@ -1,3 +1,6 @@
+<script lang="ts">
+  import SignupForm from "./SignupForm.svelte";
+</script>
 
 <section class="section page-margin"> 
   <!-- {{#if CreateSuperAdmin}}
@@ -5,67 +8,6 @@
       <button class="delete"></button> No SuperAdmin Account: Please Create one now.
     </div>
   {{/if}} -->
-  <h1 class="title page-heading is-2 is-uppercase mb-3">Sign up </h1>
-
-  <form action="/register" method="POST">
-  <div class="columns">
-  <div class="column is-2">
-    <!-- empty column -->
-  </div>
-  <div class="column is-8">
-    <div class="field is-horizontal">
-    <div class="field-body">
-      <div class="field">
-        <label class="label">First Name</label>
-        <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Enter first name" name="firstName">
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-        </p>
-      </div>
-      <div class="field">
-        <label class="label">Last Name</label>
-        <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Enter last name" name="lastName">
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>
- <div class="field">
-  <label class="label">Email</label>
-  <p class="control has-icons-left">
-    <input class="input" type="email" placeholder="Enter email" name="email">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-  </p>
-</div>
-<div class="field">
-  <label class="label">Password</label>
-  <p class="control has-icons-left">
-    <input class="input" type="password" placeholder="Enter password" name="password">
-    <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
-  </p>
-</div>
-
-<input type="hidden" name="accountType" value="user">
-<div class="field">
-  <p class="control">
-    <button class="button is-primary is-large is-fullwidth">
-      Sign Up
-    </button>
-  </p>
-</div>
-</div>
-  <div class="column is-2">
-    <!-- empty column -->
-  </div>
-</div>
-  </form>
+  <h1 class="title page-heading is-2 is-uppercase mb-3">Sign up </h1> 
+  <SignupForm></SignupForm>
 </section>

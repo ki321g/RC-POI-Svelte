@@ -1,4 +1,4 @@
-import type { Club } from "$lib/types/rugby-club-poi-types.js";
+import type { Club } from "$lib/types/rugby-club-poi-types";
 import { ClubMongoose } from "./club.js";
 
 export const clubStore = {
@@ -17,6 +17,11 @@ export const clubStore = {
 
       async findBy(category: string): Promise<Club | null> {
         const clubs = await ClubMongoose.findOne({ category: category }).lean();
+        return clubs;
+      },  
+
+      async findByUserId(userId: string): Promise<Club | null> {
+        const clubs = await ClubMongoose.findOne({ userId: userId }).lean();
         return clubs;
       },   
     
