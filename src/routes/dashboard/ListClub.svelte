@@ -1,8 +1,31 @@
-<script lang="ts">
+<script lang="ts">    
+    import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
+    import type { Club } from "$lib/types/rugby-club-poi-types";     
 	import UploadWidget from './UploadWidget.svelte';
-    import type { Club } from "$lib/types/rugby-club-poi-types"; 
+    import LeafletMap from "$lib/ui/LeafletMap.svelte";
+    import { onMount } from "svelte";
+    // let renderMAP: boolean = false;
 	  
     export let club: Club[];
+
+    let map: LeafletMap;
+    let lat: any; 
+    let lng: any;
+    
+
+    onMount(async () => {        
+        // renderMAP = true;
+        lat = Number(club.latitude);
+        lng = Number(club.longitude);
+        console.log(lat, lng);
+        // club.forEach((club: Club) => {
+        // map.addMarker(Number(club.latitude), Number(club.longitude), club.club.toString());
+        if (map) {
+            map.addMarker(lat, lng, 'TEST');
+        }
+        // });
+    });
+
   </script>
 
 
@@ -22,27 +45,14 @@
         </div>                    
         <div class="columns featured-post is-multiline">
             <div class="column is-12 post">
-                <article class="columns featured is-multiline pt-0">
-                    {#if club.img}
+                <article class="columns featured is-multiline pt-0">                   
                     <figure class="image is-520x360">
                         <div class="column">
-                            <img src={club.img} alt="">                                    
-                            <div class="buttons-overlay">
-                                <a class="button imgBtn is-warning is-half is-medium is-uppercase has-text-grey mr-2" href="/dashboard/editimage/{club._id}}">Update Image</a>
-                                <a class="button imgBtn is-danger is-half is-medium is-uppercase has-text-grey" href="/dashboard/deleteimage/{club._id}}">Delete Image</a>
-                            </div>
+                            
+                            <LeafletMap height={36} bind:this={map} />  
+                            
                         </div>
-                    </figure>                                
-                    {:else}
-                    <figure class="image is-520x360">                                                    
-                        <div class="column">
-                            <img src="/images/club-image.png" alt="">
-                            <div class="buttons-overlay">
-                                <a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="/dashboard/editimage/{club._id}">Add Image</a>
-                            </div>
-                        </div>                                
-                    </figure>   
-                    {/if}
+                    </figure>
                     <div class="column featured-content va">
                         <div>
                             <h3 class="heading post-category">County</h3>
@@ -91,3 +101,6 @@
 </div>  
 
 <UploadWidget />
+<!-- {#if renderMAP} -->
+<!-- <LeafletMap height={40} bind:this={map} /> -->
+<!-- {/if} -->
