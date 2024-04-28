@@ -126,11 +126,24 @@ export const RugbyClubPOIService = {
         return [];
       }
     },
-    
-    async addClubImage(id: string, image: string): Promise<Club[]> {
+
+    async addClub(club: Club): Promise<Club[]> {
       try {
-        const clubs = await clubStore.addClubImage(id, image);
+        const clubs = await clubStore.add(club);
         return JSON.parse(JSON.stringify(clubs));
+      } catch (error) {
+        return [];
+      }
+    },
+    
+    async addClubImage(userId: string, image: string): Promise<Club[]> {
+      try {
+        console.log('userId: ', userId);
+        console.log('image: ', image);
+        
+        const club = await clubStore.addClubImage(userId, image);
+        console.log(club);
+        return JSON.parse(JSON.stringify(club));
       } catch (error) {
         return [];
       }

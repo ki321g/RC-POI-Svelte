@@ -20,7 +20,6 @@
 	let description = '';
 	let errorMessage = '';
 	let searchBoxValue = '';
-	console.log(apiKey);
 
 	const handleSearch = () => {
 		searchResults.innerHTML = '';
@@ -60,14 +59,72 @@
 
 		searchResults.addEventListener('change', () => {
 			selectedPlace = JSON.parse(searchResults.value);
-			// rest of the code...
+			console.log(selectedPlace.place_id);
+			console.log(searchResults.value);
+			
+			// If no place selected, exit
+			if (!selectedPlace) {
+				return;
+			}
+			
+			service.getDetails({
+				placeId: selectedPlace.place_id
+			}, (place, status) => {
+				if (status === google.maps.places.PlacesServiceStatus.OK) {
+					// Extract and display place details
+					club = place.name ? place.name : "";
+
+					let placeCounty = "";
+					for (var i = 0; i < place.address_components.length; i++) {
+						var countyComponent = place.address_components[i];
+						if (countyComponent.types.includes('administrative_area_level_1')) {
+						placeCounty = countyComponent.long_name.replace('County ', '');
+						break;
+						}
+					}				
+					// club = selectedPlace.club;				
+					address = placeCounty ? placeCounty : "";
+					phone = place.formatted_phone_number ? place.formatted_phone_number : "";
+					website =  place.website ? place.website : "";
+					latitude = place.geometry.location.lat() ? place.geometry.location.lat() : "";
+					longitude = place.geometry.location.lng() ? place.geometry.location.lng() : "";
+					email = place.email ? place.email : "";
+
+					// Get the latitude and longitude of the place
+					let lat = place.geometry.location.lat();
+					let lng = place.geometry.location.lng();
+
+					// Create a Google Maps URL using the latitude and longitude
+					let mapsUrlLocation = "https://www.google.com/maps/?q=" + lat + "%2C" + lng;
+					let mapsUrlDirections = "https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + lat + "%2C" + lng;
+
+					// Create a new map centered at the place
+					var map = new google.maps.Map(document.getElementById('map'), {
+						center: { lat: lat, lng: lng },
+						zoom: 15,
+						mapTypeId: google.maps.MapTypeId.SATELLITE
+					});
+
+					// Create a marker at the place
+					var marker = new google.maps.Marker({
+						position: { lat: lat, lng: lng },
+						map: map
+					});
+				} 
+				else {
+					console.error("Place details search failed:", status);
+					}
+				});
+
+			});			
 		});
-	});
 </script>
 
-<h1 class="title page-heading is-2 is-uppercase mb-3">No Clubs</h1>
 
-<form action="/dashboard/addclub" method="POST">
+
+<h1 class="title page-heading is-2 is-uppercase mb-3">No Clubs</h1>
+<!-- <form action="/dashboard/addclub" method="POST"> -->
+<form method="POST" action="?/addclub">
 	<div class="field-body">
 		<div class="container">
 			<div class="columns is-vcentered">
@@ -119,8 +176,8 @@
 								<div class="select mb-3 is-fullwidth">
 									<select bind:value={category} id="place-category" name="category">
 										<option value="">Select Category</option>
-										<option value="Junior">Junior</option>
-										<option value="Senior">Senior</option>
+										<option value="JUNIOR">Junior</option>
+										<option value="SENIOR">Senior</option>
 									</select>
 								</div>
 							</div>

@@ -115,22 +115,115 @@ export const clubStore = {
       //     return null;
       //   }
       // }
-      async addClubImage (id: string, image: string): Promise<Club | null> {
-        try {
-          const club = await ClubMongoose.findOne({ id: id });
+      // async addClubImage (id: string, image: string): Promise<Club | null> {
+      //   try {
+      //     const club = await ClubMongoose.findOne({ id: id });
+      //     console.log(club);
+      //     if (club) {
+      //       await club.updateOne({ $push: {img: image}});
+      //       const updatedClubObj = await ClubMongoose.findOne({ id: id });
+      //       console.log("AFTER UPDATE");
+      //       console.log(updatedClubObj);
+      //       return updatedClubObj;
+      //     }
+      //     return null;
+      //   }
+      //   catch (error) {
+      //     console.log(error);
+      //     return null;
+      //   }
+      // }
+
+      // async addClubImage (id: string, image: string): Promise<Club | null> {
+      //   try {
+          
+      //     console.log("Before UPDATE");
+      //     console.log("id: " + id);
+      //     console.log("image: " + image);
+      //     //  if (club) {
+      //      await ClubMongoose.findOneAndUpdate(
+      //          { _id: id },
+      //          { $push: { img: image } },
+      //         );
+
+      //       // const club = await ClubMongoose.findOne({ _id: id });
+      //       // console.log(club);
+      //       // if (club) {
+      //         await club.updateOne({ $push: {img: image}});
+      //         const updatedClubObj = await ClubMongoose.findOne({ _id: id });
+      //         console.log("AFTER UPDATE");
+      //         console.log(updatedClubObj);
+      //         return updatedClubObj;
+      //     //   }
+      //     //   return null;
+      //     // }
+
+      //       // await ClubMongoose.updateOne(
+      //       //   { _id: id },
+      //       //   { $push: { img: image } },
+      //       //  );
+      //       // const updatedClubObj = await ClubMongoose.findOne({ _id: id });
+      //       // console.log("AFTER UPDATE");
+      //       // console.log(updatedClubObj);
+      //       // return updatedClubObj;
+      //     // }
+      //     // return null;
+      //   // }
+      //   catch (error) {
+      //     console.log(error);
+      //     return null;
+      //   }
+      // },
+
+
+
+
+      // async addClubImage (id: string, image: string): Promise<Club | null> {
+      //   try {
+      //     const club = await ClubMongoose.findOne({ _id: id }).lean();
+      //     console.log(club);
+      //     if (club) {
+      //       await ClubMongoose.updateOne(
+      //         { _id: id },
+      //         { $push: { img: image } },
+      //       ).lean();
+
+      //       const updatedClubObj = await ClubMongoose.findOne({ _id: id }).lean();
+      //       console.log("AFTER UPDATE");
+      //       console.log(updatedClubObj);
+      //       return updatedClubObj;
+      //     }
+      //     return null;
+      //   }
+      //   catch (error) {
+      //     console.log(error);
+      //     return null;
+      //   }
+      // }
+      async addClubImage (userId: string, image: string): Promise<Club | null> {
+        // try {
+          console.log("Before UPDATE");
+          console.log("id: " + userId);
+          console.log("image: " + image);
+          const club = await ClubMongoose.findOne({ userId: userId }).lean();
           console.log(club);
-          if (club) {
-            await club.updateOne({ $push: {img: image}});
-            const updatedClubObj = await ClubMongoose.findOne({ id: id });
-            console.log("AFTER UPDATE");
-            console.log(updatedClubObj);
-            return updatedClubObj;
-          }
-          return null;
-        }
-        catch (error) {
-          console.log(error);
-          return null;
-        }
+          return club;
+          // if (club) {
+          //   await ClubMongoose.updateOne(
+          //     { _id: id },
+          //     { $push: { img: image } },
+          //   );
+      
+          //   const updatedClubObj = await ClubMongoose.findOne({ id: id }).lean();
+          //   console.log("AFTER UPDATE");
+          //   console.log(updatedClubObj);
+          //   return updatedClubObj;
+          // }
+          // return null;
+        // } catch (error) {
+        //   console.log(error);
+        //   return null;
+        // }
       }
+     
 }

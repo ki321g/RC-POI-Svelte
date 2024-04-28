@@ -15,7 +15,7 @@
 		if(result.event === "success"){
 			info = result.info;
 			console.log(info);
-			const testing = await RugbyClubPOIService.addClubImage(club._id, info.secure_url);  
+			const testing = await RugbyClubPOIService.addClubImage(club.userId, info.secure_url);  
 		}else if(result.event === "error"){
 			error = result.error;
 			console.log(error);

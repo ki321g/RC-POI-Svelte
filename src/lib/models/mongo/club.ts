@@ -16,6 +16,10 @@ const clubSchema = new Schema<Club>({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  _id: {
+    type: Schema.Types.ObjectId,
+    ref: "_id",
+  },
 });
 
 export const ClubMongoose = model("Club", clubSchema);

@@ -1,6 +1,8 @@
 import type { LoggedInUser } from "$lib/types/rugby-club-poi-types";
 import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 import type { PageServerLoad } from "./$types";
+import { redirect } from "@sveltejs/kit"
+import { goto } from "$app/navigation";
 import cookie from 'cookie';
 
 
@@ -19,30 +21,45 @@ export const load: PageServerLoad = async ({ request, cookies }) => {
 
 
 export const actions = {
-    addClub: async ({ request, cookies }) => {
+  addclub: async ({ request, cookies }) => {
+    const cookieStr = cookies.get("RugbyClubPOI") as string;
+    const session = JSON.parse(cookieStr) as LoggedInUser;
+    const userId = session._id;	
+
       const form = await request.formData();
-      const firstName = form.get("firstName") as string;
-      const lastName = form.get("lastName") as string;
+      const club = form.get("club") as string;
+      const address = form.get("address") as string;
+      const phone = form.get("phone") as string;
+      const website = form.get("website") as string;
+      const latitude = form.get("latitude") as string;
+      const longitude = form.get("longitude") as string;
       const email = form.get("email") as string;
-      const password = form.get("password") as string;
-      const accountType = form.get("accountType") as string;
+      const category = form.get("category") as string;
+      const description = form.get("description") as string;
+      const img = "";
 
-      const user = {
-        firstName,
-        lastName,
+      const addClub = {
+        club,
+        address,
+        phone,
+        website,
+        latitude,
+        longitude,
         email,
-        password,
-        accountType
+        category,
+        description,
+        userId
       };
-
-      if (email === "" || password === "" || firstName === "" || lastName === "") {
+      
+      console.log(addClub)
+      if (club === "" || address === "" || phone === "" || website === "" || latitude === "" || longitude === "" || email === "" || category === "" || description === "") {
         throw redirect(307, "/");
       } else {
-        console.log(`attemting to sign up user firstName: ${firstName}, lastName: ${lastName} & email: ${email} with password: ${password}`);
-        const newUser = await RugbyClubPOIService.signup(user);
+        console.log(`attemting to create club: ${club}, category: ${category} & email: ${email}`);
+        const newClub = await RugbyClubPOIService.addClub(addClub);
   
-         if (newUser) {
-          throw redirect(303, "/login");
+         if (newClub) {
+          throw redirect(303, "/dashboard");
         } else {
           throw redirect(307, "/");
         }
