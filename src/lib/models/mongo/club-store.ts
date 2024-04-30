@@ -200,14 +200,36 @@ export const clubStore = {
       //     return null;
       //   }
       // }
-      async addClubImage (userId: string, image: string): Promise<Club | null> {
+      async addClubImage (club: Club): Promise<Club | null> {
         // try {
+          try {  
+          console.log('addClubImage club-store function');
           console.log("Before UPDATE");
-          console.log("id: " + userId);
-          console.log("image: " + image);
-          const club = await ClubMongoose.findOne({ userId: userId }).lean();
+          console.log("ClubId: " + club._id);
           console.log(club);
-          return club;
+          // const club = await ClubMongoose.findOne({ _id: id}).lean();
+          club.description = "test";
+          // club.img = [...club.img, image];
+          
+          const updateClub = ClubMongoose.updateOne({ _id: club._id }, { $set: club });    
+          // const updateClub = ClubMongoose.updateOne(
+          //   { _id: club._id },
+          //   { $addToSet: { img: image } }
+          // );
+          // updateOne({ _id: club._id }, { $push: { img: image } }, { upsert: true });   
+          console.log("AFTER UPDATE");
+          // const updateClub1 = ClubMongoose.findOneAndUpdate(
+          //   { _id: club._id },
+          //   { $push: { img: image } },
+          //   { upsert: true }
+          // );
+
+          // const updateClub = ClubMongoose.updateOne(
+          //   { _id: id }, 
+          //   { $addToSet: { img: image } }
+          // );
+          console.log(updateClub);
+          return updateClub;
           // if (club) {
           //   await ClubMongoose.updateOne(
           //     { _id: id },
@@ -220,10 +242,10 @@ export const clubStore = {
           //   return updatedClubObj;
           // }
           // return null;
-        // } catch (error) {
-        //   console.log(error);
-        //   return null;
-        // }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
       }
      
 }

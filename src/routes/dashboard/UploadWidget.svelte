@@ -6,8 +6,8 @@
 	// import { env } from '$env/static/public';
 	// import { PUBLIC_CLOUDINARY_UPLOAD_PRESET, VITE_PUBLIC_CLOUDINARY_CLOUD_NAME } from '$env/static/public'
 
-	let info;
-	let error;
+	let info: any;
+	let error: any;
 
 	export let club: Club[];
 
@@ -15,7 +15,10 @@
 		if(result.event === "success"){
 			info = result.info;
 			console.log(info);
-			const testing = await RugbyClubPOIService.addClubImage(club.userId, info.secure_url);  
+            console.log("onUpload Function");
+            club.img = [...club.img, info.secure_url];
+            const testing = await RugbyClubPOIService.addClubImage(club);  
+            console.log(testing);			
 		}else if(result.event === "error"){
 			error = result.error;
 			console.log(error);

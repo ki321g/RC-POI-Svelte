@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentLoggedInUser } from '$lib/stores';
+	import { currentSession } from '$lib/stores';
 	import WelcomeNav from '$lib/ui/header/menu/WelcomeNav.svelte';
 	import MemberNav from '$lib/ui/header/menu/MemberNav.svelte';
 	import AdminNav from '$lib/ui/header/menu//AdminNav.svelte';
@@ -7,18 +7,17 @@
 
 	export let data: any;
 	if (data.session) {
-		currentLoggedInUser.set(data.session);
+		currentSession.set(data.session);
 	} else {
-		currentLoggedInUser.set({ firstName: '', lastName: '', email: '', accountType: '', _id: '', token: '' });
+		currentSession.set({ firstName: '', lastName: '', email: '', accountType: '', _id: '', token: '' });
 	}
 </script>
 
-
 <Header>
-	{#if $currentLoggedInUser._id}
-		{#if $currentLoggedInUser.accountType === 'superadmin'}
+	{#if $currentSession._id}
+		{#if $currentSession.accountType === 'superadmin'}
 			<AdminNav />
-		{:else}			
+		{:else}
 			<MemberNav />
 		{/if}
 	{:else}

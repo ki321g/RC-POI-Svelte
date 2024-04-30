@@ -65,7 +65,7 @@
                     {#if club.img}
                     <figure class="image is-520x360">
                         <div class="column">
-                            <img src={club.img} alt="">
+                            <img src={club.img.toString()} alt="">
                         </div>
                     </figure>                                
                     {:else} 
