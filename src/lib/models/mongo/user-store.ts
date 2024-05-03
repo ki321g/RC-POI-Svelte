@@ -33,7 +33,7 @@ export const userStore = {
     const currentUser = await UserMongoose.findOne({ email: user.email }).lean();
     user._id = currentUser._id;
     console.log(user)  
-    console.log("After")
+    console.log("After")    
     
     const UpdatedUser = UserMongoose.updateOne({ _id: user._id }, { $set: user });    
     return UpdatedUser;

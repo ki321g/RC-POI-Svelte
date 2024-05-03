@@ -1,4 +1,5 @@
 <script lang="ts">    
+    // import { fetch } from '@sveltejs/kit/fetch';
     import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
     import type { Club } from "$lib/types/rugby-club-poi-types";     
 	import { CldUploadWidget } from 'svelte-cloudinary';
@@ -16,8 +17,9 @@
 			info = result.info;
 			console.log(info);
             console.log("onUpload Function");
+            //club.img = [...club.img, info.secure_url];
             club.img = [...club.img, info.secure_url];
-            const testing = await RugbyClubPOIService.addClubImage(club);  
+            const testing = await RugbyClubPOIService.addClubImage(club, info.secure_url);  
             console.log(testing);			
 		}else if(result.event === "error"){
 			error = result.error;
@@ -38,6 +40,14 @@
 	// 	widget.close();
 	// }
 
+    const testing = async (club: Club, imageURL: string) => {
+        alert('This is a test message');
+        console.log("Testing Function")
+        console.log(club);
+        console.log(imageURL);
+        const testing = await RugbyClubPOIService.addClubImage(club, imageURL);  
+        console.log(testing);
+    }
 </script>
 
 <!-- <CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
@@ -63,7 +73,8 @@
 <CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
     sources: ['local'],
     cloudName: env.PUBLIC_CLOUDINARY_CLOUD_NAME,
-    uploadPreset: env.PUBLIC_CLOUDINARY_UPLOAD_PRESET
+    uploadPreset: env.PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+    folder: `clubGallery/${club._id}`
 }}>	
     <div class="columns is-vcentered">
         <div class="column">
@@ -103,3 +114,5 @@
         </div>
     </div>
 </CldUploadWidget>
+
+<a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="" on:click={testing(club, info.secure_url)}>TESTING UPDATE</a>

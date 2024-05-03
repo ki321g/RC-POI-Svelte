@@ -1,5 +1,7 @@
 <script>
     import { onMount } from "svelte";
+    
+    // @ts-ignore
     import PhotoSwipeLightbox from 'photoswipe/lightbox';
     import 'photoswipe/style.css';
     export let galleryID;

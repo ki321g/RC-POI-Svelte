@@ -5,6 +5,7 @@ import { redirect } from '@sveltejs/kit';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 
+// export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 	if (session) {
@@ -13,7 +14,8 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		console.log(`UserId: ${UserId}`);
 		console.log(testing);
 		return {
-			clubs: await RugbyClubPOIService.getClubByUserId(UserId)
+			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
+			games: await RugbyClubPOIService.getGames()
 		};
 	  }	
 };

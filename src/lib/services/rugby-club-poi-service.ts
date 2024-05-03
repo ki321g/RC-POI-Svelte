@@ -2,7 +2,8 @@ import axios from 'axios';
 //import { user } from "../stores";
 import { userStore } from '$lib/models/mongo/user-store';
 import { clubStore } from '$lib/models/mongo/club-store';
-import type { Session, User, Club } from '$lib/types/rugby-club-poi-types';
+import { gameStore } from '$lib/models/mongo/game-store';
+import type { Session, User, Club, Game } from '$lib/types/rugby-club-poi-types';
 import { PUBLIC_BACKEND_API } from '$env/static/public';
 
 export const RugbyClubPOIService = {
@@ -70,7 +71,7 @@ export const RugbyClubPOIService = {
 
 	async deleteUser(userId: string): Promise<boolean> {
 		try {
-			await axios.delete(`${this.baseUrl}/api/users/${userId}`);
+			await userStore.deleteOne(userId);
 			return true;
 		} catch (error) {
 			console.log(error);
@@ -118,13 +119,14 @@ export const RugbyClubPOIService = {
 		}
 	},
 
-	async addClubImage(club: Club): Promise<Club[] | null> {
+	async addClubImage(club: Club, imageURL: string): Promise<Club[] | null> {
 		try {
 			console.log('addClubImage function');
 			console.log(club);
-			// console.log('image: ', image);
+			console.log('imageURL: ', imageURL);
 
-			const returnedClub = await clubStore.addClubImage(club);
+			// const returnedClub = await clubStore.addClubImage(club, imageURL);
+			const returnedClub = await clubStore.update(club);
 			console.log('addClubImage AFTER');
 			console.log(returnedClub);
 			return returnedClub
@@ -132,5 +134,55 @@ export const RugbyClubPOIService = {
 		} catch (error) {
 			return [];
 		}
-	}
+	},
+
+	
+	async updateClub(club: Club): Promise<boolean> {
+		try {
+			const updatedClub = await clubStore.update(club._id, club);
+			console.log(updatedClub);
+			if (club !== null) {
+				return updatedClub;
+			}
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+
+	async getGames(): Promise<Game[]> {
+		try {
+			const games = await gameStore.find();
+			return JSON.parse(JSON.stringify(games));
+		} catch (error) {
+			return [];
+		}
+	},
+	
+	async getGamesByClubId(clubId: string): Promise<Game[]> {
+		try {
+			const games = await gameStore.findGamesByClubId(clubId);
+			return JSON.parse(JSON.stringify(games));
+		} catch (error) {
+			return [];
+		}
+	},
+
+	async getGameById(id: string): Promise<Game[]> {
+		try {
+			const game = await gameStore.findOne(id);
+			return JSON.parse(JSON.stringify(game));
+		} catch (error) {
+			return [];
+		}
+	},
+
+	async addGame(game: Game): Promise<Game[]> {
+		try {
+			const newGame = await gameStore.add(game);
+			return JSON.parse(JSON.stringify(newGame));
+		} catch (error) {
+			return [];
+		}
+	},
 };
