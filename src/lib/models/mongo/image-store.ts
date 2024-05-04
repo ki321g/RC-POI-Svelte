@@ -30,22 +30,6 @@ export const imageStore = {
     }
   },
 
-      // Create a new image
-      // let newImage = new ImageMongoose({
-      //   img: image.img, // Replace with your actual data
-      //   clubid: image.clubid // Replace with your actual data
-      // });
-// Save the new image to the database
-      // newImage.save()
-      // .then(savedImage => {
-      //   console.log('Saved image:', savedImage);
-      // })
-      // .catch(error => {
-      //   console.error('Error saving image:', error);
-      // });
-
-
-
   async deleteOne(id: string) {
     try {
       await ImageMongoose.deleteOne({ _id: id });

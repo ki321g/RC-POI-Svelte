@@ -160,7 +160,8 @@ export const RugbyClubPOIService = {
 	
 	async updateClub(club: Club): Promise<Club[]> {
 		try {
-			const updatedClub = await clubStore.update(club._id, club);
+			// const updatedClub = await clubStore.update(club._id, club);
+			const updatedClub = await clubStore.update(club);
 			console.log(updatedClub);
 			if (club !== null) {
 				return updatedClub;

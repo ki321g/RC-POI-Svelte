@@ -17,6 +17,6 @@ const gameSchema = new Schema<Game>({
 	},
 });
 
-// export const GameMongoose = mongoose.models.Game || model('Game', gameSchema);
+
 export const GameMongoose = model("Game", gameSchema);
 //export const GameMongoose = models["Game"] || model("Game", gameSchema);
