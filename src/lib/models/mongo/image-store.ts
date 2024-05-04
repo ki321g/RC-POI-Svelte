@@ -17,15 +17,25 @@ export const imageStore = {
   
   async add(image: Image): Promise<Image | null> {
     try {
+      console.log('addImage image-store function');
+			console.log(image);
+      const newImage = new ImageMongoose(image);
+      const imageObj = await newImage.save();
+      console.log('Saved image');
+      console.log(imageObj)
+      return imageObj;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  },
+
       // Create a new image
       // let newImage = new ImageMongoose({
       //   img: image.img, // Replace with your actual data
       //   clubid: image.clubid // Replace with your actual data
       // });
-      const newImage = new ImageMongoose(image);
-      // @ts-expect-error
-      const imageObj = await newImage.save();
-      // Save the new image to the database
+// Save the new image to the database
       // newImage.save()
       // .then(savedImage => {
       //   console.log('Saved image:', savedImage);
@@ -33,12 +43,8 @@ export const imageStore = {
       // .catch(error => {
       //   console.error('Error saving image:', error);
       // });
-      return imageObj;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  },
+
+
 
   async deleteOne(id: string) {
     try {

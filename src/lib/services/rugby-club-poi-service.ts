@@ -124,6 +124,8 @@ export const RugbyClubPOIService = {
 	
 	async addImage(image: Image): Promise<Image[]> {
 		try {
+			console.log('addImage function');
+			console.log(image);
 			const images = await imageStore.add(image);
 			return JSON.parse(JSON.stringify(images));
 		} catch (error) {

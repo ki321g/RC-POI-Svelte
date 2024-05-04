@@ -6,8 +6,11 @@
 	import { env } from '$env/dynamic/public';
 	// import { env } from '$env/static/public';
 	// import { PUBLIC_CLOUDINARY_UPLOAD_PRESET, VITE_PUBLIC_CLOUDINARY_CLOUD_NAME } from '$env/static/public'
+    import axios from 'axios';
 
-	let info: any;
+	export let info: any;
+    let imageURL: String;
+    let imageForm: any;
 	let error: any;
 
 	export let club: Club[];
@@ -15,20 +18,16 @@
 
 	const onUpload = async (result, widget) => {
 		if(result.event === "success"){
-			info = result.info;
-			console.log(info);
-            console.log("onUpload Function");
-            //club.img = [...club.img, info.secure_url];
-            image = {
-                img: info.secure_url,
-                clubid: club._id,
-            }
-            // image.img = [...image.img, info.secure_url];
-            // image.clubid = club._id;
-            console.log(image);
-            const testing = await RugbyClubPOIService.addImage(image);
-            // club.img = [...club.img, info.secure_url];
-            // const testing = await RugbyClubPOIService.addClubImage(club, info.secure_url);  
+			info = result.info;			
+            
+            imageURL = info.secure_url;
+
+            // Set the values of the form inputs
+            imageForm.elements.clubid.value = club._id;
+            imageForm.elements.img.value = info.secure_url;
+            // Submit the form
+            imageForm.submit();
+
             console.log(testing);			
 		}else if(result.event === "error"){
 			error = result.error;
@@ -37,47 +36,15 @@
 		widget.close();
 	}
 
-	// function onUpload(result, widget){
-	// 	if(result.event === "success"){
-	// 		info = result.info;
-	// 		console.log(info);
-	// 		const testing = await RugbyClubPOIService.addClubImage(UserId);	
-	// 	}else if(result.event === "error"){
-	// 		error = result.error;
-	// 		console.log(error);
-	// 	}
-	// 	widget.close();
-	// }
-
     const testing = async (club: Club, imageURL: string) => {
         alert('This is a test message');
         console.log("Testing Function")
         console.log(club);
         console.log(imageURL);
-        const testing = await RugbyClubPOIService.addClubImage(club, imageURL);  
+            
         console.log(testing);
     }
 </script>
-
-<!-- <CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
-	sources: ['local'],
-    cloudName: env.PUBLIC_CLOUDINARY_CLOUD_NAME,
-    uploadPreset: env.PUBLIC_CLOUDINARY_UPLOAD_PRESET
-}}>
-	<a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="" on:click={open}>Add Image</a>
-</CldUploadWidget> -->
-<!-- 
-{#if error}
-	<p class="has-text-danger">{error.status}</p>
-{/if}
-
-{#if info}
-	<img width={info.width} height={info.height} src={info.secure_url} alt="Uploaded Asset" />
-	<p>{info.secure_url}</p>
-{/if} -->
-
-
-
 
 <CldUploadWidget uploadPreset="svelte-cloudinary-unsigned" let:open let:isLoading {onUpload} options={{
     sources: ['local'],
@@ -124,4 +91,7 @@
     </div>
 </CldUploadWidget>
 
-<a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="" on:click={testing(club, info.secure_url)}>TESTING UPDATE</a>
+<form bind:this={imageForm} method="POST" action="?/addimage">
+    <input bind:value={club._id} class="input mb-3" type="hidden" id="club-id" placeholder="Club Id" name="clubid" />
+    <input bind:value={imageURL} class="input mb-3" type="hidden" id="image-url" placeholder="Image URL" name="img" />
+</form>

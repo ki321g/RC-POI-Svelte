@@ -5,6 +5,7 @@ import { redirect } from '@sveltejs/kit';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 
+
 // export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
@@ -64,5 +65,48 @@ export const actions = {
 				throw redirect(307, '/');
 			}
 		}
+	},
+
+	addimage: async ({ request, cookies }) => {
+		// const image = request.body;
+		// console.log(request);
+		// console.log(image);
+
+		const form = await request.formData();
+		console.log(form);
+		const clubid = form.get('clubid') as string;
+		const img = form.get('img') as string;
+
+		const image = {
+			clubid,
+			img
+		}
+		console.log(image);
+
+  		if (image) {
+			const result = await RugbyClubPOIService.addImage(image);
+			if (result) {
+				console.log("Image uploaded");
+				throw redirect(303, '/dashboard');
+			} else {
+				console.log("Image upload failed");
+				throw redirect(307, '/dashboard');
+			}
+		}
 	}
 };
+
+// export async function post(request) {
+// 	const { slug } = request.params;
+// 	const image = request.body;
+  
+// 	if (slug === 'addImage') {
+// 	  const result = await RugbyClubPOIService.addImage(image);
+// 	  if (result) {
+// 		return { status: 200, body: { message: 'Image uploaded successfully' } };
+// 	  } else {
+// 		return { status: 500, body: { message: 'Image upload failed' } };
+// 	  }
+// 	}
+// 	// Handle other routes...
+//   }
