@@ -233,15 +233,16 @@
 					</div>
 					<div class="column is-12 pt-0">
 						<div class="buttons has-addons is-fullwidth">
-							<a class="button controlBtn is-warning is-medium is-third is-uppercase has-text-grey" href="#" on:click={() => clubUpdate(club)}>
+							<a class="button controlBtn is-warning is-medium is-half is-uppercase has-text-grey" href="#" on:click={() => clubUpdate(club)}>
 								<i class="fas fa-edit fa-xl mr-2"></i>
 								Edit Club
 							</a>
-							<a class="button controlBtn is-warning is-medium is-third is-uppercase has-text-grey" href="/club/{club._id}">
+							<!-- <a class="button controlBtn is-warning is-medium is-third is-uppercase has-text-grey" href="/club/{club._id}">
 								<i class="fas fa-edit fa-xl mr-2" href="#"></i>
 								View/Edit Games
-							</a>
-							<a class="button controlBtn is-danger is-medium is-uppercase is-third" href="#" on:click={() => clubDelete(club)}>
+							</a> -->
+                            <!-- button controlBtn is-warning is-medium is-third is-uppercase has-text-grey -->
+							<a class="button controlBtn is-danger is-medium is-uppercase is-half" href="#" on:click={() => clubDelete(club)}>
 								<i class="fas fa-trash-alt fa-xl mr-2"></i>
 								Delete Club
 							</a>
