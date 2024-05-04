@@ -93,6 +93,56 @@ export const actions = {
 				throw redirect(307, '/dashboard');
 			}
 		}
+	},
+
+	updateclub: async ({ request, cookies }) => {
+		// const image = request.body;
+		// console.log(request);
+		// console.log(image);
+		console.log('updateclub server');
+
+		const form = await request.formData();
+		console.log(form);
+		const _id = form.get('clubid') as string;
+		const club = form.get('club') as string;
+		const address = form.get('address') as string;
+		const phone = form.get('phone') as string;
+		const website = form.get('website') as string;
+		const latitude = form.get('latitude') as string;
+		const longitude = form.get('longitude') as string;
+		const email = form.get('email') as string;
+		const category = form.get('category') as string;
+		const description = form.get('description') as string;
+		const img = form.get('img') as string;
+		const userId = form.get('userId') as string;
+
+		const updateClub = {
+			_id,
+			club,
+			address,
+			phone,
+			website,
+			latitude,
+			longitude,
+			email,
+			category,
+			description,
+			img,
+			userId
+		}
+
+		console.log(updateClub);
+
+  		if (updateClub) {
+			const result = await RugbyClubPOIService.updateClub(updateClub);
+			if (result) {
+				console.log("Club uploaded");
+				throw redirect(303, '/dashboard');
+			} else {
+				console.log("Club upload failed");
+				throw redirect(307, '/dashboard');
+			}
+		};
 	}
 };
 

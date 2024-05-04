@@ -16,7 +16,7 @@ export interface User {
 	email: string;
 	password?: string;
 	accountType: string;
-	// _id?: string;
+	_id?: string;
 	//__v?: string;
 }
 
@@ -32,7 +32,7 @@ export interface Club {
 	category: string;
 	img?: [string];
 	userId: User['_id'];
-	// _id?: string;
+	_id?: string;
 }
 
 export interface Game {
@@ -47,7 +47,7 @@ export interface Game {
 	// 	type: Schema.Types.ObjectId,
 	// 	ref: "Club";
 	// };
-	// _id?: string;
+	_id?: string;
 }
 
 export interface Image {
