@@ -8,5 +8,5 @@
         <a id="admin" class:is-primary={$page.url.pathname.includes('/admin')} class="button button-font is-uppercase" href="/admin"> Admin <i class="fa-solid fa-user-tie fa-xl pl-2"></i></a>   
         <a id="analytics" class:is-primary={$page.url.pathname.includes('/analytics')} class="button button-font is-uppercase" href="/analytics"> Analytics <i class="fa-solid fa-chart-simple pl-2"></i></a>   
 	<a id="profile" class:is-primary={$page.url.pathname.includes('/profile')} class="button button-font is-uppercase" href="/profile"> Profile <i class="fa-solid fa-user pl-2 fa-xl"></i></a>
-	<a id="logout" class="button button-font is-uppercase is-danger" href="/logout"> Logout <i class="fa-solid fa-sign-out pl-2 fa-xl"></i></a>
+	<a data-sveltekit-preload-data="tap" id="logout" class="button button-font is-uppercase is-danger" href="/logout"> Logout <i class="fa-solid fa-sign-out pl-2 fa-xl"></i></a>
 </div>

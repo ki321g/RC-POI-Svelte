@@ -1,8 +1,17 @@
 <script lang="ts">
-  //import LoginForm from "./LoginForm.svelte";
+	import ListClub from "./ListClub.svelte";
+	import AddClub from "./AddClub.svelte";
+	
+	export let data: any;
 </script>
 
-
-<section class="section page-margin">
-	<h1 class="title page-heading is-2 is-uppercase mb-3">Dashboard</h1>
+<section class="section pt-6">
+	{#if data.clubs}
+	
+	<ListClub club={data.clubs} />
+	<!-- {data.clubs._id} -->
+	{:else}
+	<AddClub />
+	{/if}
+	
 </section>

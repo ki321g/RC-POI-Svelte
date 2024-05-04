@@ -2,7 +2,7 @@
 	//import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 	// import { goto } from "$app/navigation";
 	//import { page } from '$app/stores';
-	//import { currentLoggedInUser } from '$lib/stores';
+	//import { currentSession } from '$lib/stores';
 
 	let email = '';
 	let password = '';
