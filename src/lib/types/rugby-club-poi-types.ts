@@ -43,10 +43,6 @@ export interface Game {
 	gametime: string;
 	gamelocation: string;
 	clubid: Club['_id'];
-	// clubid: {
-	// 	type: Schema.Types.ObjectId,
-	// 	ref: "Club";
-	// };
 	_id?: string;
 }
 

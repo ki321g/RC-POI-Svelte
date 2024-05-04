@@ -27,11 +27,10 @@ export const userStore = {
   },
 
   async update(user: User): Promise<User | null> {
-    console.log('Updating :', user.email);  
+    // console.log('Updating :', user.email);  
     const currentUser = await UserMongoose.findOne({ email: user.email }).lean();
     user._id = currentUser._id;
-    console.log(user)  
-    console.log("After")    
+    // console.log(user)    
     
     const UpdatedUser = UserMongoose.updateOne({ _id: user._id }, { $set: user });    
     return UpdatedUser;

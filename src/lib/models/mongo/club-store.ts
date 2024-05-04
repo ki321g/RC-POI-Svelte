@@ -53,29 +53,6 @@ export const clubStore = {
         await ClubMongoose.deleteMany({});
       },
 
-      // async updateClub (id: string, updatedClub: Club): Promise<Club | null> {
-      //   try {
-      //     const club = await ClubMongoose.findOne({ id: id });
-      //     if (club) {
-      //       club.club = updatedClub.club;
-      //       club.address = updatedClub.address;
-      //       club.phone = updatedClub.phone;
-      //       club.email = updatedClub.email;
-      //       club.website = updatedClub.website;
-      //       club.latitude = updatedClub.latitude;
-      //       club.longitude = updatedClub.longitude;
-      //       club.description = updatedClub.description;
-      //       club.category = updatedClub.category;
-      //       const updatedClubObj = await club.save();
-      //       return updatedClubObj;
-      //     }
-      //     return null;
-      //   }
-      //   catch (error) {
-      //     console.log(error);
-      //     return null;
-      //   }
-      // },
       async updateClub (club: Club): Promise<Club | null> {
         try {
             await ClubMongoose.updateOne({ _id: club._id }, { $set: club });    
@@ -87,13 +64,11 @@ export const clubStore = {
         }
       },
 
-      async update(club: Club): Promise<User | null> {
-        console.log('Updating :', club._id );  
+      async update(club: Club): Promise<Club | null> {        
+        // console.log('Updating :', club._id );  
         const currentClub = await ClubMongoose.findOne({ _id: club._id }).lean();
         club._id = currentClub._id;
-        console.log(club)  
-        console.log("After")    
-        
+        // console.log(club)            
         const UpdatedUser = ClubMongoose.updateOne({ _id: club._id }, { $set: club });    
         return UpdatedUser;
       },

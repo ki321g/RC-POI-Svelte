@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-	import type { Club } from '$lib/types/rugby-club-poi-types';
+	import type { User, Club, Game } from '$lib/types/rugby-club-poi-types';
 	import UploadWidget from './UploadWidget.svelte';
+    import ClubGames from './ClubGames.svelte'
+    import ClubGallery from './ClubGallery.svelte'
 	import LeafletMap from '$lib/ui/LeafletMap.svelte';
 	import SimpleGallery from '$lib/ui/SimpleGallery.svelte';
 	import { onMount } from 'svelte';
@@ -9,6 +11,7 @@
 	// let renderMAP: boolean = false;
 
 	export let club: Club[] = [];
+    export let games: Game[] = [];
 	// let editState: Record<string, Club> = {};
 	// let collapseState: Record<string, boolean> = {};
 	const clubCategories = ['JUNIOR', 'SENIOR'];
@@ -51,6 +54,7 @@
 		lat = Number(club.latitude);
 		lng = Number(club.longitude);
 		console.log(lat, lng);
+        console.log(games);
 		// club.forEach((club: Club) => {
 		// map.addMarker(Number(club.latitude), Number(club.longitude), club.club.toString());
 		if (map) {
@@ -168,7 +172,7 @@
 		</div>
 		<div class="columns featured-post is-multiline">
 			<div class="column is-12 post">
-				<article class="columns featured is-multiline pt-0">
+				<article class="columns featured is-multiline is-fullwidth pt-0">
 					<figure class="image is-520x360">
 						<div class="column is-6">
 							<LeafletMap height={36} bind:this={map} />
@@ -247,6 +251,9 @@
 								Delete Club
 							</a>
 						</div>
+                        <!-- <ClubGames games={games}/> : <h1>No Games</h1> -->
+                    <ClubGames games={games} club={club} />
+                    <ClubGallery />
 					</div>
 				</article>
 			</div>

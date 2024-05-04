@@ -124,8 +124,8 @@ export const RugbyClubPOIService = {
 	
 	async addImage(image: Image): Promise<Image[]> {
 		try {
-			console.log('addImage function');
-			console.log(image);
+			// console.log('addImage function');
+			// console.log(image);
 			const images = await imageStore.add(image);
 			return JSON.parse(JSON.stringify(images));
 		} catch (error) {
@@ -133,36 +133,33 @@ export const RugbyClubPOIService = {
 		}
 	},
 
+	// async addClubImage(club: Club, imageURL: string): Promise<Image[] | null> {
+	// 	try {
+	// 		// console.log('addClubImage function');
+	// 		// console.log(club);
+	// 		// console.log('imageURL: ', imageURL);
 
-	async addClubImage(club: Club, imageURL: string): Promise<Image[] | null> {
-		try {
-			console.log('addClubImage function');
-			console.log(club);
-			console.log('imageURL: ', imageURL);
+	// 		const image: Image = {
+	// 			clubid: club._id,
+	// 			img: imageURL
+	// 		};
+	// 		// console.log(image);
 
-			const image: Image = {
-				clubid: club._id,
-				img: imageURL
-			};
-			console.log(image);
-
-			const returnedImage = await imageStore.add(image);
-			// const returnedClub = await clubStore.update(club);
-			console.log('addClubImage AFTER');
-			console.log(returnedImage);
-			return JSON.parse(JSON.stringify(returnedImage));
-		} catch (error) {
-			console.log(error);
-			return [];
-		}
-	},
-
+	// 		const returnedImage = await imageStore.add(image);
+	// 		// console.log(returnedImage);
+	// 		return JSON.parse(JSON.stringify(returnedImage));
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		return [];
+	// 	}
+	// },
 	
 	async updateClub(club: Club): Promise<Club[]> {
 		try {
-			// const updatedClub = await clubStore.update(club._id, club);
+			// console.log("updateClub function");
+			// console.log("clubID: ", club._id);
 			const updatedClub = await clubStore.update(club);
-			console.log(updatedClub);
+			// console.log(updatedClub);
 			if (club !== null) {
 				return updatedClub;
 			}
@@ -216,6 +213,32 @@ export const RugbyClubPOIService = {
 			const newGame = await gameStore.add(game);
 			return JSON.parse(JSON.stringify(newGame));
 		} catch (error) {
+			return [];
+		}
+	},
+
+	
+	async deleteGame(gameId: string): Promise<boolean> {
+		try {
+			await gameStore.deleteOne(gameId);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+
+	async updateGame(game: Game): Promise<Game[]> {
+		try {
+			// console.log("updateGame function");
+			// console.log("gameID: ", game._id);
+			const updatedGame = await gameStore.update(game);
+			if (game !== null) {
+				return updatedGame;
+			}
+			return [];
+		} catch (error) {
+			console.log(error);
 			return [];
 		}
 	},

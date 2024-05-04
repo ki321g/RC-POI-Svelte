@@ -11,23 +11,26 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 	if (session) {
 		const UserId = session._id;
-		const testing = await RugbyClubPOIService.getClubByUserId(UserId);
-		console.log(`UserId: ${UserId}`);
-		console.log(testing);
+		const userClub = await RugbyClubPOIService.getClubByUserId(UserId);
+		// console.log(`UserId: ${UserId}`);
+		// console.log(userClub);
+		
 		return {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
-			games: await RugbyClubPOIService.getGames()
+			games: await RugbyClubPOIService.getGamesByClubId(userClub._id)
 		};
 	  }	
 };
 
 export const actions = {
 	addclub: async ({ request, cookies }) => {
+		console.log('addclub server');
 		const cookieStr = cookies.get('RugbyClubPOI') as string;
 		const session = JSON.parse(cookieStr) as Session;
 		const userId = session._id;
 
 		const form = await request.formData();
+		console.log(form);
 		const club = form.get('club') as string;
 		const address = form.get('address') as string;
 		const phone = form.get('phone') as string;
@@ -52,7 +55,7 @@ export const actions = {
 			userId
 		};
 
-		console.log(addClub);
+		// console.log(addClub);
 		if (club === '' || address === '' || phone === '' || website === '' || latitude === '' || longitude === '' || email === '' || category === '' || description === '') {
 			throw redirect(307, '/');
 		} else {
@@ -68,9 +71,7 @@ export const actions = {
 	},
 
 	addimage: async ({ request, cookies }) => {
-		// const image = request.body;
-		// console.log(request);
-		// console.log(image);
+		console.log('addimage server');
 
 		const form = await request.formData();
 		console.log(form);
@@ -96,9 +97,6 @@ export const actions = {
 	},
 
 	updateclub: async ({ request, cookies }) => {
-		// const image = request.body;
-		// console.log(request);
-		// console.log(image);
 		console.log('updateclub server');
 
 		const form = await request.formData();
@@ -131,7 +129,7 @@ export const actions = {
 			userId
 		}
 
-		console.log(updateClub);
+		// console.log(updateClub);
 
   		if (updateClub) {
 			const result = await RugbyClubPOIService.updateClub(updateClub);
@@ -157,7 +155,7 @@ export const actions = {
 			_id
 		};
 
-		console.log(deleteClub);
+		// console.log(deleteClub);
 
   		if (deleteClub) {
 			const result = await RugbyClubPOIService.deleteClub(deleteClub);
@@ -169,27 +167,109 @@ export const actions = {
 				throw redirect(307, '/dashboard');
 			}
 		};
-	}
+	}, 
+
+	deletegame: async ({ request, cookies }) => {
+		console.log('deletegame server');
+
+		const form = await request.formData();
+		console.log(form);
+		const _id = form.get('gameid') as string;;
+
+		const deleteGame = {
+			_id
+		};
+
+		// console.log(deleteGame);
+
+  		if (deleteGame) {
+			const result = await RugbyClubPOIService.deleteGame(deleteGame);
+			if (result) {
+				console.log("Game Deleted");
+				throw redirect(303, '/dashboard');
+			} else {
+				console.log("Game delete failed");
+				throw redirect(307, '/dashboard');
+			}
+		};
+	}, 
+
+	updategame: async ({ request, cookies }) => {
+		console.log('updategame server');
+
+		const form = await request.formData();
+		console.log(form);
+		const _id = form.get('gameid') as string;
+		const home = form.get('home') as string;
+		const homescore = form.get('homescore') as number;
+		const awayscore = form.get('awayscore') as number;
+		const away = form.get('away') as string;
+		const gametime = form.get('gametime') as string;
+		const gamelocation = form.get('gamelocation') as string;
+		const clubid = form.get('clubid') as string;
+
+		const updateGame = {
+			_id,
+			home,
+			homescore,
+			awayscore,
+			away,
+			gametime,
+			gamelocation,
+			clubid
+		}
+		// console.log("updateGame array");
+		// console.log(updateGame);
+
+  		if (updateGame) {
+			const result = await RugbyClubPOIService.updateGame(updateGame);
+			if (result) {
+				console.log("Game updated");
+				throw redirect(303, '/dashboard');
+			} else {
+				console.log("Game updated failed");
+				throw redirect(307, '/dashboard');
+			}
+		};
+	},
 
 
+	addgame: async ({ request, cookies }) => {
+		console.log('addgame server');
 
+		const form = await request.formData();
+		console.log(form);		
+		const home = form.get('home') as string;
+		const homescore = form.get('homescore') as number;
+		const awayscore = form.get('awayscore') as number;
+		const away = form.get('away') as string;
+		const gametime = form.get('gametime') as string;
+		const gamelocation = form.get('gamelocation') as string;
+		const clubid = form.get('clubid') as string;
 
+		const addGame = {
+			home,
+			homescore,
+			awayscore,
+			away,
+			gametime,
+			gamelocation,
+			clubid
+		};
 
+		// console.log(addClub);
+		if (home === '' || homescore === '' || awayscore === '' || away === '' || gametime === '' || gamelocation === '' || clubid === '') {
+			throw redirect(307, '/');
+		} else {
+			console.log(`attempting to create game: ${home} Vrs, category: ${away}`);
+			const newGame = await RugbyClubPOIService.addGame(addGame);
 
+			if (newGame) {
+				throw redirect(303, '/dashboard');
+			} else {
+				throw redirect(307, '/');
+			}
+		}
+	},
 
 };
-
-// export async function post(request) {
-// 	const { slug } = request.params;
-// 	const image = request.body;
-  
-// 	if (slug === 'addImage') {
-// 	  const result = await RugbyClubPOIService.addImage(image);
-// 	  if (result) {
-// 		return { status: 200, body: { message: 'Image uploaded successfully' } };
-// 	  } else {
-// 		return { status: 500, body: { message: 'Image upload failed' } };
-// 	  }
-// 	}
-// 	// Handle other routes...
-//   }

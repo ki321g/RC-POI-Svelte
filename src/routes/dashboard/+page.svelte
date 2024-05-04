@@ -8,7 +8,7 @@
 <section class="section pt-6">
 	{#if data.clubs}
 	
-	<ListClub club={data.clubs} />
+	<ListClub club={data.clubs} games={data.games} />
 	<!-- {data.clubs._id} -->
 	{:else}
 	<AddClub />
