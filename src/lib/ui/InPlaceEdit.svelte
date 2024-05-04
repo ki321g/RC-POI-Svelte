@@ -1,10 +1,12 @@
 <script>
-    // Pat O'Conner Showed me this URL when talking about inline editing
+    //  URL when talking about inline editing
     //  https://svelte.dev/repl/29c1026dda3c47a187bd21afa0782df1?version=4.2.15
     // @ts-nocheck
     import { createEventDispatcher, onMount } from 'svelte'
   
     export let value, required = true
+    export let categoryField = false; // Prop to determine if it's the category field
+    export let clubCategories = []; // Prop to accept an array of allowed categories
   
     const dispatch = createEventDispatcher()
     let editing = false, original
@@ -40,7 +42,15 @@
   
   {#if editing}
     <form on:submit|preventDefault={submit} on:keydown={keydown}>
-      <input bind:value on:blur={submit} {required} use:focus/>
+        {#if categoryField}
+            <select bind:value={value} on:blur={submit} use:focus class="input">
+                {#each clubCategories as category}
+                <option value={category}>{category}</option>
+                {/each}
+            </select>
+        {:else}
+            <input bind:value on:blur={submit} {required} use:focus/>
+        {/if}
     </form>
   {:else}
     <div on:click={edit}>

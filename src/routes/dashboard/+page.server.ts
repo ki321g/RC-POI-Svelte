@@ -136,14 +136,47 @@ export const actions = {
   		if (updateClub) {
 			const result = await RugbyClubPOIService.updateClub(updateClub);
 			if (result) {
-				console.log("Club uploaded");
+				console.log("Club updated");
 				throw redirect(303, '/dashboard');
 			} else {
-				console.log("Club upload failed");
+				console.log("Club updated failed");
+				throw redirect(307, '/dashboard');
+			}
+		};
+	},
+
+	
+	deleteclub: async ({ request, cookies }) => {
+		console.log('deleteclub server');
+
+		const form = await request.formData();
+		console.log(form);
+		const _id = form.get('clubid') as string;;
+
+		const deleteClub = {
+			_id
+		};
+
+		console.log(deleteClub);
+
+  		if (deleteClub) {
+			const result = await RugbyClubPOIService.deleteClub(deleteClub);
+			if (result) {
+				console.log("Club Deleted");
+				throw redirect(303, '/dashboard');
+			} else {
+				console.log("Club delete failed");
 				throw redirect(307, '/dashboard');
 			}
 		};
 	}
+
+
+
+
+
+
+
 };
 
 // export async function post(request) {

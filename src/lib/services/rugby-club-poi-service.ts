@@ -173,6 +173,17 @@ export const RugbyClubPOIService = {
 		}
 	},
 
+	
+	async deleteClub(clubId: string): Promise<boolean> {
+		try {
+			await clubStore.deleteOne(clubId);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+
 	async getGames(): Promise<Game[]> {
 		try {
 			const games = await gameStore.find();
