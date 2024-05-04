@@ -1,0 +1,34 @@
+<script>
+  import { Pie } from "svelte-frappe-charts";
+
+  let data = {
+    labels: ["Wins", "Losses"],
+    datasets: [
+      {
+        name: "Win Percentage",
+        values: [70, 30] // Replace with your actual data
+      }
+    ]
+  };
+</script>
+
+<Pie {data} />
+
+
+
+<script lang="ts">
+  // Other imports...
+  import { Bar } from "svelte-frappe-charts";
+
+  let data = {
+    labels: ["Game 1", "Game 2", "Game 3"], // Replace with your actual data
+    datasets: [
+      {
+        name: "Scores",
+        values: [10, 20, 30] // Replace with your actual data
+      }
+    ]
+  };
+</script>
+
+<Bar {data} />

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { userStore } from '$lib/models/mongo/user-store';
 import { clubStore } from '$lib/models/mongo/club-store';
 import { gameStore } from '$lib/models/mongo/game-store';
-import type { Session, User, Club, Game } from '$lib/types/rugby-club-poi-types';
+import { imageStore } from '$lib/models/mongo/image-store';
+import type { Session, User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
 import { PUBLIC_BACKEND_API } from '$env/static/public';
 
 export const RugbyClubPOIService = {
@@ -43,13 +44,14 @@ export const RugbyClubPOIService = {
 		}
 	},
 
-	async getLoggedInUser(email: string): Promise<Session | null> {
+	async getLoggedInUser(email: string): Promise<User | null> {
 		try {
 			const user = await userStore.findBy(email);
 			console.log('user: ', user);
 			if (user !== null) {
 				return user;
 			}
+			return null;
 		} catch (error) {
 			console.log(error);
 			return null;
@@ -61,8 +63,9 @@ export const RugbyClubPOIService = {
 			const updatedUser = await userStore.update(user);
 			console.log(updatedUser);
 			if (user !== null) {
-				return updatedUser;
+				return true;
 			}
+			return false;
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -118,35 +121,52 @@ export const RugbyClubPOIService = {
 			return [];
 		}
 	},
-
-	async addClubImage(club: Club, imageURL: string): Promise<Club[] | null> {
+	
+	async addImage(image: Image): Promise<Image[]> {
 		try {
-			console.log('addClubImage function');
-			console.log(club);
-			console.log('imageURL: ', imageURL);
-
-			// const returnedClub = await clubStore.addClubImage(club, imageURL);
-			const returnedClub = await clubStore.update(club);
-			console.log('addClubImage AFTER');
-			console.log(returnedClub);
-			return returnedClub
-			// JSON.parse(JSON.stringify(returnedClub));
+			const images = await imageStore.add(image);
+			return JSON.parse(JSON.stringify(images));
 		} catch (error) {
 			return [];
 		}
 	},
 
+
+	async addClubImage(club: Club, imageURL: string): Promise<Image[] | null> {
+		try {
+			console.log('addClubImage function');
+			console.log(club);
+			console.log('imageURL: ', imageURL);
+
+			const image: Image = {
+				clubid: club._id,
+				img: imageURL
+			};
+			console.log(image);
+
+			const returnedImage = await imageStore.add(image);
+			// const returnedClub = await clubStore.update(club);
+			console.log('addClubImage AFTER');
+			console.log(returnedImage);
+			return JSON.parse(JSON.stringify(returnedImage));
+		} catch (error) {
+			console.log(error);
+			return [];
+		}
+	},
+
 	
-	async updateClub(club: Club): Promise<boolean> {
+	async updateClub(club: Club): Promise<Club[]> {
 		try {
 			const updatedClub = await clubStore.update(club._id, club);
 			console.log(updatedClub);
 			if (club !== null) {
 				return updatedClub;
 			}
+			return [];
 		} catch (error) {
 			console.log(error);
-			return false;
+			return [];
 		}
 	},
 

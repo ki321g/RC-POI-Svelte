@@ -1,7 +1,7 @@
 <script lang="ts">    
     // import { fetch } from '@sveltejs/kit/fetch';
     import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-    import type { Club } from "$lib/types/rugby-club-poi-types";     
+    import type { User, Club, Game, Image } from "$lib/types/rugby-club-poi-types";     
 	import { CldUploadWidget } from 'svelte-cloudinary';
 	import { env } from '$env/dynamic/public';
 	// import { env } from '$env/static/public';
@@ -11,6 +11,7 @@
 	let error: any;
 
 	export let club: Club[];
+    export let image: Image[];
 
 	const onUpload = async (result, widget) => {
 		if(result.event === "success"){
@@ -18,8 +19,16 @@
 			console.log(info);
             console.log("onUpload Function");
             //club.img = [...club.img, info.secure_url];
-            club.img = [...club.img, info.secure_url];
-            const testing = await RugbyClubPOIService.addClubImage(club, info.secure_url);  
+            image = {
+                img: info.secure_url,
+                clubid: club._id,
+            }
+            // image.img = [...image.img, info.secure_url];
+            // image.clubid = club._id;
+            console.log(image);
+            const testing = await RugbyClubPOIService.addImage(image);
+            // club.img = [...club.img, info.secure_url];
+            // const testing = await RugbyClubPOIService.addClubImage(club, info.secure_url);  
             console.log(testing);			
 		}else if(result.event === "error"){
 			error = result.error;

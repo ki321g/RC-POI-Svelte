@@ -1,3 +1,4 @@
+
 // User Types
 
 export interface Session {
@@ -15,7 +16,7 @@ export interface User {
 	email: string;
 	password?: string;
 	accountType: string;
-	_id?: string;
+	// _id?: string;
 	//__v?: string;
 }
 
@@ -31,26 +32,39 @@ export interface Club {
 	category: string;
 	img?: [string];
 	userId: User['_id'];
-	_id?: string;
+	// _id?: string;
 }
 
 export interface Game {
-	home: String,
-	homescore: Number,
-	awayscore: Number,
-	away: String,
-	gametime: String,
-	gamelocation: String,
-	clubid: {
-		type: Schema.Types.ObjectId,
-		ref: "Club",
-	},
-	_id?: string;
+	home: string;
+	homescore: number;
+	awayscore: number;
+	away: string;
+	gametime: string;
+	gamelocation: string;
+	clubid: Club['_id'];
+	// clubid: {
+	// 	type: Schema.Types.ObjectId,
+	// 	ref: "Club";
+	// };
+	// _id?: string;
+}
+
+export interface Image {
+	img: string;	
+	clubid: Club['_id'];
 }
 
 export interface DataSet {
 	labels: string[];
 	datasets: [{ values: number[] }];
+}
+
+
+export interface DataSetGames {	
+	labels: string[];
+	datasets: [{ name: string, chartType: string, values: number[] },
+	{ name: string, chartType: string, values: number[] }];
 }
 
 // export interface Club {

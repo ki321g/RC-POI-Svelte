@@ -2,13 +2,13 @@ import type { User } from "$lib/types/rugby-club-poi-types.js";
 import { UserMongoose } from '$lib/models/mongo/user';
 export const userStore = {
   async find(): Promise<User[]> {
-    const users = await UserMongoose.find().lean();
+    const users = await UserMongoose.find().lean() as User[];
     return users;
   },
 
   async findOne(id: string): Promise<User | null> {
     if (id) {
-      const user = await UserMongoose.findOne({ _id: id }).lean();
+      const user = await UserMongoose.findOne({ _id: id }).lean() as User | null;
       return user;
     }
     return null;
@@ -22,9 +22,7 @@ export const userStore = {
 
   async findBy(email: string): Promise<User | null> {
     console.log('Finding user by email:', email);    
-    // console.log(UserMongoose.collection.findOne({ email: email});
-    // const user = await UserMongoose.collection.findOne({ email: email}).lean();
-    const user = await UserMongoose.findOne({ email: email }).lean();
+    const user = await UserMongoose.findOne({ email: email }).lean() as User | null;
     return user;
   },
 

@@ -8,7 +8,8 @@ export const load: PageServerLoad = async () => {
   // const testClubs = await RugbyClubPOIService.getClubs();
  // console.log(testClubs)
   return {
-    clubs: await RugbyClubPOIService.getClubs(),  
+    clubs: await RugbyClubPOIService.getClubs(),
+    games: await RugbyClubPOIService.getGames(),
     // clubCounties: await RugbyClubPOIService.getClubsCounties(),    
   };
 };
