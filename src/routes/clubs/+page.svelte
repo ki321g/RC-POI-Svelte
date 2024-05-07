@@ -1,6 +1,6 @@
 <script lang="ts">
   import Club from "$lib/ui/Club.svelte";
-
+  
   export let data: any;
 
 </script>

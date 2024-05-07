@@ -1,21 +1,17 @@
 <script lang="ts">
+	import type { User } from '$lib/types/rugby-club-poi-types';
     import { goto } from "$app/navigation";
-  
-    let firstName = "";
-    let lastName = "";
-    let email = "";
-    let password = "";
+	import { enhance } from '$app/forms';
+
+	export let user: User[];
+
+    // let firstName = "";
+    // let lastName = "";
+    // let email = "";
+    // let password = "";
     let errorMessage = "";
-  
-    // async function signup() {
-    //   const success = false;
-    //   if (success) {
-    //     goto("/dashboard");
-    //   } else {
-    //     errorMessage = "Error Trying to sign up";
-    //   }
-    // }
-  </script>
+
+</script>
 
 {#if errorMessage}
 	<div class="message is-danger">
@@ -27,7 +23,7 @@
 
 <!-- <form action="/register" method="POST"> -->
 <!-- <form on:submit|preventDefault={signup}> -->
-<form method="POST" action="?/signup">
+<form method="POST" action="?/update" use:enhance>
     <div class="columns">
     <div class="column is-2">
       <!-- empty column -->
@@ -38,7 +34,7 @@
         <div class="field">
           <label class="label" for="newFirstName">First Name</label>
           <p class="control has-icons-left">
-            <input bind:value={firstName} class="input" type="text" placeholder="Enter first name" id="newFirstName" name="firstName">
+            <input bind:value={user.firstName} class="input" type="text" placeholder="Enter first name" id="newFirstName" name="firstName">
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
@@ -47,7 +43,7 @@
         <div class="field">
           <label  class="label" for="newLastName">Last Name</label>
           <p class="control has-icons-left">
-            <input bind:value={lastName} class="input" type="text" placeholder="Enter last name" id="newLastName" name="lastName">
+            <input bind:value={user.lastName} class="input" type="text" placeholder="Enter last name" id="newLastName" name="lastName">
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
@@ -58,7 +54,7 @@
    <div class="field">
     <label class="label" for="newEmail">Email</label>
     <p class="control has-icons-left">
-      <input bind:value={email} class="input" type="email" placeholder="Enter email" id="newEmail" name="email">
+      <input bind:value={user.email} class="input" type="email" placeholder="Enter email" id="newEmail" name="email">
       <span class="icon is-small is-left">
         <i class="fas fa-envelope"></i>
       </span>
@@ -67,7 +63,7 @@
   <div class="field">
     <label class="label" for="newPassword">Password</label>
     <p class="control has-icons-left">
-      <input bind:value={password} class="input" type="password" placeholder="Enter password"  id="newPassword" name="password">
+      <input bind:value={user.password} class="input" type="text" placeholder="Enter password"  id="newPassword" name="password">
       <span class="icon is-small is-left">
         <i class="fas fa-lock"></i>
       </span>
@@ -78,7 +74,7 @@
   <div class="field">
     <p class="control">
       <button class="button is-primary is-large is-fullwidth">
-        Sign Up
+        Update
       </button>
     </p>
   </div>
