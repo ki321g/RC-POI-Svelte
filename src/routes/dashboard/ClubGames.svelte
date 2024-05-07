@@ -86,14 +86,17 @@
 	</div>
 	<div class="column is-fullwidth">
 		<button class="button controlBtn is-warning is-fullwidth is-uppercase has-text-grey" on:click={toggleForm}>
-			{#if showForm}Hide Add Game Form{:else}Show Add Game Form{/if}
+			{#if showForm}
+				<i class="fa-solid fa-square-minus fa-xl mr-2"></i>Hide Add Game
+			{:else}
+				<i class="fa-solid fa-square-plus fa-xl mr-2"></i>Add Game
+			{/if}
 		</button>
 	</div>
 </div>
 
 {#if showForm}
 	<form method="POST" action="?/addgame">
-		<label>Enter Game Details:</label>
 		<div class="field is-horizontal">
 			<div class="field-body">
 				<div class="field">

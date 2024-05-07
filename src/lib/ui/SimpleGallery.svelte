@@ -1,9 +1,9 @@
-<script>
-    import { onMount } from "svelte";
-    
+<script lang="ts">
     // @ts-ignore
-    import PhotoSwipeLightbox from 'photoswipe/lightbox';
-    import 'photoswipe/style.css';
+    import PhotoSwipeLightbox from 'photoswipe/lightbox'; 
+    import 'photoswipe/style.css'    
+    import type { User, Club, Game, Image } from "$lib/types/rugby-club-poi-types";     
+    import { onMount } from "svelte";;
     export let galleryID;
     export let images;
     
@@ -17,7 +17,8 @@
       </script>
     
         <div class="pswp-gallery" id={galleryID}>
-        {#each images as image}
+          {#if images}
+          {#each images as image}
         <a
               href={image.largeURL}
               data-pswp-width={image.width}
@@ -28,5 +29,6 @@
               <img src={image.thumbnailURL} alt="" />
               </a>
         {/each}
+        {/if}
         </div>
     

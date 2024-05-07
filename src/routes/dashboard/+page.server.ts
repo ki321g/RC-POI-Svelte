@@ -2,11 +2,12 @@ import type { Session } from '$lib/types/rugby-club-poi-types';
 import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
+import { imageNotification, imageNotificationColor } from '$lib/stores';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 
 
-// export const ssr = false;
+//export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 	if (session) {
@@ -14,10 +15,14 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		const userClub = await RugbyClubPOIService.getClubByUserId(UserId);
 		// console.log(`UserId: ${UserId}`);
 		// console.log(userClub);
+		const userImages = await RugbyClubPOIService.getImagesByClubId(userClub._id);
+		// console.log("Club Images");
+		// console.log(userImages);
 		
 		return {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
-			games: await RugbyClubPOIService.getGamesByClubId(userClub._id)
+			games: await RugbyClubPOIService.getGamesByClubId(userClub._id),
+			images: await RugbyClubPOIService.getImagesByClubId(userClub._id)
 		};
 	  }	
 };
@@ -63,6 +68,7 @@ export const actions = {
 			const newClub = await RugbyClubPOIService.addClub(addClub);
 
 			if (newClub) {
+				// update the store values
 				throw redirect(303, '/dashboard');
 			} else {
 				throw redirect(307, '/');
@@ -77,23 +83,58 @@ export const actions = {
 		console.log(form);
 		const clubid = form.get('clubid') as string;
 		const img = form.get('img') as string;
+		// const width = form.get('width') as number;
+		// const height = form.get('height') as number;
+		// const thumbnailURL = form.get('thumbnailURL') as string;
 
 		const image = {
 			clubid,
-			img
+			img,
+			// width,
+			// height,
+			// thumbnailURL
 		}
-		console.log(image);
+		// console.log(image);
 
   		if (image) {
 			const result = await RugbyClubPOIService.addImage(image);
 			if (result) {
 				console.log("Image uploaded");
+				imageNotification.set('Image Uploaded Successfully!');
+				imageNotificationColor.set('is-primary');
 				throw redirect(303, '/dashboard');
 			} else {
-				console.log("Image upload failed");
+				console.log("Image upload failed");				
+				imageNotification.set('Image Upload Error!');
+				imageNotificationColor.set('is-danger');
 				throw redirect(307, '/dashboard');
 			}
 		}
+	},
+
+	deleteimage: async ({ request, cookies }) => {
+		console.log('deleteimage server');
+
+		const form = await request.formData();
+		console.log(form);
+		const _id = form.get('imageid') as string;;
+
+		const deleteImage = {
+			_id
+		};
+
+		// console.log(deleteClub);
+
+  		if (deleteImage) {
+			const result = await RugbyClubPOIService.deleteImage(deleteImage);
+			if (result) {
+				console.log("Club Deleted");
+				throw redirect(303, '/dashboard');
+			} else {
+				console.log("Club delete failed");
+				throw redirect(307, '/dashboard');
+			}
+		};
 	},
 
 	updateclub: async ({ request, cookies }) => {

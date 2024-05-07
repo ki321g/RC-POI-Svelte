@@ -132,7 +132,27 @@ export const RugbyClubPOIService = {
 			return [];
 		}
 	},
+	
+	async getImagesByClubId(clubId: string): Promise<Image[]> {
+		try {
+			// console.log('getImagesByClubId function');
+			const images = await imageStore.findByClubId(clubId);
+			return JSON.parse(JSON.stringify(images));
+		} catch (error) {
+			return [];
+		}
+	},
 
+	
+	async deleteImage(imageId: string): Promise<boolean> {
+		try {
+			await imageStore.deleteOne(imageId);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
 	// async addClubImage(club: Club, imageURL: string): Promise<Image[] | null> {
 	// 	try {
 	// 		// console.log('addClubImage function');

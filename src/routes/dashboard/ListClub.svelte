@@ -1,17 +1,19 @@
 <script lang="ts">
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-	import type { User, Club, Game } from '$lib/types/rugby-club-poi-types';
+	import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
 	import UploadWidget from './UploadWidget.svelte';
     import ClubGames from './ClubGames.svelte'
     import ClubGallery from './ClubGallery.svelte'
 	import LeafletMap from '$lib/ui/LeafletMap.svelte';
-	import SimpleGallery from '$lib/ui/SimpleGallery.svelte';
+	// import SimpleGallery from '$lib/ui/SimpleGallery.svelte';	
+	// import ImageGallery from '$lib/ui/ImageGallery.svelte';
 	import { onMount } from 'svelte';
 	import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';
 	// let renderMAP: boolean = false;
 
 	export let club: Club[] = [];
     export let games: Game[] = [];
+	export let images: Image[] = [];
 	// let editState: Record<string, Club> = {};
 	// let collapseState: Record<string, boolean> = {};
 	const clubCategories = ['JUNIOR', 'SENIOR'];
@@ -28,33 +30,33 @@
 	let lat: any;
 	let lng: any;
 
-	const images = [
-		{
-			largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg',
-			thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg',
-			width: 1875,
-			height: 2500
-		},
-		{
-			largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg',
-			thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg',
-			width: 1669,
-			height: 2500
-		},
-		{
-			largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg',
-			thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg',
-			width: 2500,
-			height: 1666
-		}
-	];
+	// const images = [
+	// 	{
+	// 		largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg',
+	// 		thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg',
+	// 		width: 1875,
+	// 		height: 2500
+	// 	},
+	// 	{
+	// 		largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg',
+	// 		thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg',
+	// 		width: 1669,
+	// 		height: 2500
+	// 	},
+	// 	{
+	// 		largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg',
+	// 		thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg',
+	// 		width: 2500,
+	// 		height: 1666
+	// 	}
+	// ];
 
 	onMount(async () => {
 		// renderMAP = true;
 		lat = Number(club.latitude);
 		lng = Number(club.longitude);
 		console.log(lat, lng);
-        console.log(games);
+        // console.log(games);
 		// club.forEach((club: Club) => {
 		// map.addMarker(Number(club.latitude), Number(club.longitude), club.club.toString());
 		if (map) {
@@ -252,8 +254,10 @@
 							</a>
 						</div>
                         <!-- <ClubGames games={games}/> : <h1>No Games</h1> -->
-                    <ClubGames games={games} club={club} />
-                    <ClubGallery />
+						<ClubGames games={games} club={club} />						
+						
+						<ClubGallery images={images} club={club}/>
+						<!-- <ImageGallery images={images}/> -->
 					</div>
 				</article>
 			</div>
@@ -261,37 +265,6 @@
 	</div>
 </div>
 
-<div class="blog-posts">
-	<div class="box box-link-hover-shadow">
-		<div class="columns is-fullwidth p-0 mb-0">
-			<div class="column has-text-left">
-				<h2 class="title page-heading is-2 is-uppercase mb-0">Club Gallery</h2>
-			</div>
-			<div class="column has-text-right">
-				<h2 class="title page-heading is-2 is-uppercase mb-0"></h2>
-			</div>
-		</div>
-		<div class="columns featured-post is-multiline">
-			<div class="column is-12 post">
-				<article class="columns featured is-multiline pt-0">
-					<div class="column is-12">
-						<!-- MAP WAS HERE -->
-						<UploadWidget {club} />
-					</div>
-					<div class="column is-12 pb-0">
-						<!-- BELLOW MAP WAS HERE -->
-					</div>
-					<div class="column is-12 pt-0">
-						<div class="is-fullwidth">
-							<!-- GALLERY GOES HERE -->
-							<SimpleGallery galleryID="my-test-gallery" {images} />
-						</div>
-					</div>
-				</article>
-			</div>
-		</div>
-	</div>
-</div>
 
 <form bind:this={clubForm} method="POST" action="?/updateclub">
 	<input bind:value={club._id} class="input mb-3" type="hidden" id="clubid" placeholder="club id" name="clubid" />

@@ -47,8 +47,12 @@ export interface Game {
 }
 
 export interface Image {
-	img: string;	
+	img: string;
+	// width: number,
+	// height: number,
+	// thumbnailURL: string,	
 	clubid: Club['_id'];
+	_id?: string;
 }
 
 export interface DataSet {
