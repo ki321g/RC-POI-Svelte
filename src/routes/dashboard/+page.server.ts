@@ -176,10 +176,10 @@ export const actions = {
 			const result = await RugbyClubPOIService.updateClub(updateClub);
 			if (result) {
 				console.log("Club updated");
-				throw redirect(303, '/dashboard');
+				// throw redirect(303, '/dashboard');
 			} else {
 				console.log("Club updated failed");
-				throw redirect(307, '/dashboard');
+				// throw redirect(307, '/dashboard');
 			}
 		};
 	},
