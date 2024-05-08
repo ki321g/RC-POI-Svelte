@@ -2,6 +2,8 @@ import { dev } from '$app/environment';
 import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 import { currentSession } from '$lib/stores.js';
 import { redirect } from '@sveltejs/kit';
+import bcrypt from 'bcrypt';
+
 
 export const actions = {
 	signup: async ({ request, cookies }) => {
@@ -12,11 +14,15 @@ export const actions = {
 		const password = form.get('password') as string;
 		const accountType = form.get('accountType') as string;
 
+		 // Hash the password before storing it
+		 const saltRounds = 10;
+		 const hashedPassword = await bcrypt.hash(password, saltRounds);	 
+
 		const user = {
 			firstName,
 			lastName,
 			email,
-			password,
+			password: hashedPassword,
 			accountType
 		};
 

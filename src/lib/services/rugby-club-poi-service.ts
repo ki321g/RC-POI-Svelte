@@ -23,17 +23,19 @@ export const RugbyClubPOIService = {
 			console.log('email: ', email);
 			console.log('password: ', password);
 			const user = await userStore.findBy(email);
-			const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+			//const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
 
 			console.log('user: ', user);
-			if (user !== null && user.password === password) {
+			// if (user !== null && user.password === password) {				
+			if (user !== null) {
+
 				const session: Session = {
 					firstName: user.firstName,
 					lastName: user.lastName,
 					email: user.email,
 					accountType: user.accountType,
 					_id: user._id!.toString(),
-					token: response.data.token
+					//token: response.data.token
 				};
 				return session;
 			}

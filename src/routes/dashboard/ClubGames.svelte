@@ -77,7 +77,8 @@
 		} else {
 			alert('Delete Cancelled');
 		}
-	}
+
+	};
 </script>
 
 <div class="columns is-vcentered is-12">
@@ -96,7 +97,7 @@
 </div>
 
 {#if showForm}
-	<form method="POST" action="?/addgame">
+	<form method="POST" action="?/addgame">	
 		<div class="field is-horizontal">
 			<div class="field-body">
 				<div class="field">
@@ -188,6 +189,7 @@
 			<form bind:this={deleteGame} method="POST" action="?/deletegame">
 				<input bind:value={game._id} class="input mb-3" type="hidden" id="gameid" placeholder="game id" name="gameid" />
 			</form>
+			
 
 			<form bind:this={updateGame} method="POST" action="?/updategame">
 				<input bind:value={game._id} class="input mb-3" type="hidden" id="gameid" placeholder="game id" name="gameid" />

@@ -6,15 +6,18 @@ import { imageNotification, imageNotificationColor } from '$lib/stores';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 
-
-//export const ssr = false;
+export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 	if (session) {
 		const UserId = session._id;
+		// console.log(`UserId: ${UserId}`);
 		const userClub = await RugbyClubPOIService.getClubByUserId(UserId);
+		// console.log("Club");
+		// console.log(userClub);
 		// console.log(`UserId: ${UserId}`);
 		// console.log(userClub);
+		if (userClub) {
 		const userImages = await RugbyClubPOIService.getImagesByClubId(userClub._id);
 		// console.log("Club Images");
 		// console.log(userImages);
@@ -24,6 +27,7 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 			games: await RugbyClubPOIService.getGamesByClubId(userClub._id),
 			images: await RugbyClubPOIService.getImagesByClubId(userClub._id)
 		};
+	}
 	  }	
 };
 
@@ -266,10 +270,10 @@ export const actions = {
 			const result = await RugbyClubPOIService.updateGame(updateGame);
 			if (result) {
 				console.log("Game updated");
-				throw redirect(303, '/dashboard');
+				// throw redirect(303, '/dashboard');
 			} else {
 				console.log("Game updated failed");
-				throw redirect(307, '/dashboard');
+				// throw redirect(307, '/dashboard');
 			}
 		};
 	},

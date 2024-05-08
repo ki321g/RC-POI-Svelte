@@ -11,72 +11,33 @@
 	import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';
 	// let renderMAP: boolean = false;
 
+
+
 	export let club: Club[] = [];
     export let games: Game[] = [];
 	export let images: Image[] = [];
-	// let editState: Record<string, Club> = {};
-	// let collapseState: Record<string, boolean> = {};
+
 	const clubCategories = ['JUNIOR', 'SENIOR'];
 
 	let clubForm: any;
     let deleteClub: any;
-	// let editedClub: Record<string, Club> = {};
-
-	// let clubid: any;
-	// let address: any;
-	// let phone: any;
-	// let
 	let map: LeafletMap;
 	let lat: any;
 	let lng: any;
 
-	// const images = [
-	// 	{
-	// 		largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg',
-	// 		thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg',
-	// 		width: 1875,
-	// 		height: 2500
-	// 	},
-	// 	{
-	// 		largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg',
-	// 		thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg',
-	// 		width: 1669,
-	// 		height: 2500
-	// 	},
-	// 	{
-	// 		largeURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg',
-	// 		thumbnailURL: 'https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg',
-	// 		width: 2500,
-	// 		height: 1666
-	// 	}
-	// ];
 
-	onMount(async () => {
+
+	onMount(async () => {		
+		const leaflet = await import("leaflet");
 		// renderMAP = true;
 		lat = Number(club.latitude);
 		lng = Number(club.longitude);
 		console.log(lat, lng);
-        // console.log(games);
-		// club.forEach((club: Club) => {
-		// map.addMarker(Number(club.latitude), Number(club.longitude), club.club.toString());
 		if (map) {
-			map.addMarker(lat, lng, 'TEST');
+			map.addMarker(lat, lng, 'TEST', '');
 		}
 	});
 
-	// function submit(field: string | number) {
-	//     return ({detail: newValue}: {detail: any}) => {
-	//         editState[field] = newValue;
-	//         // IRL: POST value to server here
-	// 	    console.log(`updated ${field}, new value is: "${newValue}"`)
-	//     };
-	// }
-	// function submit(field) {
-	//     return ({detail: newValue}) => {
-	//         // IRL: POST value to server here
-	//         console.log(`updated ${field}, new value is: "${newValue}"`)
-	//     }
-	// }
 	function submit(field) {
 		return ({ detail: newValue }) => {
 			// IRL: POST value to server here
@@ -157,6 +118,8 @@
 </script>
 
 <div class="blog-posts">
+
+
 	<div class="box box-link-hover-shadow">
 		<div class="columns is-fullwidth p-0 mb-0">
 			<div class="column has-text-left">
@@ -177,7 +140,7 @@
 				<article class="columns featured is-multiline is-fullwidth pt-0">
 					<figure class="image is-520x360">
 						<div class="column is-6">
-							<LeafletMap height={36} bind:this={map} />
+							<LeafletMap centerOnMarker={true} height={36} bind:this={map} />
 						</div>
 					</figure>
 					<div class="column featured-content va is-6">
@@ -264,7 +227,6 @@
 		</div>
 	</div>
 </div>
-
 
 <form bind:this={clubForm} method="POST" action="?/updateclub">
 	<input bind:value={club._id} class="input mb-3" type="hidden" id="clubid" placeholder="club id" name="clubid" />

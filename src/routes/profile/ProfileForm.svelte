@@ -4,12 +4,7 @@
 	import { enhance } from '$app/forms';
 
 	export let user: User[];
-
-    // let firstName = "";
-    // let lastName = "";
-    // let email = "";
-    // let password = "";
-    let errorMessage = "";
+  let errorMessage = "";
 
 </script>
 
@@ -63,7 +58,7 @@
   <div class="field">
     <label class="label" for="newPassword">Password</label>
     <p class="control has-icons-left">
-      <input bind:value={user.password} class="input" type="text" placeholder="Enter password"  id="newPassword" name="password">
+      <input class="input" type="password" placeholder="Enter password"  id="newPassword" name="password">
       <span class="icon is-small is-left">
         <i class="fas fa-lock"></i>
       </span>

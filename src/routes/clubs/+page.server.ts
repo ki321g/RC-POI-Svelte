@@ -1,6 +1,7 @@
 import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 import type { PageServerLoad } from "./$types";
-// export const ssr = false;
+
+export const ssr = false;
 
 export const load: PageServerLoad = async () => {
   const testCounties = await RugbyClubPOIService.getClubsCounties();  

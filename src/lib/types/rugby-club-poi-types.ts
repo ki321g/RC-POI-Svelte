@@ -6,7 +6,7 @@ export interface Session {
 	lastName: string;
 	email: string;
 	accountType: string;
-	token: string;
+	// token: string;
 	_id: string;
 }
 
