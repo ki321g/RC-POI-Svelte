@@ -6,6 +6,7 @@ import type { LoggedInUser, User, Club } from "$lib/types/rugby-club-poi-types";
 import { PUBLIC_BACKEND_API } from "$env/static/public";
 
 export const RugbyClubPOIService = {
+<<<<<<< Updated upstream
     baseUrl: PUBLIC_BACKEND_API,
     //baseUrl: process.env.PUBLIC_BACKEND_API
     //baseUrl: "http://rugbyclubpoi-f3ce2fe5ab82.herokuapp.com",
@@ -35,6 +36,44 @@ export const RugbyClubPOIService = {
         console.log('password: ', password);
         const user = await userStore.findBy(email);
         const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+=======
+	baseUrl: PUBLIC_BACKEND_API,
+	async signup(user: User): Promise<boolean> {
+		try {
+			const newUser = await userStore.add(user);
+			return !!newUser;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+	async login(email: string, password: string): Promise<Session | null> {
+		try {
+			console.log('email: ', email);
+			console.log('password: ', password);
+			const user = await userStore.findBy(email);
+			//const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+
+			console.log('user: ', user);
+			// if (user !== null && user.password === password) {				
+			if (user !== null) {
+				const session: Session = {
+					firstName: user.firstName,
+					lastName: user.lastName,
+					email: user.email,
+					accountType: user.accountType,
+					_id: user._id!.toString(),
+					//token: response.data.token
+				};
+				return session;
+			}
+			return null;
+		} catch (error) {
+			console.log(error);
+			return null;
+		}
+	},
+>>>>>>> Stashed changes
 
         console.log('user: ', user);
         if (user !== null && user.password === password) {

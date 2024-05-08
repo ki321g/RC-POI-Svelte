@@ -1,25 +1,47 @@
 <script lang="ts">
   import "leaflet/dist/leaflet.css";
   import { onMount } from "svelte";
-  import type { Control, Map as LeafletMap } from "leaflet";
-
+  import type { Control, Map as LeafletMap, LayerGroup } from "leaflet";
   import { browser } from "$app/environment";
+  import L from "leaflet";
+  
+  export const ssr = false;
 
   export let id = "home-map-id";
   export let height = 80;
+<<<<<<< Updated upstream
   export let location = { lat: 53.2734, lng: -7.7783203 };
+=======
+  export let width = 54;
+  // export let location = { lat: 52.435416, lng: -7.9230912 };
+  export let location = { lat: 53.1424, lng: -7.6921 };
+>>>>>>> Stashed changes
   export let zoom = 8;
   export let minZoom = 7;
   export let activeLayer = "Terrain";
+  export let allowCategories = false;
+  export let centerOnMarker = false;
 
   let imap: LeafletMap;
   let control: Control.Layers;
   let overlays: Control.LayersObject = {};
   let baseLayers: any;
+  let categoryLayers: Record<string, LayerGroup> = {};
+    
+
+  const categories = ["JUNIOR", "SENIOR"];
+  
 
   onMount(async () => {
-    if (browser) {
+    if (browser) {;
       const leaflet = await import("leaflet");
+
+      if (allowCategories) {
+      categories.forEach(category => {
+              categoryLayers[category] = L.layerGroup();
+          });
+      };
+
       baseLayers = {
         Terrain: leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 17,
@@ -49,32 +71,57 @@
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &amp; USGS'
         })
       };
+
       let defaultLayer = baseLayers[activeLayer];
+
       imap = leaflet.map(id, {
         center: [location.lat, location.lng],
         zoom: zoom,
         minZoom: minZoom,
         layers: [defaultLayer]
       });
-      control = leaflet.control.layers(baseLayers, overlays).addTo(imap);
+
+      if (allowCategories) {
+        Object.values(categoryLayers).forEach(layer => {
+              imap.addLayer(layer);
+          });
+      };
+
+      // control = leaflet.control.layers(baseLayers, overlays, categoryLayers).addTo(imap);
+      const control = leaflet.control.layers({
+          'Terrain': baseLayers.Terrain,
+          'Satellite': baseLayers.Satellite,
+          'OpenTopoMap': baseLayers.OpenTopoMap,
+          'Stadia_AlidadeSatellite': baseLayers.Stadia_AlidadeSatellite,
+          'Stadia_AlidadeSmoothDark': baseLayers.Stadia_AlidadeSmoothDark,
+          'MtbMap': baseLayers.MtbMap
+            }, {                
+                ...categoryLayers
+                }).addTo(imap)
     }
   });
 
-  export async function addMarker(lat: number, lng: number, popupText: string) {
+  export async function addMarker(lat: number, lng: number, popupText: string, category: string) {
     const leaflet = await import("leaflet");
     const marker = leaflet.marker([lat, lng]);
     marker.addTo(imap);
-    const popup = leaflet.popup({ autoClose: false, closeOnClick: false });
+    const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
     popup.setContent(popupText);
-    marker.bindPopup(popup);
+    marker.bindPopup(popup);  
+    if (category !== '') {
+      categoryLayers[category].addLayer(marker);
+    }
 
     // Recenter the map to the marker's location
-    imap.setView([lat, lng], imap.getZoom());
+    if (centerOnMarker) {
+      imap.setView([lat, lng], imap.getZoom());
+    }
   }
 
   export function moveTo(lat: number, lng: number) {
     imap.flyTo({ lat: lat, lng: lng });
   }
+
 </script>
 
 <div {id} class="box" style="height: {height}vh" />
