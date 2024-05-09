@@ -33,8 +33,12 @@
 		lat = Number(club.latitude);
 		lng = Number(club.longitude);
 		console.log(lat, lng);
+		const popup = `
+            <h1><strong>${club.club}</strong></h1>
+            <p>${club.address}</p>
+        `;
 		if (map) {
-			map.addMarker(lat, lng, 'TEST', '');
+			map.addMarker(lat, lng, popup, '', '');
 		}
 	});
 
@@ -140,7 +144,7 @@
 				<article class="columns featured is-multiline is-fullwidth pt-0">
 					<figure class="image is-520x360">
 						<div class="column is-6">
-							<LeafletMap centerOnMarker={true} height={36} bind:this={map} />
+							<LeafletMap id={club._id} activeLayer="Satellite" minZoom={5} zoom={16} centerOnMarker={true} height={36} bind:this={map} />
 						</div>
 					</figure>
 					<div class="column featured-content va is-6">
