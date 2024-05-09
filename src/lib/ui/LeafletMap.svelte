@@ -91,9 +91,20 @@
           'Stadia_AlidadeSatellite': baseLayers.Stadia_AlidadeSatellite,
           'Stadia_AlidadeSmoothDark': baseLayers.Stadia_AlidadeSmoothDark,
           'MtbMap': baseLayers.MtbMap
-            }, {                
+            }, {
                 ...categoryLayers
                 }).addTo(imap)
+
+      // // Add titles to the layer control
+      // const layerControlElement = control.getContainer();
+      // const separator = layerControlElement.querySelector('.leaflet-control-layers-base');
+      // const baseLayersTitle = document.createElement('h3');
+      // baseLayersTitle.textContent = 'Map';
+      // const overlayLayersTitle = document.createElement('h3');
+      // overlayLayersTitle.textContent = 'Categories';
+      // layerControlElement.insertBefore(baseLayersTitle, separator.previousSibling);
+      // layerControlElement.insertBefore(overlayLayersTitle, separator.nextSibling);
+  
     }
   });
 
