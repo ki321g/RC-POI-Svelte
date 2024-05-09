@@ -4,6 +4,9 @@
   import type { Control, Map as LeafletMap, LayerGroup } from "leaflet";
   import { browser } from "$app/environment";
   import L from "leaflet";
+  import "leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js";
+  import "leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.css";
+	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
   
   export const ssr = false;
 
@@ -11,21 +14,30 @@
   export let height = 80;
   export let location = { lat: 53.2734, lng: -7.7783203 };
   export let width = 54;
-
   export let zoom = 8;
   export let minZoom = 7;
   export let activeLayer = "Terrain";
   export let allowCategories = false;
   export let centerOnMarker = false;
 
+
   let imap: LeafletMap;
   let control: Control.Layers;
   let overlays: Control.LayersObject = {};
   let baseLayers: any;
-  let categoryLayers: Record<string, LayerGroup> = {};
+  let categoryLayers: Record<string, LayerGroup> = {};  
+  let countyLayers: Record<string, LayerGroup> = {};
+  let countyAdded:any = [];
+  
     
 
-  const categories = ["JUNIOR", "SENIOR"];
+  let categories = ["JUNIOR", "SENIOR"];
+  let counties = [
+    "Antrim", "Armagh", "Carlow", "Cavan", "Clare", "Cork", "Derry", "Donegal", "Down", 
+    "Dublin", "Fermanagh", "Galway", "Kerry", "Kildare", "Kilkenny", "Laois", "Leitrim", 
+    "Limerick", "Londonderry", "Longford", "Louth", "Mayo", "Meath", "Monaghan", "Offaly", "Omagh", "Roscommon", "Sligo", "Tipperary", "Tyrone", "Waterford", "Westmeath", "Wexford", "Wicklow"
+  ];
+ 
   
 
   onMount(async () => {
@@ -33,9 +45,13 @@
       const leaflet = await import("leaflet");
 
       if (allowCategories) {
-      categories.forEach(category => {
-              categoryLayers[category] = L.layerGroup();
-          });
+        categories.forEach(category => {
+            categoryLayers[category] = L.layerGroup();
+        });        
+                
+        counties.forEach((county: any) => {
+            countyLayers[county] = L.layerGroup();
+        });
       };
 
       baseLayers = {
@@ -77,46 +93,53 @@
         layers: [defaultLayer]
       });
 
+        
+
+      let groupedOverlays = {
+              SelectCategory: {},
+              SelectCounty: {}
+            };
+
       if (allowCategories) {
         Object.values(categoryLayers).forEach(layer => {
               imap.addLayer(layer);
-          });
+          }); 
+        Object.values(countyLayers).forEach(layer => {
+              imap.addLayer(layer);
+          }); 
+
+            for (let category in categoryLayers) {
+              groupedOverlays.SelectCategory[category] = categoryLayers[category];    
+            }
+            // console.log (countyLayers)
+            for (let county in countyLayers) {
+              groupedOverlays.SelectCounty[county] = countyLayers[county];    
+            }
       };
 
-      // control = leaflet.control.layers(baseLayers, overlays, categoryLayers).addTo(imap);
-      const control = leaflet.control.layers({
-          'Terrain': baseLayers.Terrain,
-          'Satellite': baseLayers.Satellite,
-          'OpenTopoMap': baseLayers.OpenTopoMap,
-          'Stadia_AlidadeSatellite': baseLayers.Stadia_AlidadeSatellite,
-          'Stadia_AlidadeSmoothDark': baseLayers.Stadia_AlidadeSmoothDark,
-          'MtbMap': baseLayers.MtbMap
-            }, {
-                ...categoryLayers
-                }).addTo(imap)
+      if (allowCategories) {
+        const control = leaflet.control.groupedLayers(baseLayers, groupedOverlays).addTo(imap);
+      } else {
+        const control = leaflet.control.layers(baseLayers).addTo(imap);
+      }
 
-      // // Add titles to the layer control
-      // const layerControlElement = control.getContainer();
-      // const separator = layerControlElement.querySelector('.leaflet-control-layers-base');
-      // const baseLayersTitle = document.createElement('h3');
-      // baseLayersTitle.textContent = 'Map';
-      // const overlayLayersTitle = document.createElement('h3');
-      // overlayLayersTitle.textContent = 'Categories';
-      // layerControlElement.insertBefore(baseLayersTitle, separator.previousSibling);
-      // layerControlElement.insertBefore(overlayLayersTitle, separator.nextSibling);
-  
     }
   });
 
-  export async function addMarker(lat: number, lng: number, popupText: string, category: string) {
+  export async function addMarker(lat: number, lng: number, popupText: string, category: string, county: string) {
     const leaflet = await import("leaflet");
     const marker = leaflet.marker([lat, lng]);
     marker.addTo(imap);
     const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
     popup.setContent(popupText);
     marker.bindPopup(popup);  
+
     if (category !== '') {
       categoryLayers[category].addLayer(marker);
+    }    
+    if (county !== '') {
+      countyAdded.push(county);
+      countyLayers[county].addLayer(marker);
     }
 
     // Recenter the map to the marker's location
