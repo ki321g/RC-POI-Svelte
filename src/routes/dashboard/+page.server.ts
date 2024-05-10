@@ -5,6 +5,7 @@ import { redirect } from '@sveltejs/kit';
 import { imageNotification, imageNotificationColor } from '$lib/stores';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
+import { generateReading } from '$lib/utilities/openweathermap-utils';
 
 export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
@@ -21,6 +22,8 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		const userImages = await RugbyClubPOIService.getImagesByClubId(userClub._id);
 		// console.log("Club Images");
 		// console.log(userImages);
+
+		await generateReading(userClub.latitude, userClub.longitude);
 		
 		return {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
