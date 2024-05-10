@@ -9,7 +9,7 @@
 
     // lat = 53.435416;
     // lng = -7.9230912;
-
+    
 
     onMount(() => {
     // Initialize your map here with mapContainer as the container

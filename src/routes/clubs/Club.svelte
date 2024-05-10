@@ -45,41 +45,15 @@
             });
         }
     }
-
-    // function filterAddress() {
-    //     // alert(county);
-    //     const elements = document.querySelectorAll('[data-address]');
-    //     elements.forEach(el => {
-    //         el.hidden = el.getAttribute('data-address') !== county;
-    //     });
-    // }
-
-    // let category = '';
-
-    // Reactively update the category based on the page path
-    // $: {
-    // const path = $page.url.pathname;
-    // if (path.includes('/clubs/junior')) {
-    //     category = 'JUNIOR';
-    // } else if (path.includes('/clubs/senior')) {
-    //     category = 'SENIOR';
-    // } else {
-    //     category = '';
-    // }
-    // }
-
-    // Reactively filter the clubs based on the category
-    // $: filteredClubs = category ? clubs.filter(club => club.category === category) : clubs;
 </script>
+
+
 
 <section class="section pt-6">
     <div class="buttons is-flex is-align-items-center">
-        <!-- <a class="button mb-0" href="/clubs">ALL</a> -->
-        <!-- <a class="button mb-0" href="/clubs/junior">JUNIOR</a> -->
         <div on:click={showAllClubs} class="button mb-0">ALL</div>
         <div on:click={filterJuniorClubs} class="button mb-0">JUNIOR</div>
         <div on:click={filterSeniorClubs} class="button mb-0">SENIOR</div>
-        <!-- <a class="button mb-0" href="/clubs/senior">SENIOR</a> -->
         <span class="title select-label is-4 mb-0 mr-2">Filter by County:</span>
         <div class="select custom-select">
             <select bind:value={county} on:change={filterAddress} name="county">
@@ -90,14 +64,9 @@
             </select>
         </div>         
         <span class="title select-label number-of-clubs ml-auto is-uppercase is-4 mb-0 mr-2 ">Clubs: 
-            <!-- {{clubs.length}} -->
         </span>
     </div>
-    <!-- {{> club-results }} -->
 </section>
-<!-- {#each clubs as club} -->
-<!-- Use filteredClubs instead of clubs -->
-<!-- {#each filteredClubs as club (club._id)} -->
 {#each clubs as club (club._id)}
 <div class="blog-posts" data-address="{club.address.toUpperCase()}" data-category="{club.category}">
     <div class="box box-link-hover-shadow">
@@ -118,7 +87,6 @@
                 <article class="columns featured is-multiline pt-0">
                     <figure class="image is-520x360">
                         <div class="column">
-                            <!-- <ClubMap club={club} id={club.club} /> -->
                             <ClubMap club={club} id={club._id} lat={club.latitude} lng={club.longitude}/>
                         </div>
                     </figure> 
