@@ -1,6 +1,6 @@
 <script lang="ts">
   import Club from "./Club.svelte";
-  export const ssr = false;
+
   export let data: any;
 
 </script>

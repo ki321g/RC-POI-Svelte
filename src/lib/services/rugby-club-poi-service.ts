@@ -99,6 +99,7 @@ export const RugbyClubPOIService = {
 
 			let clubCounties = clubs.map((club) => club.address.toUpperCase()); // Create clubCounties array
 			clubCounties = [...new Set(clubCounties)]; // Remove duplicates
+			clubCounties.sort(); // Sorts Clubs
 
 			return clubCounties;
 		} catch (error) {

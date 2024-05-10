@@ -44,7 +44,7 @@ div<script lang="ts">
         <div class="box box-link-hover-shadow">
             <div class="columns featured-post is-multiline">
                 <div class="column is-12 post">
-                    <LeafletMap allowCategories={true} height={60} width={130} minZoom={5} zoom={7} {location} bind:this={map} />
+                    <LeafletMap allowCategories={true} height={80} width={130} minZoom={5} zoom={7} {location} bind:this={map} />
                 </div>
             </div>
         </div>
