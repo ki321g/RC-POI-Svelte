@@ -20,6 +20,9 @@
   export let allowCategories = false;
   export let centerOnMarker = false;
 
+  export let club: Club[] = [];
+  
+
 
   let imap: LeafletMap;
   let control: Control.Layers;
@@ -28,7 +31,7 @@
   let categoryLayers: Record<string, LayerGroup> = {};  
   let countyLayers: Record<string, LayerGroup> = {};
   let countyAdded:any = [];
-  
+  let showClub: Club[] = [];
     
 
   let categories = ["JUNIOR", "SENIOR"];
@@ -126,20 +129,41 @@
     }
   });
 
-  export async function addMarker(lat: number, lng: number, popupText: string, category: string, county: string) {
+  export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club) {
     const leaflet = await import("leaflet");
-    const marker = leaflet.marker([lat, lng]);
+    const marker = leaflet.marker([lat, lng]);    
+
     marker.addTo(imap);
     const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
     popup.setContent(popupText);
     marker.bindPopup(popup);  
 
-    if (category !== '') {
-      categoryLayers[category].addLayer(marker);
-    }    
-    if (county !== '') {
-      countyAdded.push(county);
-      countyLayers[county].addLayer(marker);
+    
+ 
+
+    // Add an event listener to the marker
+    marker.on('click', function() {
+        const hiddenDiv = document.getElementById(currentClub.address);
+
+        const hideAddressDivs = document.querySelectorAll('div[data-address]');
+        hideAddressDivs.forEach(div => div.hidden = true);
+
+        hiddenDiv.hidden = false;
+
+        // Scroll to the div
+        setTimeout(() => {
+          window.scroll({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+          
+        }, 300);
+    });
+
+    if (currentClub) {
+      categoryLayers[currentClub.category].addLayer(marker);
+      countyAdded.push(currentClub.address);
+      countyLayers[currentClub.address].addLayer(marker);
     }
 
     // Recenter the map to the marker's location
@@ -151,7 +175,6 @@
   export function moveTo(lat: number, lng: number) {
     imap.flyTo({ lat: lat, lng: lng });
   }
-
 </script>
 
 <div {id} class="box" style="height: {height}vh; width: {width}vh" />
