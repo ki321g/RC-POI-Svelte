@@ -6,7 +6,7 @@ import { imageNotification, imageNotificationColor } from '$lib/stores';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
-import fs from 'fs';
+// import fs from 'fs';
 
 export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
@@ -48,10 +48,10 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		// console.log(JSON.stringify(currentForecast, null, 2));
 		console.log("^^^^ Forecast ^^^^");
 
-		fs.writeFile('currentForecast.json', JSON.stringify(currentForecast, null, 2), (err) => {
-			if (err) throw err;
-			console.log('The file has been saved!');
-		  });
+		// fs.writeFile('currentForecast.json', JSON.stringify(currentForecast, null, 2), (err) => {
+		// 	if (err) throw err;
+		// 	console.log('The file has been saved!');
+		//   });
 
 		return {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
