@@ -1,7 +1,11 @@
 
 <script lang="ts">
+    import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
+    import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
 
 	let showWeather = false;
+    export let currentForecast: any;
+    export let currentWeather: any;
 
     function toggleWeather() {
 		showWeather = !showWeather;
@@ -21,8 +25,12 @@
 	</div>
 </div>
 {#if showWeather}
-<div class="field">
-    <span class="is-uppercase has-text-weight-bold">Weather</span>
+<div class="field has-background-warning px-6 pb-4">
+    <!-- <span class="is-uppercase has-text-weight-bold">Weather</span>span class="is-uppercase has-text-weight-bold">Weather</span> -->
+	<div class="pb-4">
+        <CurrentTemp currentWeather={currentWeather}/>
+    </div>    
+    <ForecastTemp currentForecast={currentForecast} />
 </div>
 			
 {/if}

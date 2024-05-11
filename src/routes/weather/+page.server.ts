@@ -8,17 +8,34 @@ import cookie from 'cookie';
 import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
 // import fs from 'fs';
 
+
+
 export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 	if (session) {
+		let currentTemp: CurrentTemp = {
+			temp: null,
+			feels_like: null,
+			humidity: null,
+			description: null,
+			iconCode: null,
+		  };
+		  
 		const UserId = session._id;
 		const userClub = await RugbyClubPOIService.getClubByUserId(UserId);
 		if (userClub) {
 		const userImages = await RugbyClubPOIService.getImagesByClubId(userClub._id);
 
-		// let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
+		let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
+	
+		currentTemp.temp = currentWeather.data.main.temp;
+		currentTemp.feels_like = currentWeather.data.main.feels_like;
+		currentTemp.humidity = currentWeather.data.main.humidity;
+		currentTemp.description = currentWeather.data.weather[0].description;
+		currentTemp.iconCode = currentWeather.data.weather[0].id;
 		
+		console.log(currentTemp);
 		// currentWeather = {
 		// 	date: currentWeather.headers.date,
 		// 	data: currentWeather.data			
@@ -35,10 +52,10 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		// 	data: currentForecast.data.list			
 		//   };
 		const tempList = currentForecast.data.list;
-		console.log("#### Forecast ####");		
+		// console.log("#### Forecast ####");		
 		// console.log(currentForecast);
 		// console.log(JSON.stringify(currentForecast, null, 2));
-		console.log("^^^^ Forecast ^^^^");
+		// console.log("^^^^ Forecast ^^^^");
 
 		// fs.writeFile('currentForecast.json', JSON.stringify(currentForecast, null, 2), (err) => {
 		// 	if (err) throw err;
@@ -47,6 +64,7 @@ export const load: PageServerLoad = async ({ request, parent }) => {
         // let jsonString = JSON.stringify(currentForecast);
 		return {
 			currentForecast: tempList,
+			currentWeather: currentTemp,
 		};
 	}
 	  }	

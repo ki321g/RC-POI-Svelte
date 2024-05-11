@@ -9,13 +9,15 @@
     // import ImageGallery from '$lib/ui/ImageGallery.svelte';
     import { onMount } from 'svelte';
     import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';   
-    import WeatherWidget from '$lib/ui/WeatherWidget.svelte';   
+    import WeatherWidget from '$lib/ui/WeatherWidget.svelte'; 
 
     // let renderMAP: boolean = false;
 
     export let club: Club[] = [];
     export let games: Game[] = [];
     export let images: Image[] = [];
+    export let currentForecast: any;
+    export let currentWeather: any;
 	let currentTab = 'Club Details';
 
     const clubCategories = ['JUNIOR', 'SENIOR'];
@@ -123,7 +125,7 @@
 <div class="blog-posts">
 
     <div class="box box-link-hover-shadow">
-        <WeatherWidget />
+        <WeatherWidget currentWeather={currentWeather} currentForecast={currentForecast} />
         <div class="columns is-fullwidth p-0 mb-0">
             <div class="column has-text-left">
                 <h2 class="title page-heading is-2 is-uppercase mb-0">

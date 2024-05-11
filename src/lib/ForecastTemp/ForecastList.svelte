@@ -21,12 +21,11 @@
       }>;
     }> = [];
     
-    onMount(() => {
-      
-    console.log("kieron is here")
-    console.log(currentForecast);
-     tempList = currentForecast;
-  });
+    onMount(() => {      
+      // console.log("kieron is here")
+      // console.log(currentForecast);
+      tempList = currentForecast;
+    });
     // location.subscribe((location) => {
     //   if (location.name) {
     //     axios(FORECAST_API_URL, {
@@ -42,7 +41,7 @@
     // });
   </script>
   
-  <div class="forecast-list" class:skeleton={!tempList.length}>
+  <div class="forecast-list has-background-white" class:skeleton={!tempList.length}>
     {#if tempList.length}
       {#each tempList as temp, index}
         {#if (mode === "hourly" && index < 10) || (mode === "daily" && index % 8 === 0)}

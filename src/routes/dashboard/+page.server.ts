@@ -12,6 +12,14 @@ export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
 	if (session) {
+		let currentTemp: CurrentTemp = {
+			temp: null,
+			feels_like: null,
+			humidity: null,
+			description: null,
+			iconCode: null,
+		  };
+
 		const UserId = session._id;
 		// console.log(`UserId: ${UserId}`);
 		const userClub = await RugbyClubPOIService.getClubByUserId(UserId);
@@ -24,29 +32,39 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		// console.log("Club Images");
 		// console.log(userImages);
 
-		let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
+		// let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
 		
-		currentWeather = {
-			date: currentWeather.headers.date,
-			data: currentWeather.data			
-		  };
+		// currentWeather = {
+		// 	date: currentWeather.headers.date,
+		// 	data: currentWeather.data			
+		//   };
+		let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
+		let tempForecast = await generateForecast(userClub.latitude, userClub.longitude);
 
-		console.log("#### Weather ####");
+		const currentForecast = tempForecast.data.list;
+	
+		currentTemp.temp = currentWeather.data.main.temp;
+		currentTemp.feels_like = currentWeather.data.main.feels_like;
+		currentTemp.humidity = currentWeather.data.main.humidity;
+		currentTemp.description = currentWeather.data.weather[0].description;
+		currentTemp.iconCode = currentWeather.data.weather[0].id;
+
+		// console.log("#### Weather ####");
 		// console.log(currentWeather);
-		console.log(JSON.stringify(currentWeather, null, 2));
-		console.log("^^^^ Weather ^^^^");
+		// console.log(JSON.stringify(currentWeather, null, 2));
+		// console.log("^^^^ Weather ^^^^");
 		// console.log(currentWeather.data.weather);
 
-		let currentForecast = await generateForecast(userClub.latitude, userClub.longitude);
+		// let currentForecast = await generateForecast(userClub.latitude, userClub.longitude);
 		
-		currentForecast = {
-			date: currentForecast.headers.date,
-			data: currentForecast.data			
-		  };
-		console.log("#### Forecast ####");		
+		// currentForecast = {
+		// 	date: currentForecast.headers.date,
+		// 	data: currentForecast.data			
+		//   };
+		// console.log("#### Forecast ####");		
 		// console.log(currentForecast);
-		// console.log(JSON.stringify(currentForecast, null, 2));
-		console.log("^^^^ Forecast ^^^^");
+		console.log(JSON.stringify(currentForecast, null, 2));
+		// console.log("^^^^ Forecast ^^^^");
 
 		// fs.writeFile('currentForecast.json', JSON.stringify(currentForecast, null, 2), (err) => {
 		// 	if (err) throw err;
@@ -56,7 +74,9 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		return {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
 			games: await RugbyClubPOIService.getGamesByClubId(userClub._id),
-			images: await RugbyClubPOIService.getImagesByClubId(userClub._id)
+			images: await RugbyClubPOIService.getImagesByClubId(userClub._id),
+			currentForecast: currentForecast,
+			currentWeather: currentTemp,
 		};
 	}
 	  }	
