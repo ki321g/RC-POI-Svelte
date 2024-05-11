@@ -123,7 +123,6 @@
 </script>
 
 <div class="blog-posts">
-
     <div class="box box-link-hover-shadow">
         <WeatherWidget currentWeather={currentWeather} currentForecast={currentForecast} />
         <div class="columns is-fullwidth p-0 mb-0">
@@ -150,48 +149,37 @@
                     </figure>
                     <div class="column featured-content va is-6">
                         <div>
-							<!-- <button on:click={() => currentTab = 'Club Details'}>Club Details</button>
-							<button on:click={() => currentTab = 'Current Weather'}>Current Weather</button> -->
-                            <div class="tab-container">
-                                <button class="tab {currentTab === 'Club Details' ? 'active' : ''}" on:click={() => currentTab = 'Club Details'}>Club Details</button>
-                                <button class="tab {currentTab === 'Current Weather' ? 'active' : ''}" on:click={() => currentTab = 'Current Weather'}>Current Weather</button>
-							</div>
-                                {#if currentTab === 'Club Details'}
-								<h3 class="heading post-category pt-2">County</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.address} on:submit={submit('address')} />
-									<!-- {club.address} -->
-								</h1>
-								<h3 class="heading post-category">Phone</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.phone} on:submit={submit('phone')} />
-									<!-- {club.phone} -->
-								</h1>
-								<h3 class="heading post-category">Email</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.email} on:submit={submit('email')} />
-									<!-- {club.email} -->
-								</h1>
-								<h3 class="heading post-category">website</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.website} on:submit={submit('website')} />
-									<!-- {club.website} -->
-								</h1>
-								<div class="buttons has-addons is-fullwidth">
-									<a id="place-link-location" class="button is-half" href="https://www.google.com/maps/?q={club.latitude}%2C{club.longitude}" target="_blank"
-										><i class="fas fa-location-dot fa-lg mr-2"></i> View Place</a
-									>
-									<a
-										id="place-link-directions"
-										class="button is-half"
-										href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination={club.latitude}%2C{club.longitude}"
-										target="_blank"><i class="fas fa-route fa-lg mr-2"></i> Get Directions</a
-									>
-								</div>
-							{:else if currentTab === 'Current Weather'}
-								<!--  Current Weather GOES HERE -->
-                                Weather
-							{/if}       
+                            <h3 class="heading post-category pt-2">County</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.address} on:submit={submit('address')} />
+                                <!-- {club.address} -->
+                            </h1>
+                            <h3 class="heading post-category">Phone</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.phone} on:submit={submit('phone')} />
+                                <!-- {club.phone} -->
+                            </h1>
+                            <h3 class="heading post-category">Email</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.email} on:submit={submit('email')} />
+                                <!-- {club.email} -->
+                            </h1>
+                            <h3 class="heading post-category">website</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.website} on:submit={submit('website')} />
+                                <!-- {club.website} -->
+                            </h1>
+                            <div class="buttons has-addons is-fullwidth">
+                                <a id="place-link-location" class="button is-half" href="https://www.google.com/maps/?q={club.latitude}%2C{club.longitude}" target="_blank"
+                                    ><i class="fas fa-location-dot fa-lg mr-2"></i> View Place</a
+                                >
+                                <a
+                                    id="place-link-directions"
+                                    class="button is-half"
+                                    href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination={club.latitude}%2C{club.longitude}"
+                                    target="_blank"><i class="fas fa-route fa-lg mr-2"></i> Get Directions</a
+                                >
+                            </div>  
                         </div>
                     </div>
                 </article>

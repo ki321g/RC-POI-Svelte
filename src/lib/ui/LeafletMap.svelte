@@ -7,6 +7,9 @@
   import "leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js";
   import "leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.css";
 	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+  import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
+  import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
+  import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
   
   export const ssr = false;
 
@@ -33,6 +36,8 @@
   let countyLayers: Record<string, LayerGroup> = {};
   let countyAdded:any = [];
   let showClub: Club[] = [];
+  let currentWeather: any;
+  let currentForecast: any;
     
 
   let categories = ["JUNIOR", "SENIOR"];
@@ -130,16 +135,47 @@
     }
   });
 
+  async function getClubWeather(club: Club) {
+   
+      let currentTemp: CurrentTemp = {
+        temp: null,
+        feels_like: null,
+        humidity: null,
+        description: null,
+        iconCode: null,
+      };
+
+      let currentWeather = await generateReading(club.latitude, club.longitude);
+      let tempForecast = await generateForecast(club.latitude, club.longitude);
+
+      const currentForecast = tempForecast.data.list;
+
+      currentTemp.temp = currentWeather.data.main.temp;
+      currentTemp.feels_like = currentWeather.data.main.feels_like;
+      currentTemp.humidity = currentWeather.data.main.humidity;
+      currentTemp.description = currentWeather.data.weather[0].description;
+      currentTemp.iconCode = currentWeather.data.weather[0].id;
+
+      currentWeather = currentTemp;
+      tempForecast = currentForecast;
+
+      return {
+        currentForecast: currentForecast,
+        currentWeather: currentTemp,
+      };
+  }
+  
+
   export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club, onClickPopup) {
     const leaflet = await import("leaflet");
     const marker = leaflet.marker([lat, lng]);   
-    console.log(popupText); 
+    // console.log(popupText); 
 
     marker.addTo(imap);
     if(onClickPopup) {
       const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
       popup.setContent(popupText);
-      marker.bindPopup(popup);  
+      marker.bindPopup(popup);        
 
       // Add an event listener to the marker
       marker.on('click', function() {
@@ -150,6 +186,14 @@
           hideAddressDivs.forEach(div => div.hidden = true);
 
           hiddenDiv.hidden = false;
+
+          console.log(currentClub._id);
+          getClubWeather(currentClub).then(data => {
+            const currentWeather = data.currentWeather;
+            const currentForecast = data.currentForecast;  
+            console.log(currentWeather);
+            console.log(currentForecast);
+          });
 
           // Scroll to the div
           setTimeout(() => {

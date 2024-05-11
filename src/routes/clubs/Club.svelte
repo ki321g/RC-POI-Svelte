@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount, afterUpdate } from 'svelte';
     import { page } from '$app/stores';
     import type { Club } from "$lib/types/rugby-club-poi-types";    
     import ClubMap from "$lib/ui/ClubMap.svelte";
@@ -7,6 +8,7 @@
     export let clubCounties: string[];
 
     let county = 'ALL';
+    let numberOfClubs = 0;
 
     function showAllClubs() {
         const categoryElements = document.querySelectorAll('[data-category]');
@@ -18,20 +20,23 @@
         addressElements.forEach(el => {
             el.hidden = false;
         });
-        }
+        countFilteredClubs()
+    }
 
     function filterJuniorClubs() {
-    const elements = document.querySelectorAll('[data-category]');
-    elements.forEach(el => {
+        const elements = document.querySelectorAll('[data-category]');
+        elements.forEach(el => {
             el.hidden = el.getAttribute('data-category') !== 'JUNIOR';
         });
+        countFilteredClubs()
     }
 
     function filterSeniorClubs() {
-    const elements = document.querySelectorAll('[data-category]');
-    elements.forEach(el => {
+        const elements = document.querySelectorAll('[data-category]');
+        elements.forEach(el => {
             el.hidden = el.getAttribute('data-category') !== 'SENIOR';
         });
+        countFilteredClubs()
     }
 
     function filterAddress() {
@@ -41,10 +46,25 @@
             showAllClubs();
         } else {
             elements.forEach(el => {
-            el.hidden = el.getAttribute('data-address') !== county;
+                el.hidden = el.getAttribute('data-address') !== county;
             });
+            countFilteredClubs()
         }
+        
     }
+
+    function countFilteredClubs() {
+        const elements = document.querySelectorAll('[data-category]:not([hidden])');
+        numberOfClubs = elements.length;
+    }
+
+    afterUpdate(() => {
+        countFilteredClubs();
+    });
+
+    onMount(() => {
+        countFilteredClubs();
+    });
 </script>
 
 <section class="section pt-6">
@@ -61,7 +81,7 @@
                 {/each}
             </select>
         </div>         
-        <span class="title select-label number-of-clubs ml-auto is-uppercase is-4 mb-0 mr-2 ">Clubs: 
+        <span class="title select-label number-of-clubs ml-auto is-uppercase is-4 mb-0 mr-2 ">Clubs: {numberOfClubs}
         </span>
     </div>
 </section>

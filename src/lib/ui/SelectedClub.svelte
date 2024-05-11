@@ -4,11 +4,9 @@
     import type { Club } from "$lib/types/rugby-club-poi-types"; 
 
     export let data: any;
-    export let clubs: Club[] = data.clubs;
-   
+    export let clubs: Club[] = data.clubs;   
 
-    onMount(() => {
-    
+    onMount(() => {   
         
         setTimeout(() => {            
             const hideAddressDivs = document.querySelectorAll('div[data-address]');

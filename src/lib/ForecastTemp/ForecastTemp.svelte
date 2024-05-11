@@ -8,7 +8,7 @@
   
   <section class="wrapper">
     <header class="header">
-      <h2 class="heading has-text-weight-bold">Forecast</h2>
+      <h2 class="title page-heading is-2 is-uppercase mb-0 pt-4">Forecast</h2>
       <ForecastMode bind:mode />
     </header>
     <ForecastList {mode} {currentForecast}/>

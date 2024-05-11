@@ -63,7 +63,7 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		//   };
 		// console.log("#### Forecast ####");		
 		// console.log(currentForecast);
-		console.log(JSON.stringify(currentForecast, null, 2));
+		// console.log(JSON.stringify(currentForecast, null, 2));
 		// console.log("^^^^ Forecast ^^^^");
 
 		// fs.writeFile('currentForecast.json', JSON.stringify(currentForecast, null, 2), (err) => {
