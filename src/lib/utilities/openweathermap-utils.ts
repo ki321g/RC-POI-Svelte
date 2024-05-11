@@ -3,6 +3,8 @@ import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-c
 import axios from 'axios';
 
 const apiKey = import.meta.env.VITE_WEATHER_API; // API key from .env file
+const WEATHER_FORECAST_API_URL = "https://api.openweathermap.org/data/2.5/forecast";
+const WEATHER_CURRENT_API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 /**
  * This class handles openweathermap API
@@ -17,16 +19,11 @@ const apiKey = import.meta.env.VITE_WEATHER_API; // API key from .env file
  * @param longitude longitude to get reading from openweathermap
  * @return reading to return
  */
-export async function generateReading(latitude: number, longitude: number,) {
-    // const requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,hourly,daily,alerts&appid=${PUBIC_OPEN_WEATHER_API}`;
-    // const response = await axios.get(requestUrl);
-
-
-    // Make an API call to the OpenWeather API to retrieve the current weather data
+export async function generateReading(latitude: number, longitude: number,) {   
     // Make an API call to the OpenWeather API to retrieve the current weather data
     try {
         // console.log(apiKey);
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
+        const response = await axios.get(WEATHER_CURRENT_API_URL, {
           params: {
             lat: latitude,
             lon: longitude,
@@ -34,37 +31,47 @@ export async function generateReading(latitude: number, longitude: number,) {
             units: "metric",
           },
         });
-        // console.log(response.data);
-        // Return the weather data
-      } catch (error) {
-        console.error("Failed to fetch weather data:", error);
+
+        if (response.status == 200) {
+            return response;
+        }
+        return null; 
+    } catch (error) {
+      console.error("Failed to fetch weather data:", error);
+    }    
+};
+
+/**
+ * This class handles openweathermap API
+ *
+ * @author Kieron Garvey
+ * @version 0.1
+ */
+/**
+ * generateForecast() - Returns forecast from the openweathermap API
+ *
+ * @param latitude latitude to get forecast from openweathermap
+ * @param longitude longitude to get forecast from openweathermap
+ * @return forcast to return
+ */
+export async function generateForecast(latitude: number, longitude: number,) {   
+  // Make an API call to the OpenWeather API to retrieve the current weather data
+  try {
+      // console.log(apiKey);
+      const response = await axios.get(WEATHER_FORECAST_API_URL, {
+        params: {
+          lat: latitude,
+          lon: longitude,
+          appid: apiKey,
+          units: "metric",
+        },
+      });
+
+      if (response.status == 200) {
+          return response;
       }
-    // const date = new Date(); // Add Current Date
-    // let dateTime = date.toLocaleString("en-GB", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     second: "2-digit",
-    //     hour12: false,
-    // }); // Convert to Format
-
-    // if (response.status == 200) {
-    //     const currentWeather = response.data.current;
-    //     const newReading = {
-    //     timeStamp: String(dateTime),
-    //     //code: Number(codeConverter(currentWeather.weather[0].id)),
-    //     code: Number(currentWeather.weather[0].id),
-    //     temperature: Number(currentWeather.temp),
-    //     windSpeed: Number(currentWeather.wind_speed),
-    //     windDirection: Number(currentWeather.wind_deg),
-    //     pressure: Number(currentWeather.pressure),
-    //     };
-    //     return newReading;
-    // }
-
-    // return null;
-}
-
-    
+      return null; 
+  } catch (error) {
+    console.error("Failed to fetch weather data:", error);
+  }    
+};

@@ -49,7 +49,7 @@ export const RugbyClubPOIService = {
 	async getLoggedInUser(email: string): Promise<User | null> {
 		try {
 			const user = await userStore.findBy(email);
-			console.log('user: ', user);
+			// console.log('user: ', user);
 			if (user !== null) {
 				return user;
 			}

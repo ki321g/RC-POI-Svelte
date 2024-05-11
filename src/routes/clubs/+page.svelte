@@ -13,16 +13,16 @@
     }
 
     onMount(() => {
-    const checkScroll = () => {
-      showButton = window.pageYOffset > 200;
-    };
+        const checkScroll = () => {
+            showButton = window.scrollY > 200;
+        };
 
-    window.addEventListener('scroll', checkScroll);
-    checkScroll();
+        window.addEventListener('scroll', checkScroll);
+        checkScroll();
 
-    return () => {
-      window.removeEventListener('scroll', checkScroll);
-    };
+        return () => {
+            window.removeEventListener('scroll', checkScroll);
+        };
   });
 </script>
 

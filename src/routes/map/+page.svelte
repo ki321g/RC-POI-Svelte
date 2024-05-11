@@ -12,14 +12,13 @@ div<script lang="ts">
     let showButton = false;
 
     export let clubs: Club[] = data.clubs;
-
+    
     function scrollToTop() {
         window.scrollTo({
         top: 0,
         behavior: 'smooth'
         });
     }
-
 
     onMount(async () => {
         let totalLat = 0;
@@ -31,12 +30,12 @@ div<script lang="ts">
         
         clubs.forEach((club: Club) => {
             const popup = `
-            <h1><strong>${club.club}</strong></h1>
-            <p>${club.address}</p>
-        `;
-        totalLat += Number(club.latitude);
-        totalLng += (club.longitude);
-        map.addMarker(Number(club.latitude), Number(club.longitude), popup, club, true);        
+                <h1><strong>${club.club}</strong></h1>
+                <p>${club.address}</p>
+            `;
+            totalLat += Number(club.latitude);
+            totalLng += (club.longitude);
+            map.addMarker(Number(club.latitude), Number(club.longitude), popup, club, true);        
         });
 
         const centerLat = totalLat / clubs.length;
@@ -45,14 +44,14 @@ div<script lang="ts">
         // console.log(location);
 
         const checkScroll = () => {
-        showButton = window.pageYOffset > 200;
+            showButton = window.scrollY > 200;
         };
 
         window.addEventListener('scroll', checkScroll);
         checkScroll();
 
         return () => {
-        window.removeEventListener('scroll', checkScroll);
+            window.removeEventListener('scroll', checkScroll);
         };
 	});
 </script>
