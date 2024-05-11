@@ -31,7 +31,7 @@
         // renderMAP = true;
         lat = Number(club.latitude);
         lng = Number(club.longitude);
-        console.log(lat, lng);
+        // console.log(lat, lng);
         const popup = `
             <h1><strong>${club.club}</strong></h1>
             <p>${club.address}</p>
@@ -55,8 +55,8 @@
         // Set the values of the form inputs
         if (confirmUpdate) {
             try {
-                console.log('Updating club...clubUpdate');
-                console.log(club);
+                // console.log('Updating club...clubUpdate');
+                // console.log(club);
                 clubForm.elements.clubid.value = club._id;
                 clubForm.elements.club.value = club.club;
                 clubForm.elements.address.value = club.address;
@@ -70,18 +70,18 @@
                 clubForm.elements.img.value = club.img;
                 clubForm.elements.userId.value = club.userId;
 
-                console.log(clubForm.elements.clubid.value);
-                console.log(clubForm.elements.club.value);
-                console.log(clubForm.elements.address.value);
-                console.log(clubForm.elements.phone.value);
-                console.log(clubForm.elements.email.value);
-                console.log(clubForm.elements.website.value);
-                console.log(clubForm.elements.latitude.value);
-                console.log(clubForm.elements.longitude.value);
-                console.log(clubForm.elements.description.value);
-                console.log(clubForm.elements.category.value);
-                console.log(clubForm.elements.img.value);
-                console.log(clubForm.elements.userId.value);
+                // console.log(clubForm.elements.clubid.value);
+                // console.log(clubForm.elements.club.value);
+                // console.log(clubForm.elements.address.value);
+                // console.log(clubForm.elements.phone.value);
+                // console.log(clubForm.elements.email.value);
+                // console.log(clubForm.elements.website.value);
+                // console.log(clubForm.elements.latitude.value);
+                // console.log(clubForm.elements.longitude.value);
+                // console.log(clubForm.elements.description.value);
+                // console.log(clubForm.elements.category.value);
+                // console.log(clubForm.elements.img.value);
+                // console.log(clubForm.elements.userId.value);
 
                 // Submit the form
                 clubForm.submit();
@@ -97,7 +97,7 @@
 
     async function clubDelete(club: Club) {
         const confirmDelete = confirm('Deleting the Club is irreversible. Please click OK to delete this Club?');
-        console.log(club);
+        // console.log(club);
         if (confirmDelete) {
             try {
                 deleteClub.elements.clubid.value = club._id;

@@ -13,7 +13,7 @@ export function getCategoryData(clubs: Club[]): DataSet {
     // Update chart data
     categoriesTotal.labels = Object.keys(categoryCounts);
     categoriesTotal.datasets[0].values = Object.values(categoryCounts);
-    console.log(categoriesTotal);
+    // console.log(categoriesTotal);
     return categoriesTotal;
 }
 
@@ -30,6 +30,6 @@ export function getGamesData(games: Game[]): DataSetGames {
     gamesData.datasets[1].chartType = 'line';
     gamesData.datasets[1].values = games.map(game => game.awayscore);    
 
-    console.log(gamesData);
+    // console.log(gamesData);
     return gamesData;
 }

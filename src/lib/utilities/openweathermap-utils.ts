@@ -25,7 +25,7 @@ export async function generateReading(latitude: number, longitude: number,) {
     // Make an API call to the OpenWeather API to retrieve the current weather data
     // Make an API call to the OpenWeather API to retrieve the current weather data
     try {
-        console.log(apiKey);
+        // console.log(apiKey);
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
           params: {
             lat: latitude,
@@ -34,7 +34,7 @@ export async function generateReading(latitude: number, longitude: number,) {
             units: "metric",
           },
         });
-        console.log(response.data);
+        // console.log(response.data);
         // Return the weather data
       } catch (error) {
         console.error("Failed to fetch weather data:", error);

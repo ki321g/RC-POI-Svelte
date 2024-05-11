@@ -48,8 +48,8 @@ export const imageStore = {
 
   async deleteOne(id: string) {
     try {
-      console.log('deleteOne image-store function');  
-      console.log("id: ", + id )
+      // console.log('deleteOne image-store function');  
+      // console.log("id: ", + id )
       await ImageMongoose.deleteOne({ _id: id });
     } catch (error) {
       console.log("Error deleting image:", error.message);

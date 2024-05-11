@@ -36,7 +36,7 @@ div<script lang="ts">
         `;
         totalLat += Number(club.latitude);
         totalLng += (club.longitude);
-        map.addMarker(Number(club.latitude), Number(club.longitude), popup, club);        
+        map.addMarker(Number(club.latitude), Number(club.longitude), popup, club, true);        
         });
 
         const centerLat = totalLat / clubs.length;

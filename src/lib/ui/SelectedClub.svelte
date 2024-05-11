@@ -1,20 +1,14 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import ClubMap from "$lib/ui/ClubMap.svelte";
+    import type { Club } from "$lib/types/rugby-club-poi-types"; 
 
-	// export let club: Club[] = [];
+    export let data: any;
     export let clubs: Club[] = data.clubs;
-    // let emptyContainer;
-    // let lat, lng, clubID, clubName, clubAddress,mapID;
-
-    // lat = 53.435416;
-    // lng = -7.9230912;
-    
+   
 
     onMount(() => {
-    // Initialize your map here with mapContainer as the container
-
-    // After the map is initialized, hide the container
+    
         
         setTimeout(() => {            
             const hideAddressDivs = document.querySelectorAll('div[data-address]');
@@ -22,104 +16,12 @@
 
             const hideEmptySpace = document.getElementById('empty-space');
             hideEmptySpace.hidden = true;
-            // empty-space
-            // emptyContainer.hidden = true;          
+        
         }, 1000);
     });
-
-    // onMount(() => {
-    // // Create a new MutationObserver instance
-    // const observer = new MutationObserver(function(mutations) {
-    //   mutations.forEach(function(mutation) {
-    //     if (mutation.target.id === 'latitude') {
-    //       lat = mutation.target.textContent;
-    //     } else if (mutation.target.id === 'longitude') {
-    //       lng = mutation.target.textContent;
-    //     } else if (mutation.target.id === 'address') {
-    //         clubAddress = mutation.target.textContent;
-    //     } else if (mutation.target.id === 'id') {
-    //       clubID = mutation.target.textContent;
-    //       mapID = "rugbyclubpoi-" + clubID;
-    //       console.log(mapID);
-    //     } 
-    //   });
-    // });
-
-    // // Start observing the 'latitude' and 'longitude' divs for changes to their 'textContent'
-    // observer.observe(document.getElementById('latitude'), { childList: true });
-    // observer.observe(document.getElementById('longitude'), { childList: true });    
-    // observer.observe(document.getElementById('address'), { childList: true });   
-    // observer.observe(document.getElementById('id'), { childList: true });
-//   });
 </script>
 
-<div>
-	<!-- <div id="latitude" hidden>Temp</div>
-	<div id="longitude" hidden>Temp</div>
-    <div id="id" hidden></div>
-    <button on:click={() => alert(`lat: ${lat}, lng: ${lng}, clubID: ${clubID}`)}>
-        Show Coordinates
-      </button> -->
-
-	<!-- <div id="description"></div> -->
-	<!-- <div id="website"></div> -->
-	<!-- <div id="category"></div> -->
-	<!-- <div id="club"></div> 
-    <div id="address"></div>
-    <div id="phone"></div>
-    <div id="email" ></div>-->
-
-	<!-- <div class="blog-posts">
-		<div class="box box-link-hover-shadow">
-			<div class="columns is-fullwidth p-0 mb-0">
-				<div class="column has-text-left">
-					<h2 id="club" class="title club page-heading is-2 is-uppercase mb-0"></h2>
-				</div>
-				<div class="column has-text-right">
-					<h2 id="category" class="title page-heading is-2 is-uppercase mb-0"></h2>
-				</div>
-			</div>
-			<div class="columns featured-post is-multiline">
-				<div class="column is-12 post">
-					<article class="columns featured is-multiline pt-0">
-						<figure class="image is-520x360">
-							<div class="column">
-								
-                                <ClubMap id={mapID} lat={lat} lng={lng} />
-							</div>
-						</figure>
-						<div class="column featured-content va">
-							<div>
-								<h3 class="heading post-category">County</h3>
-								<h1 id="address" class="title post-title page-content is-3 mb-3"></h1>
-								<h3 class="heading post-category">Phone</h3>
-								<h1 id="phone" class="title post-title page-content is-3 mb-3"></h1>
-								<h3 class="heading post-category">Email</h3>
-								<h1 id="email" class="title post-title page-content is-3 mb-3"></h1>
-								<h3 class="heading post-category">Website</h3>
-								<h1 id="website" class="title post-title page-content is-3 mb-3"></h1>
-								<div class="buttons has-addons is-fullwidth">
-									<a id="place-link-location" class="button is-half" href="https://www.google.com/maps/?q={lat}%2C{lng}"
-                                        target="_blank"><i class="fas fa-location-dot fa-xl mr-2"></i> View Place</a>
-                                    <a id="place-link-directions" class="button is-half" href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination={lat}%2C{lng}"
-                                        target="_blank"><i class="fas fa-route fa-xl mr-2"></i> Get Directions</a>
-								</div>
-							</div>
-						</div>
-						<div class="column is-12 pb-0">
-							<h3 class="heading post-category">Description</h3>
-							<p id="description" class="post-excerpt"></p>
-							<br />
-						</div>
-						<a class="button view-club-details is-success is-outlined is-medium is-fullwidth has-addons mb-0" href="/clubs/clubdetails/{clubID}"><i class="fas fa-location-dot fa-xl mr-2"></i> View Club Details</a>     
-					</article>
-				</div>
-			</div>
-		</div>
-	</div> -->
-</div>
 <div id="empty-space" class="empty-space"></div>
-<!-- <div bind:this={emptyContainer} id="empty-space" class="empty-space" hidden></div> -->
 <style>
     #empty-space {
       height: 10000px; /* Replace with the height you want */

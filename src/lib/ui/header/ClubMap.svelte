@@ -14,8 +14,8 @@
         // renderMAP = true;
         lat = Number(club.latitude);
         lng = Number(club.longitude);
-        console.log(lat, lng);
-        console.log("id: " + id);
+        // console.log(lat, lng);
+        // console.log("id: " + id);
         // club.forEach((club: Club) => {
         // map.addMarker(Number(club.latitude), Number(club.longitude), club.club.toString());
         if (map) {

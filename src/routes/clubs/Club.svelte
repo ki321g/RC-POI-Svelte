@@ -47,8 +47,6 @@
     }
 </script>
 
-
-
 <section class="section pt-6">
     <div class="buttons is-flex is-align-items-center">
         <div on:click={showAllClubs} class="button mb-0">ALL</div>

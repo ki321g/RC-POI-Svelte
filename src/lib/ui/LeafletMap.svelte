@@ -19,6 +19,7 @@
   export let activeLayer = "Terrain";
   export let allowCategories = false;
   export let centerOnMarker = false;
+  // export let onClickPopup = true;
 
   export let club: Club[] = [];
   
@@ -129,37 +130,38 @@
     }
   });
 
-  export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club) {
+  export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club, onClickPopup) {
     const leaflet = await import("leaflet");
-    const marker = leaflet.marker([lat, lng]);    
+    const marker = leaflet.marker([lat, lng]);   
+    console.log(popupText); 
 
     marker.addTo(imap);
-    const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
-    popup.setContent(popupText);
-    marker.bindPopup(popup);  
+    if(onClickPopup) {
+      const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
+      popup.setContent(popupText);
+      marker.bindPopup(popup);  
 
-    
- 
+      // Add an event listener to the marker
+      marker.on('click', function() {
+        
+          const hiddenDiv = document.getElementById(currentClub.address);
 
-    // Add an event listener to the marker
-    marker.on('click', function() {
-        const hiddenDiv = document.getElementById(currentClub.address);
+          const hideAddressDivs = document.querySelectorAll('div[data-address]');
+          hideAddressDivs.forEach(div => div.hidden = true);
 
-        const hideAddressDivs = document.querySelectorAll('div[data-address]');
-        hideAddressDivs.forEach(div => div.hidden = true);
+          hiddenDiv.hidden = false;
 
-        hiddenDiv.hidden = false;
-
-        // Scroll to the div
-        setTimeout(() => {
-          window.scroll({
-            top: document.body.scrollHeight,
-            behavior: 'smooth'
-          });
-          
-        }, 300);
-    });
-
+          // Scroll to the div
+          setTimeout(() => {
+            window.scroll({
+              top: document.body.scrollHeight,
+              behavior: 'smooth'
+            });
+            
+          }, 300);
+        
+      });
+    };
     if (currentClub) {
       categoryLayers[currentClub.category].addLayer(marker);
       countyAdded.push(currentClub.address);
