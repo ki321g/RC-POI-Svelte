@@ -44,8 +44,8 @@
 
 
 
-<section class="section page-margin">
-	<h1 class="title page-heading is-2 is-uppercase mb-5">RUGBYCLUBPOI Charts</h1>
+<section class="section pt-6">
+	<h1 class="title page-heading is-2 is-uppercase mb-5">Charts</h1>
 	<div class="columns">
 		<div class="column is-narrow center-content">
 			Bar Chart

@@ -9,13 +9,15 @@
     // import ImageGallery from '$lib/ui/ImageGallery.svelte';
     import { onMount } from 'svelte';
     import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';   
-    import WeatherWidget from '$lib/ui/WeatherWidget.svelte';   
+    import WeatherWidget from '$lib/ui/WeatherWidget.svelte'; 
 
     // let renderMAP: boolean = false;
 
     export let club: Club[] = [];
     export let games: Game[] = [];
     export let images: Image[] = [];
+    export let currentForecast: any;
+    export let currentWeather: any;
 	let currentTab = 'Club Details';
 
     const clubCategories = ['JUNIOR', 'SENIOR'];
@@ -31,7 +33,7 @@
         // renderMAP = true;
         lat = Number(club.latitude);
         lng = Number(club.longitude);
-        console.log(lat, lng);
+        // console.log(lat, lng);
         const popup = `
             <h1><strong>${club.club}</strong></h1>
             <p>${club.address}</p>
@@ -55,8 +57,8 @@
         // Set the values of the form inputs
         if (confirmUpdate) {
             try {
-                console.log('Updating club...clubUpdate');
-                console.log(club);
+                // console.log('Updating club...clubUpdate');
+                // console.log(club);
                 clubForm.elements.clubid.value = club._id;
                 clubForm.elements.club.value = club.club;
                 clubForm.elements.address.value = club.address;
@@ -70,18 +72,18 @@
                 clubForm.elements.img.value = club.img;
                 clubForm.elements.userId.value = club.userId;
 
-                console.log(clubForm.elements.clubid.value);
-                console.log(clubForm.elements.club.value);
-                console.log(clubForm.elements.address.value);
-                console.log(clubForm.elements.phone.value);
-                console.log(clubForm.elements.email.value);
-                console.log(clubForm.elements.website.value);
-                console.log(clubForm.elements.latitude.value);
-                console.log(clubForm.elements.longitude.value);
-                console.log(clubForm.elements.description.value);
-                console.log(clubForm.elements.category.value);
-                console.log(clubForm.elements.img.value);
-                console.log(clubForm.elements.userId.value);
+                // console.log(clubForm.elements.clubid.value);
+                // console.log(clubForm.elements.club.value);
+                // console.log(clubForm.elements.address.value);
+                // console.log(clubForm.elements.phone.value);
+                // console.log(clubForm.elements.email.value);
+                // console.log(clubForm.elements.website.value);
+                // console.log(clubForm.elements.latitude.value);
+                // console.log(clubForm.elements.longitude.value);
+                // console.log(clubForm.elements.description.value);
+                // console.log(clubForm.elements.category.value);
+                // console.log(clubForm.elements.img.value);
+                // console.log(clubForm.elements.userId.value);
 
                 // Submit the form
                 clubForm.submit();
@@ -97,7 +99,7 @@
 
     async function clubDelete(club: Club) {
         const confirmDelete = confirm('Deleting the Club is irreversible. Please click OK to delete this Club?');
-        console.log(club);
+        // console.log(club);
         if (confirmDelete) {
             try {
                 deleteClub.elements.clubid.value = club._id;
@@ -121,9 +123,8 @@
 </script>
 
 <div class="blog-posts">
-
     <div class="box box-link-hover-shadow">
-        <WeatherWidget />
+        <WeatherWidget currentWeather={currentWeather} currentForecast={currentForecast} />
         <div class="columns is-fullwidth p-0 mb-0">
             <div class="column has-text-left">
                 <h2 class="title page-heading is-2 is-uppercase mb-0">
@@ -148,48 +149,37 @@
                     </figure>
                     <div class="column featured-content va is-6">
                         <div>
-							<!-- <button on:click={() => currentTab = 'Club Details'}>Club Details</button>
-							<button on:click={() => currentTab = 'Current Weather'}>Current Weather</button> -->
-                            <div class="tab-container">
-                                <button class="tab {currentTab === 'Club Details' ? 'active' : ''}" on:click={() => currentTab = 'Club Details'}>Club Details</button>
-                                <button class="tab {currentTab === 'Current Weather' ? 'active' : ''}" on:click={() => currentTab = 'Current Weather'}>Current Weather</button>
-							</div>
-                                {#if currentTab === 'Club Details'}
-								<h3 class="heading post-category pt-2">County</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.address} on:submit={submit('address')} />
-									<!-- {club.address} -->
-								</h1>
-								<h3 class="heading post-category">Phone</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.phone} on:submit={submit('phone')} />
-									<!-- {club.phone} -->
-								</h1>
-								<h3 class="heading post-category">Email</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.email} on:submit={submit('email')} />
-									<!-- {club.email} -->
-								</h1>
-								<h3 class="heading post-category">website</h3>
-								<h1 class="title post-title page-heading is-3 mb-3">
-									<InPlaceEdit bind:value={club.website} on:submit={submit('website')} />
-									<!-- {club.website} -->
-								</h1>
-								<div class="buttons has-addons is-fullwidth">
-									<a id="place-link-location" class="button is-half" href="https://www.google.com/maps/?q={club.latitude}%2C{club.longitude}" target="_blank"
-										><i class="fas fa-location-dot fa-lg mr-2"></i> View Place</a
-									>
-									<a
-										id="place-link-directions"
-										class="button is-half"
-										href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination={club.latitude}%2C{club.longitude}"
-										target="_blank"><i class="fas fa-route fa-lg mr-2"></i> Get Directions</a
-									>
-								</div>
-							{:else if currentTab === 'Current Weather'}
-								<!--  Current Weather GOES HERE -->
-                                Weather
-							{/if}       
+                            <h3 class="heading post-category pt-2">County</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.address} on:submit={submit('address')} />
+                                <!-- {club.address} -->
+                            </h1>
+                            <h3 class="heading post-category">Phone</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.phone} on:submit={submit('phone')} />
+                                <!-- {club.phone} -->
+                            </h1>
+                            <h3 class="heading post-category">Email</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.email} on:submit={submit('email')} />
+                                <!-- {club.email} -->
+                            </h1>
+                            <h3 class="heading post-category">website</h3>
+                            <h1 class="title post-title page-heading is-3 mb-3">
+                                <InPlaceEdit bind:value={club.website} on:submit={submit('website')} />
+                                <!-- {club.website} -->
+                            </h1>
+                            <div class="buttons has-addons is-fullwidth">
+                                <a id="place-link-location" class="button is-half" href="https://www.google.com/maps/?q={club.latitude}%2C{club.longitude}" target="_blank"
+                                    ><i class="fas fa-location-dot fa-lg mr-2"></i> View Place</a
+                                >
+                                <a
+                                    id="place-link-directions"
+                                    class="button is-half"
+                                    href="https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination={club.latitude}%2C{club.longitude}"
+                                    target="_blank"><i class="fas fa-route fa-lg mr-2"></i> Get Directions</a
+                                >
+                            </div>  
                         </div>
                     </div>
                 </article>
