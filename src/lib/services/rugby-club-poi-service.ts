@@ -49,7 +49,7 @@ export const RugbyClubPOIService = {
 	async getLoggedInUser(email: string): Promise<User | null> {
 		try {
 			const user = await userStore.findBy(email);
-			console.log('user: ', user);
+			// console.log('user: ', user);
 			if (user !== null) {
 				return user;
 			}
@@ -99,6 +99,7 @@ export const RugbyClubPOIService = {
 
 			let clubCounties = clubs.map((club) => club.address.toUpperCase()); // Create clubCounties array
 			clubCounties = [...new Set(clubCounties)]; // Remove duplicates
+			clubCounties.sort(); // Sorts Clubs
 
 			return clubCounties;
 		} catch (error) {
@@ -155,26 +156,6 @@ export const RugbyClubPOIService = {
 			return false;
 		}
 	},
-	// async addClubImage(club: Club, imageURL: string): Promise<Image[] | null> {
-	// 	try {
-	// 		// console.log('addClubImage function');
-	// 		// console.log(club);
-	// 		// console.log('imageURL: ', imageURL);
-
-	// 		const image: Image = {
-	// 			clubid: club._id,
-	// 			img: imageURL
-	// 		};
-	// 		// console.log(image);
-
-	// 		const returnedImage = await imageStore.add(image);
-	// 		// console.log(returnedImage);
-	// 		return JSON.parse(JSON.stringify(returnedImage));
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 		return [];
-	// 	}
-	// },
 	
 	async updateClub(club: Club): Promise<Club[]> {
 		try {
