@@ -8,9 +8,8 @@
 	import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.css';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types'; 
   
-
 	export const ssr = false;
 	const apiKey = import.meta.env.VITE_WEATHER_API; // API key from .env file
 
@@ -177,8 +176,29 @@
 	});
 
 	export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club, onClickPopup) {
-		const leaflet = await import('leaflet');
-		const marker = leaflet.marker([lat, lng]);
+		const iconUrl = '/images/marker-icon.png';  
+    const shadowUrl = './images/marker-shadow.png';
+    const iconRetinaUrl = '/images/marker-icon-2x.png';
+
+    const leaflet = await import('leaflet');
+    
+    const iconDefault = leaflet.icon({
+      iconRetinaUrl,
+      iconUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      tooltipAnchor: [16, -28],
+      shadowSize: [41, 41]
+    });
+
+		const marker = leaflet.marker(
+        [lat, lng],
+        {
+          icon: iconDefault
+        }
+    );
 		// console.log(popupText);
 
 		marker.addTo(imap);
@@ -187,7 +207,7 @@
         iconUrl: icon,
         shadowUrl: iconShadow
     });
-    
+
     leaflet.Marker.prototype.options.icon = DefaultIcon;
 
 		if (onClickPopup) {
