@@ -2,12 +2,21 @@
     import { onMount } from 'svelte';
     import ClubMap from "$lib/ui/ClubMap.svelte";
     import type { Club } from "$lib/types/rugby-club-poi-types"; 
+    import WeatherWidget from '$lib/ui/WeatherWidget.svelte'; 
+    import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
+    import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
 
     export let data: any;
-    export let clubs: Club[] = data.clubs;   
+    export let clubs: Club[] = data.clubs;  
+    
+    // export let currentForecast: any;
+    // export let currentWeather: any; 
+    // export let currentForecast: any = data.currentForecast;
+    // export let currentWeather: any = data.currentWeather;
 
     onMount(() => {   
-        
+        // console.log(clubs[0].currentWeather);
+        // console.log(clubs[0].currentForecast);
         setTimeout(() => {            
             const hideAddressDivs = document.querySelectorAll('div[data-address]');
             hideAddressDivs.forEach(div => div.hidden = true);
@@ -42,7 +51,7 @@
         </div>                    
         <div class="columns featured-post is-multiline">
             <div class="column is-12 post">
-                <article class="columns featured is-multiline pt-0">
+                <article class="columns featured is-multiline py-0">
                     <figure class="image is-520x360">
                         <div class="column">
                             <!-- <ClubMap club={club} id={club.club} /> -->
@@ -70,10 +79,19 @@
                     <div class="column is-12 pb-0">
                         <h3 class="heading post-category">Description</h3>
                         <p class="post-excerpt">{club.description}</p>
-                        <br>
                     </div>
-                    <a class="button view-club-details is-success is-outlined is-medium is-fullwidth has-addons mb-0" href="/clubs/clubdetails/{club._id}"><i class="fas fa-location-dot fa-xl mr-2"></i> View Club Details</a>
                 </article>
+                <div class="field has-background-light px-6 pb-4">
+                    <div class="has-text-left">
+                        <h2 class="title page-heading is-2 is-uppercase mb-0 pt-4">
+                            Current Weather
+                        </h2>
+                    </div>
+                    <div class="pb-4">
+                        <CurrentTemp currentWeather={club.currentWeather}/>
+                    </div>    
+                    <ForecastTemp currentForecast={club.currentForecast} />
+                </div>
             </div>
         </div>
     </div>

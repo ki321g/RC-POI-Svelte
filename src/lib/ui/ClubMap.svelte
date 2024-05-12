@@ -2,6 +2,9 @@
     import type { Club } from "$lib/types/rugby-club-poi-types";     
     import LeafletMap from "$lib/ui/LeafletMap.svelte";
     import { onMount } from "svelte";
+  // import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
+  // import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
+  // import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
 	  
     export let club: Club[] = [];
     export let id: any;
@@ -23,7 +26,7 @@
         }
         
         if (map) {
-              map.addMarker(Number(lat), Number(lng), popup, '', '', false);
+              map.addMarker(Number(lat), Number(lng), popup, '', club, false);
           }
     });
   </script>

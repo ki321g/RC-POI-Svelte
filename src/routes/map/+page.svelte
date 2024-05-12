@@ -6,6 +6,8 @@ div<script lang="ts">
 	import { onMount, onDestroy } from 'svelte';  
 
     export let data: any;
+    export let currentWeather: any;
+    export let currentForecast: any;
     let map: LeafletMap;
     let location = { lat: 53.1424, lng: -7.6921 }; // replace with your actual location    
     let counties:any;
@@ -66,12 +68,12 @@ div<script lang="ts">
         <div class="box box-link-hover-shadow">
             <div class="columns featured-post is-multiline">
                 <div class="column is-12 post">
-                    <LeafletMap allowCategories={true} height={80} width={130} minZoom={5} zoom={7} {location} bind:this={map} />
+                    <LeafletMap allowCategories={true} height={80} width={130} minZoom={1} zoom={7} {location} bind:this={map} />
                 </div>
             </div>
         </div>
     </div>
-    <div id="hiddenClub" >
+    <div id="scrollTo">
         <SelectedClub clubs={clubs}/>
     </div>
 </section>
