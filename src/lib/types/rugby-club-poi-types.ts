@@ -6,7 +6,7 @@ export interface Session {
 	lastName: string;
 	email: string;
 	accountType: string;
-	token: string;
+	// token: string;
 	_id: string;
 }
 
@@ -16,7 +16,7 @@ export interface User {
 	email: string;
 	password?: string;
 	accountType: string;
-	// _id?: string;
+	_id?: string;
 	//__v?: string;
 }
 
@@ -32,7 +32,7 @@ export interface Club {
 	category: string;
 	img?: [string];
 	userId: User['_id'];
-	// _id?: string;
+	_id?: string;
 }
 
 export interface Game {
@@ -43,16 +43,16 @@ export interface Game {
 	gametime: string;
 	gamelocation: string;
 	clubid: Club['_id'];
-	// clubid: {
-	// 	type: Schema.Types.ObjectId,
-	// 	ref: "Club";
-	// };
-	// _id?: string;
+	_id?: string;
 }
 
 export interface Image {
-	img: string;	
+	img: string;
+	// width: number,
+	// height: number,
+	// thumbnailURL: string,	
 	clubid: Club['_id'];
+	_id?: string;
 }
 
 export interface DataSet {

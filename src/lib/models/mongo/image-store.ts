@@ -14,15 +14,31 @@ export const imageStore = {
     }
     return null;
   },
+
+   
+
+  async findByClubId(clubId: string): Promise<Image | null> {
+    try{
+      // console.log('findByClubId image-store function');
+      // console.log(clubId);
+      const images = await ImageMongoose.find({ clubid: clubId }).lean() as Image | null;
+      
+      return images;
+    }
+    catch (error) {
+      console.log(error);
+      return null;
+    }
+  },   
   
   async add(image: Image): Promise<Image | null> {
     try {
-      console.log('addImage image-store function');
-			console.log(image);
+      // console.log('addImage image-store function');
+			// console.log(image);
       const newImage = new ImageMongoose(image);
       const imageObj = await newImage.save();
-      console.log('Saved image');
-      console.log(imageObj)
+      // console.log('Saved image');
+      // console.log(imageObj)
       return imageObj;
     } catch (error) {
       console.log(error);
@@ -30,26 +46,13 @@ export const imageStore = {
     }
   },
 
-      // Create a new image
-      // let newImage = new ImageMongoose({
-      //   img: image.img, // Replace with your actual data
-      //   clubid: image.clubid // Replace with your actual data
-      // });
-// Save the new image to the database
-      // newImage.save()
-      // .then(savedImage => {
-      //   console.log('Saved image:', savedImage);
-      // })
-      // .catch(error => {
-      //   console.error('Error saving image:', error);
-      // });
-
-
-
   async deleteOne(id: string) {
     try {
+      // console.log('deleteOne image-store function');  
+      // console.log("id: ", + id )
       await ImageMongoose.deleteOne({ _id: id });
     } catch (error) {
+      console.log("Error deleting image:", error.message);
       console.log("bad id");
     }
   },

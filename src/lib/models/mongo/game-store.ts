@@ -52,24 +52,20 @@ export const gameStore = {
         await GameMongoose.deleteMany({});
       },
 
-      async updateGame (id: string, updatedGame: Game): Promise<Game | null> {
+      async update(game: Game): Promise<Game | null> {
         try {
-          const game = await GameMongoose.findOne({ id: id });
-          if (game) {
-            game.home = updatedGame.home;
-            game.homescore = Number(updatedGame.homescore);
-            game.awayscore = Number(updatedGame.awayscore);
-            game.away = updatedGame.away;
-            game.gametime = updatedGame.gametime;
-            game.gamelocation = updatedGame.gamelocation;
-            const updatedGameObj = await game.save();
-            return updatedGameObj;
-          }
-          return null;
-        }
-        catch (error) {
+          // console.log('Updating :', game._id );  
+          const currentGame = await GameMongoose.findOne({ _id: game._id }).lean();
+          game._id = currentGame._id;
+          // console.log(game) 
+                  
+          const UpdatedGame = GameMongoose.updateOne({ _id: game._id }, { $set: game });    
+          return UpdatedGame;
+        } catch (error) {
           console.log(error);
           return null;
         }
       },
+
+
 };

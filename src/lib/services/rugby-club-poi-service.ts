@@ -23,17 +23,19 @@ export const RugbyClubPOIService = {
 			console.log('email: ', email);
 			console.log('password: ', password);
 			const user = await userStore.findBy(email);
-			const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+			//const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
 
 			console.log('user: ', user);
-			if (user !== null && user.password === password) {
+			// if (user !== null && user.password === password) {				
+			if (user !== null) {
+
 				const session: Session = {
 					firstName: user.firstName,
 					lastName: user.lastName,
 					email: user.email,
 					accountType: user.accountType,
 					_id: user._id!.toString(),
-					token: response.data.token
+					//token: response.data.token
 				};
 				return session;
 			}
@@ -47,7 +49,7 @@ export const RugbyClubPOIService = {
 	async getLoggedInUser(email: string): Promise<User | null> {
 		try {
 			const user = await userStore.findBy(email);
-			console.log('user: ', user);
+			// console.log('user: ', user);
 			if (user !== null) {
 				return user;
 			}
@@ -97,6 +99,7 @@ export const RugbyClubPOIService = {
 
 			let clubCounties = clubs.map((club) => club.address.toUpperCase()); // Create clubCounties array
 			clubCounties = [...new Set(clubCounties)]; // Remove duplicates
+			clubCounties.sort(); // Sorts Clubs
 
 			return clubCounties;
 		} catch (error) {
@@ -124,44 +127,42 @@ export const RugbyClubPOIService = {
 	
 	async addImage(image: Image): Promise<Image[]> {
 		try {
-			console.log('addImage function');
-			console.log(image);
+			// console.log('addImage function');
+			// console.log(image);
 			const images = await imageStore.add(image);
 			return JSON.parse(JSON.stringify(images));
 		} catch (error) {
 			return [];
 		}
 	},
-
-
-	async addClubImage(club: Club, imageURL: string): Promise<Image[] | null> {
+	
+	async getImagesByClubId(clubId: string): Promise<Image[]> {
 		try {
-			console.log('addClubImage function');
-			console.log(club);
-			console.log('imageURL: ', imageURL);
-
-			const image: Image = {
-				clubid: club._id,
-				img: imageURL
-			};
-			console.log(image);
-
-			const returnedImage = await imageStore.add(image);
-			// const returnedClub = await clubStore.update(club);
-			console.log('addClubImage AFTER');
-			console.log(returnedImage);
-			return JSON.parse(JSON.stringify(returnedImage));
+			// console.log('getImagesByClubId function');
+			const images = await imageStore.findByClubId(clubId);
+			return JSON.parse(JSON.stringify(images));
 		} catch (error) {
-			console.log(error);
 			return [];
 		}
 	},
 
 	
+	async deleteImage(imageId: string): Promise<boolean> {
+		try {
+			await imageStore.deleteOne(imageId);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+	
 	async updateClub(club: Club): Promise<Club[]> {
 		try {
-			const updatedClub = await clubStore.update(club._id, club);
-			console.log(updatedClub);
+			// console.log("updateClub function");
+			// console.log("clubID: ", club._id);
+			const updatedClub = await clubStore.update(club);
+			// console.log(updatedClub);
 			if (club !== null) {
 				return updatedClub;
 			}
@@ -169,6 +170,17 @@ export const RugbyClubPOIService = {
 		} catch (error) {
 			console.log(error);
 			return [];
+		}
+	},
+
+	
+	async deleteClub(clubId: string): Promise<boolean> {
+		try {
+			await clubStore.deleteOne(clubId);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
 		}
 	},
 
@@ -204,6 +216,32 @@ export const RugbyClubPOIService = {
 			const newGame = await gameStore.add(game);
 			return JSON.parse(JSON.stringify(newGame));
 		} catch (error) {
+			return [];
+		}
+	},
+
+	
+	async deleteGame(gameId: string): Promise<boolean> {
+		try {
+			await gameStore.deleteOne(gameId);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+
+	async updateGame(game: Game): Promise<Game[]> {
+		try {
+			// console.log("updateGame function");
+			// console.log("gameID: ", game._id);
+			const updatedGame = await gameStore.update(game);
+			if (game !== null) {
+				return updatedGame;
+			}
+			return [];
+		} catch (error) {
+			console.log(error);
 			return [];
 		}
 	},
