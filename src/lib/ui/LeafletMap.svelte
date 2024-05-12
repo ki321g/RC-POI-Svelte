@@ -1,12 +1,15 @@
 <script lang="ts">
-	import 'leaflet/dist/leaflet.css';
-	import { onMount } from 'svelte';
-	import type { Control, Map as LeafletMap, LayerGroup } from 'leaflet';
-	import { browser } from '$app/environment';
 	import L from 'leaflet';
+	import 'leaflet/dist/leaflet.css';
+	import type { Control, Marker, Map as LeafletMap, LayerGroup } from 'leaflet';
+  import icon from 'leaflet/dist/images/marker-icon.png';
+  import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 	import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 	import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.css';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+  
 
 	export const ssr = false;
 	const apiKey = import.meta.env.VITE_WEATHER_API; // API key from .env file
@@ -179,6 +182,14 @@
 		// console.log(popupText);
 
 		marker.addTo(imap);
+
+    let DefaultIcon = L.icon({
+        iconUrl: icon,
+        shadowUrl: iconShadow
+    });
+    
+    leaflet.Marker.prototype.options.icon = DefaultIcon;
+
 		if (onClickPopup) {
 			const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
 			popup.setContent(popupText);
