@@ -85,15 +85,15 @@
         })
       };
 
-      const openWeatherLayer = {
-          Precipitation: L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-          Temperature: L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50}),
-          Clouds: L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-          Wind: L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-          Rain: L.tileLayer(`https://tile.openweathermap.org/map/rain_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-          Snow: L.tileLayer(`https://tile.openweathermap.org/map/snow_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-          Pressure: L.tileLayer(`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-      };
+      // const openWeatherLayer = {
+      //     Precipitation: L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
+      //     Temperature: L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50}),
+      //     Clouds: L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
+      //     Wind: L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
+      //     Rain: L.tileLayer(`https://tile.openweathermap.org/map/rain_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
+      //     Snow: L.tileLayer(`https://tile.openweathermap.org/map/snow_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
+      //     Pressure: L.tileLayer(`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
+      // };
 
       let defaultLayer = baseLayers[activeLayer];
 
@@ -101,20 +101,21 @@
         center: [location.lat, location.lng],
         zoom: zoom,
         minZoom: minZoom,
-        layers: [defaultLayer, openWeatherLayer.Precipitation, openWeatherLayer.Clouds, openWeatherLayer.Wind]
+        // layers: [defaultLayer, openWeatherLayer.Precipitation, openWeatherLayer.Clouds, openWeatherLayer.Wind]
+        layers: [defaultLayer]
       });
       
       let groupedOverlays = {
               SelectCategory: {},
-              SelectWeather: {
-                  "Pressure": openWeatherLayer.Pressure,
-                  "Precipitation": openWeatherLayer.Precipitation,
-                  "Temperature": openWeatherLayer.Temperature,
-                  "Clouds": openWeatherLayer.Clouds,
-                  "Wind": openWeatherLayer.Wind,
-                  "Rain": openWeatherLayer.Rain,
-                  "Snow": openWeatherLayer.Snow,
-              },
+              // SelectWeather: {
+              //     "Pressure": openWeatherLayer.Pressure,
+              //     "Precipitation": openWeatherLayer.Precipitation,
+              //     "Temperature": openWeatherLayer.Temperature,
+              //     "Clouds": openWeatherLayer.Clouds,
+              //     "Wind": openWeatherLayer.Wind,
+              //     "Rain": openWeatherLayer.Rain,
+              //     "Snow": openWeatherLayer.Snow,
+              // },
               SelectCounty: {}
             };
 
