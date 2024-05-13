@@ -106,6 +106,14 @@ export const RugbyClubPOIService = {
 			return [];
 		}
 	},
+	async getClubByClubId(clubId: string): Promise<Club[]> {
+		try {
+			const clubs = await clubStore.findOne(clubId);
+			return JSON.parse(JSON.stringify(clubs));
+		} catch (error) {
+			return [];
+		}
+	},
 
 	async getClubByUserId(userId: string): Promise<Club[]> {
 		try {
