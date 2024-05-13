@@ -45,10 +45,10 @@
 		currentForecast.set(tempForecast.data.list);
 	}
 
-	onMount(() => {
-		console.log(club);
-		fetchWeatherData(club);
-	});
+	onMount(async () => {       
+        console.log(club);
+		await fetchWeatherData(club);
+    });
 </script>
 
 <div class="columns is-vcentered is-12">
