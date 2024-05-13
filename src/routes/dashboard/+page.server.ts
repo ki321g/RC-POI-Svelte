@@ -75,8 +75,8 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
 			games: await RugbyClubPOIService.getGamesByClubId(userClub._id),
 			images: await RugbyClubPOIService.getImagesByClubId(userClub._id),
-			currentForecast: currentForecast,
-			currentWeather: currentTemp,
+			// currentForecast: currentForecast,
+			// currentWeather: currentTemp,
 		};
 	}
 	  }	

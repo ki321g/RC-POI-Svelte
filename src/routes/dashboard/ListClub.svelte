@@ -124,7 +124,7 @@
 
 <div class="blog-posts">
     <div class="box box-link-hover-shadow">
-        <WeatherWidget currentWeather={currentWeather} currentForecast={currentForecast} />
+        <WeatherWidget club={club} />
         <div class="columns is-fullwidth p-0 mb-0">
             <div class="column has-text-left">
                 <h2 class="title page-heading is-2 is-uppercase mb-0">
