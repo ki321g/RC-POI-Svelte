@@ -13,8 +13,7 @@
 	let clubs = [];
   	let games = [];
 	let chartType = 'bar';
-	let chartTypes = ['bar', 'line', 'percentage'];
-  	
+	let chartTypes = ['bar', 'line', 'percentage'];  	
 
 	//export let clubs: Club[];
 	export let data: any;
@@ -44,23 +43,9 @@
 </script>
 
 
-<!-- <div class="">
-      <input type="radio" bind:group={chartType} value="bar"> Bar Chart
-      <input type="radio" bind:group={chartType} value="percentage"> Percentage Chart
-  </div>
-  {#if chartType === 'bar'}
-    <Chart type="bar" data={categoryData} />
-  {/if}
-  
-  {#if chartType === 'line'}
-  <Chart type="line" data={categoryData} />
-{/if}
-    {#if chartType === 'percentage'}
-      <Chart type="percentage" data={categoryData} />
-    {/if}  -->
 
-<section class="section page-margin">
-	<h1 class="title page-heading is-2 is-uppercase mb-5">RUGBYCLUBPOI Charts</h1>
+<section class="section pt-6">
+	<h1 class="title page-heading is-2 is-uppercase mb-5">Charts</h1>
 	<div class="columns">
 		<div class="column is-narrow center-content">
 			Bar Chart

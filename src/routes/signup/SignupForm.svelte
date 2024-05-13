@@ -7,14 +7,14 @@
     let password = "";
     let errorMessage = "";
   
-    async function signup() {
-      const success = false;
-      if (success) {
-        goto("/dashboard");
-      } else {
-        errorMessage = "Error Trying to sign up";
-      }
-    }
+    // async function signup() {
+    //   const success = false;
+    //   if (success) {
+    //     goto("/dashboard");
+    //   } else {
+    //     errorMessage = "Error Trying to sign up";
+    //   }
+    // }
   </script>
 
 {#if errorMessage}

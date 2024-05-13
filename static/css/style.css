@@ -160,6 +160,12 @@
 	border: 2px solid #ffffff;
 }
 
+.controlBtn.button.is-half {
+	width: 50%;
+	border: 2px solid #ffffff;
+}
+
+
 .button.imgBtn.is-warning:hover,
 .button.controlBtn.is-warning:hover {
 	background-color: #ffaa00; /* Darker shade of warning color */
@@ -185,4 +191,17 @@ button {
 
 .table-centered th {
 	text-align: center !important;
+}
+
+/* Gallery top */
+.pswp__top-bar {
+	top: 70px !important;
+}
+
+
+/* .graph-svg-tip, .graph-svg-tip > .svg-pointer{
+    background: #fff !important;
+} */
+.graph-svg-tip > .title, .graph-svg-tip > .title > strong {
+    color: #dedede !important;
 }

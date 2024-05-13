@@ -1,6 +1,8 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import type { Club } from "$lib/types/rugby-club-poi-types";
+    import type { Club } from "$lib/types/rugby-club-poi-types";    
+    // import ClubMap from "$lib/ui/header/ClubMap.svelte";
+    import ClubMap from "$lib/ui/ClubMap.svelte";
   
     export let clubs: Club[];
     export let clubCounties: string[];
@@ -62,10 +64,20 @@
         <div class="columns featured-post is-multiline">
             <div class="column is-12 post">
                 <article class="columns featured is-multiline pt-0">
-                    {#if club.img}
+                    <!-- <figure class="image is-520x360">
+                        <div class="column">
+                            <LeafletMap height={36} bind:this={map} />
+                        </div>
+                    </figure>   -->
                     <figure class="image is-520x360">
                         <div class="column">
-                            <img src={club.img} alt="">
+                            <ClubMap club={club} id={club.club} />
+                        </div>
+                    </figure> 
+                    <!-- {#if club.latitude && club.longitude}
+                    <figure class="image is-520x360">
+                        <div class="column">
+                            <img src={club.img.toString()} alt="">                            
                         </div>
                     </figure>                                
                     {:else} 
@@ -74,7 +86,7 @@
                             <img src="/images/club-image.png" alt="">
                         </div>                                
                     </figure>   
-                    {/if}
+                    {/if} -->
                     <div class="column featured-content va">
                         <div>
                             <h3 class="heading post-category">County</h3>

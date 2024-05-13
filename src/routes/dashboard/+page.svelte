@@ -1,21 +1,18 @@
 <script lang="ts">
 	import ListClub from "./ListClub.svelte";
+	import AddClub from "./AddClub.svelte";
 	
 	export let data: any;
-
 </script>
-
-
 
 <section class="section pt-6">
 	{#if data.clubs}
 	
-	<ListClub club={data.clubs} />
-
-
+	<ListClub club={data.clubs} games={data.games} images={data.images} currentWeather={data.currentWeather} currentForecast={data.currentForecast}/>
+	
 	<!-- {data.clubs._id} -->
 	{:else}
-	<h1 class="title page-heading is-2 is-uppercase mb-3">No Clubs</h1>
+	<AddClub />
 	{/if}
 	
 </section>

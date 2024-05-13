@@ -4,12 +4,7 @@
 	import { enhance } from '$app/forms';
 
 	export let user: User[];
-
-    // let firstName = "";
-    // let lastName = "";
-    // let email = "";
-    // let password = "";
-    let errorMessage = "";
+  let errorMessage = "";
 
 </script>
 
