@@ -88,9 +88,9 @@
                         </h2>
                     </div>
                     <div class="pb-4">
-                        <CurrentTemp currentWeather={club.currentWeather}/>
+                        <CurrentTemp currentWeather={club.currentWeather} />
                     </div>    
-                    <ForecastTemp currentForecast={club.currentForecast} />
+                        <ForecastTemp currentForecast={club.currentForecast}/>
                 </div>
             </div>
         </div>

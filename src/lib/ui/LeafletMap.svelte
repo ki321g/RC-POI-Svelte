@@ -118,13 +118,13 @@
 			};
 
 			const openWeatherLayer = {
-				Precipitation: L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-				Temperature: L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-				Clouds: L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-				Wind: L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-				Rain: L.tileLayer(`https://tile.openweathermap.org/map/rain_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-				Snow: L.tileLayer(`https://tile.openweathermap.org/map/snow_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 }),
-				Pressure: L.tileLayer(`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 50 })
+				Precipitation: L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 }),
+				Temperature: L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 }),
+				Clouds: L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 }),
+				Wind: L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 }),
+				Rain: L.tileLayer(`https://tile.openweathermap.org/map/rain_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 }),
+				Snow: L.tileLayer(`https://tile.openweathermap.org/map/snow_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 }),
+				Pressure: L.tileLayer(`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${apiKey}`, { opacity: 0.5 })
 			};
 
 			let defaultLayer = baseLayers[activeLayer];
@@ -176,8 +176,8 @@
 	});
 
 	export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club, onClickPopup) {
-		const iconUrl = '/images/marker-icon.png';  
-    const shadowUrl = './images/marker-shadow.png';
+	const iconUrl = '/images/marker-icon.png';  
+    const shadowUrl = '/images/marker-shadow.png';
     const iconRetinaUrl = '/images/marker-icon-2x.png';
 
     const leaflet = await import('leaflet');

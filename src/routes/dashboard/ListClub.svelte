@@ -2,8 +2,8 @@
     import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
     import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
     import UploadWidget from './UploadWidget.svelte';
-    import ClubGames from './ClubGames.svelte'
-    import ClubGallery from './ClubGallery.svelte'
+    import ClubGames from '$lib/ui/ClubGames.svelte'
+    import ClubGallery from '$lib/ui/ClubGallery.svelte'
     import LeafletMap from '$lib/ui/LeafletMap.svelte';
     // import SimpleGallery from '$lib/ui/SimpleGallery.svelte';    
     // import ImageGallery from '$lib/ui/ImageGallery.svelte';
@@ -144,7 +144,7 @@
                 <article class="columns featured is-multiline is-fullwidth pt-0">
                     <figure class="column image is-520x360">
                         <div class="column is-6">
-                            <LeafletMap id={club._id} activeLayer="Satellite" minZoom={5} zoom={16} centerOnMarker={true} height={42} bind:this={map} />
+                            <LeafletMap id={club._id} activeLayer="Satellite" minZoom={5} zoom={16} centerOnMarker={true} height={38} bind:this={map} />
                         </div>
                     </figure>
                     <div class="column featured-content va is-6">
@@ -184,7 +184,7 @@
                     </div>
                 </article>
                 <div class="columns is-multiline is-fullwidth pt-0">
-                    <div class="column is-3 pb-0">
+                    <div class="column is-3 pb-0 pl-6">
                         <h3 class="heading post-category">longitude</h3>
                         <p class="post-excerpt">
                             <InPlaceEdit bind:value={club.longitude} on:submit={submit('longitude')} />

@@ -131,7 +131,8 @@
                         <p class="post-excerpt">{club.description}</p>
                         <br>
                     </div>
-                    <a class="button view-club-details is-success is-outlined is-medium is-fullwidth has-addons mb-0" href="/clubs/clubdetails/{club._id}"><i class="fas fa-location-dot fa-xl mr-2"></i> View Club Details</a>
+                    <!-- <a class="button view-club-details is-success is-outlined is-medium is-fullwidth has-addons mb-0" href="/clubs/{club._id}/{club.userId}"><i class="fas fa-location-dot fa-xl mr-2"></i> View Club Details</a> -->
+                    <a class="button view-club-details is-success is-outlined is-medium is-fullwidth has-addons mb-0" href="/clubs/{club._id}"><i class="fas fa-location-dot fa-xl mr-2"></i> View Club Details</a>
                 </article>
             </div>
         </div>
