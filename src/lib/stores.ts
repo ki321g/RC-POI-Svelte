@@ -8,4 +8,5 @@ export const latestClub = writable<Club>();
 export const clubStore = writable<Club[]>([]);
 export const imageNotification = writable('');
 export const imageNotificationColor = writable('');
-
+export const currentForecast = writable<any[]>([]);
+export const currentWeather = writable<any[]>([]);

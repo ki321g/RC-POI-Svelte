@@ -5,9 +5,13 @@
     import WeatherWidget from '$lib/ui/WeatherWidget.svelte'; 
     import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
     import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
+    import { currentForecast, currentWeather } from '$lib/stores';	
+    import { onDestroy } from 'svelte';
 
     export let data: any;
     export let clubs: Club[] = data.clubs;  
+
+    
     
     // export let currentForecast: any;
     // export let currentWeather: any; 
@@ -88,9 +92,9 @@
                         </h2>
                     </div>
                     <div class="pb-4">
-                        <CurrentTemp currentWeather={club.currentWeather} />
+                        <CurrentTemp />
                     </div>    
-                        <ForecastTemp currentForecast={club.currentForecast}/>
+                        <ForecastTemp />
                 </div>
             </div>
         </div>

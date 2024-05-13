@@ -2,14 +2,17 @@
 	import L from 'leaflet';
 	import 'leaflet/dist/leaflet.css';
 	import type { Control, Marker, Map as LeafletMap, LayerGroup } from 'leaflet';
-  import icon from 'leaflet/dist/images/marker-icon.png';
-  import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+	import icon from 'leaflet/dist/images/marker-icon.png';
+	import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 	import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 	import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.css';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types'; 
-  
+	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+	import { currentForecast, currentWeather } from '$lib/stores';
+	import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
+	import { onDestroy } from 'svelte';
+
 	export const ssr = false;
 	const apiKey = import.meta.env.VITE_WEATHER_API; // API key from .env file
 
@@ -176,39 +179,36 @@
 	});
 
 	export async function addMarker(lat: number, lng: number, popupText: string, currentClub: Club, onClickPopup) {
-	const iconUrl = '/images/marker-icon.png';  
-    const shadowUrl = '/images/marker-shadow.png';
-    const iconRetinaUrl = '/images/marker-icon-2x.png';
+		const iconUrl = '/images/marker-icon.png';
+		const shadowUrl = '/images/marker-shadow.png';
+		const iconRetinaUrl = '/images/marker-icon-2x.png';
 
-    const leaflet = await import('leaflet');
-    
-    const iconDefault = leaflet.icon({
-      iconRetinaUrl,
-      iconUrl,
-      shadowUrl,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      tooltipAnchor: [16, -28],
-      shadowSize: [41, 41]
-    });
+		const leaflet = await import('leaflet');
 
-		const marker = leaflet.marker(
-        [lat, lng],
-        {
-          icon: iconDefault
-        }
-    );
+		const iconDefault = leaflet.icon({
+			iconRetinaUrl,
+			iconUrl,
+			shadowUrl,
+			iconSize: [25, 41],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			tooltipAnchor: [16, -28],
+			shadowSize: [41, 41]
+		});
+
+		const marker = leaflet.marker([lat, lng], {
+			icon: iconDefault
+		});
 		// console.log(popupText);
 
 		marker.addTo(imap);
 
-    let DefaultIcon = L.icon({
-        iconUrl: icon,
-        shadowUrl: iconShadow
-    });
+		let DefaultIcon = L.icon({
+			iconUrl: icon,
+			shadowUrl: iconShadow
+		});
 
-    leaflet.Marker.prototype.options.icon = DefaultIcon;
+		leaflet.Marker.prototype.options.icon = DefaultIcon;
 
 		if (onClickPopup) {
 			const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
@@ -216,8 +216,11 @@
 			marker.bindPopup(popup);
 
 			// Add an event listener to the marker
-			marker.on('click', function () {
+			marker.on('click', async function () {
 				const hiddenDiv = document.getElementById(currentClub.address);
+
+				//fetch weather data
+				await fetchWeatherData(currentClub);
 
 				const hideAddressDivs = document.querySelectorAll('div[data-address]');
 				hideAddressDivs.forEach((div) => (div.hidden = true));
@@ -247,6 +250,35 @@
 	}
 	export function moveTo(lat: number, lng: number) {
 		imap.flyTo({ lat: lat, lng: lng });
+	}
+
+	async function fetchWeatherData(club: Club) {
+		//variable for weather data
+		let setWeather: setWeather = {
+			temp: null,
+			feels_like: null,
+			humidity: null,
+			description: null,
+			iconCode: null
+		};
+
+		// fetch weather data from openweathermap
+		let tempWeather = await generateReading(club.latitude, club.longitude);
+
+		// set weather data
+		setWeather.temp = tempWeather.data.main.temp;
+		setWeather.feels_like = tempWeather.data.main.feels_like;
+		setWeather.humidity = tempWeather.data.main.humidity;
+		setWeather.description = tempWeather.data.weather[0].description;
+		setWeather.iconCode = tempWeather.data.weather[0].id;
+
+		// Set weather store data
+		currentWeather.set(setWeather);
+
+		// fetch forecast data from openweathermap
+		let tempForecast = await generateForecast(club.latitude, club.longitude);
+		// set forecast store data
+		currentForecast.set(tempForecast.data.list);
 	}
 </script>
 
