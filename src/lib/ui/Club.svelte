@@ -1,7 +1,8 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import type { Club } from "$lib/types/rugby-club-poi-types";    
-    import ClubMap from "$lib/ui/header/ClubMap.svelte";
+    // import ClubMap from "$lib/ui/header/ClubMap.svelte";
+    import ClubMap from "$lib/ui/ClubMap.svelte";
   
     export let clubs: Club[];
     export let clubCounties: string[];
