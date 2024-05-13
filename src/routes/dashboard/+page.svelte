@@ -1,8 +1,8 @@
 <script lang="ts">
 	import ListClub from "./ListClub.svelte";
 	import AddClub from "./AddClub.svelte";
-	
-	export let data: any;
+
+export let data: any;
 </script>
 
 <section class="section pt-6">
