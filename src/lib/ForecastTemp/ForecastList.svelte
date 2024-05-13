@@ -3,12 +3,12 @@
     import axios from "axios";
     import { onMount } from 'svelte';
     import ForecastItem from "./ForecastItem.svelte";
+    import { currentForecast, currentWeather } from '$lib/stores';	
+    import { onDestroy } from 'svelte';
+
     export let mode: "hourly" | "daily";
   
-    const FORECAST_API_URL = "https://api.openweathermap.org/data/2.5/forecast";
-    
-    export let currentForecast: any;
-    
+    const FORECAST_API_URL = "https://api.openweathermap.org/data/2.5/forecast";    
 
     let tempList: Array<{
       dt_txt: string;
@@ -20,30 +20,23 @@
         id: number;
       }>;
     }> = [];
+
+    let forecast;
+    const unsubscribe = currentForecast.subscribe(value => {
+      forecast = value;
+    });
+
+    onDestroy(unsubscribe);
     
     onMount(() => {      
-      // console.log("kieron is here")
-      // console.log(currentForecast);
-      tempList = currentForecast;
+
     });
-    // location.subscribe((location) => {
-    //   if (location.name) {
-    //     axios(FORECAST_API_URL, {
-    //       params: {
-    //         lat: location.lat,
-    //         lon: location.lon,
-    //         appid: import.meta.env.VITE_WEATHER_API_KEY,
-    //       },
-    //     }).then(({ data }) => {
-    //       tempList = data.list;
-    //     });
-    //   }
-    // });
+
   </script>
   
-  <div class="forecast-list has-background-white" class:skeleton={!tempList.length}>
-    {#if tempList.length}
-      {#each tempList as temp, index}
+  <div class="forecast-list has-background-white" class:skeleton={!forecast.length}>
+    {#if forecast.length}
+      {#each forecast as temp, index}
         {#if (mode === "hourly" && index < 10) || (mode === "daily" && index % 8 === 0)}
           <ForecastItem {temp} {mode} />
         {/if}
