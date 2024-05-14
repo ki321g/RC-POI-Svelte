@@ -13,7 +13,7 @@ export function getCategoryData(clubs: Club[]): DataSet {
     // Update chart data
     categoriesTotal.labels = Object.keys(categoryCounts);
     categoriesTotal.datasets[0].values = Object.values(categoryCounts);
-    // console.log(categoriesTotal);
+    console.log(categoriesTotal);
     return categoriesTotal;
 }
 
@@ -30,6 +30,65 @@ export function getGamesData(games: Game[]): DataSetGames {
     gamesData.datasets[1].chartType = 'line';
     gamesData.datasets[1].values = games.map(game => game.awayscore);    
 
-    // console.log(gamesData);
+    console.log(gamesData);
     return gamesData;
+}
+
+export function getClubsPerCountyData(clubs: Club[]): DataSet {
+    let countyAnalytics = [];
+    const countyData: DataSet = { labels: [], datasets: [{ values: [] }], };
+
+    clubs.forEach((club) => {
+        try {
+          const index = countyAnalytics.findIndex((c) => c.address === club.address);
+          if (index !== -1) {
+            countyAnalytics[index].clubCount += 1;
+          } else {
+            countyAnalytics.push({ address: club.address, clubCount: 1 });
+          }
+        } catch (error) {
+          console.error("Error processing club:", club._id, error);
+        }
+      });
+
+    countyData.labels = countyAnalytics.map(item => item.address);    
+    countyData.datasets[0].values = countyAnalytics.map(item => item.clubCount); 
+    console.log(countyData);   
+
+    // Update chart data
+    return countyData;
+}
+
+export function getGamesPlayedData(clubs: Club[], games: Game[]): DataSet {
+    let gamesAnalytics = [];
+    const gamesPlayedData: DataSet = { labels: [], datasets: [{ values: [] }], };
+
+
+     // Calculate the Club with the most games
+    //  clubs.forEach((club) => {
+    //     try {
+    //       const maxGamesPerClub = { clubid: club._id, club: club.club, address: club.address, gameCount: games.length };
+    //       gamesAnalytics.push(maxGamesPerClub);
+    //     } catch (error) {
+    //       console.error("Error processing club:", club._id, error);
+    //     }
+    //   });
+    clubs.forEach((club) => {
+        try {
+          const gameCount = games.filter(game => game.clubid === club._id).length;
+          if (gameCount > 0) {
+            const maxGamesPerClub = { clubid: club._id, club: club.club, address: club.address, gameCount: gameCount };
+            gamesAnalytics.push(maxGamesPerClub);
+          }
+        } catch (error) {
+          console.error("Error processing club:", club._id, error);
+        }
+      });
+
+    gamesPlayedData.labels = gamesAnalytics.map(item => item.address);    
+    gamesPlayedData.datasets[0].values = gamesAnalytics.map(item => item.gameCount); 
+    console.log(gamesPlayedData);   
+
+    // Update chart data
+    return gamesPlayedData;
 }
