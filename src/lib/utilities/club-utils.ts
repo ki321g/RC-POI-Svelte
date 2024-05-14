@@ -85,7 +85,7 @@ export function getGamesPlayedData(clubs: Club[], games: Game[]): DataSet {
         }
       });
 
-    gamesPlayedData.labels = gamesAnalytics.map(item => item.address);    
+    gamesPlayedData.labels = gamesAnalytics.map(item => item.club);    
     gamesPlayedData.datasets[0].values = gamesAnalytics.map(item => item.gameCount); 
     console.log(gamesPlayedData);   
 
