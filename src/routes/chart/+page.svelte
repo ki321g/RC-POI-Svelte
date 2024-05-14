@@ -124,7 +124,7 @@
 	<div class="blog-posts">
 		<div class="box box-link-hover-shadow">
 			<h1 class="title page-heading is-2 is-uppercase mb-5">Charts</h1>
-			<Card title="Testing">
+			<Card title="Weather Forecast">
 				<span slot="first-select-header" class="is-flex is-align-items-center">
 					<div class="select is-normmediumal mr-3">
 						<select bind:value={selectedClub} on:change={clubChange(data.clubs)}>

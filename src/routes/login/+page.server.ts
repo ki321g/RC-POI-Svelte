@@ -36,7 +36,11 @@ export const actions = {
 				secure: !dev,
 				maxAge: 60 * 60 * 24 * 7 // one week
 			});
-			throw redirect(303, '/dashboard');
+			if(user.accountType === 'superadmin') {
+				throw redirect(303, '/admin');
+			} else {
+				throw redirect(303, '/dashboard');
+			}
 		  } else {
 			// The passwords do not match, throw an error
 			throw new Error('Invalid password');
