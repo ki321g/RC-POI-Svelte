@@ -40,7 +40,7 @@
     }
   </style>
 {#each clubs as club (club._id)}
-<div id="{club.address}" class="blog-posts" data-address="{club.address}">
+<div id="{club.address}_{club._id}" class="blog-posts" data-address="{club.address}" data-id="{club._id}">
     <div class="box box-link-hover-shadow">
         <div class="columns is-fullwidth p-0 mb-0">
             <div class="column has-text-left">
