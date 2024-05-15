@@ -16,10 +16,11 @@
         // console.log(lat, lng);
         // console.log(id)
         if (club) {
-          popup = `
-              <h1><strong>${club.club}</strong></h1>
-              <p>${club.address}</p>
-          `;
+          popup = ` `;
+          // popup = `
+          //     <h1><strong>${club.club}</strong></h1>
+          //     <p>${club.address}</p>
+          // `;
         }
         
         if (map) {

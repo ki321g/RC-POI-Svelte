@@ -9,5 +9,5 @@
     <div class="pb-4">
         <CurrentTemp currentWeather={data.currentWeather}/>
     </div>    
-    <ForecastTemp currentForecast={data.currentForecast} />
+        <ForecastTemp currentForecast={data.currentForecast} />
 </section>

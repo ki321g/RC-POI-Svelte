@@ -11,6 +11,7 @@
 	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
 	import { currentForecast, currentWeather } from '$lib/stores';
 	import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
+    import { toSentenceCase } from "$lib/utilities/toSentenceCase";
 	import { onDestroy } from 'svelte';
 
 	export const ssr = false;
@@ -26,6 +27,13 @@
 	export let allowCategories = false;
 	export let centerOnMarker = false;
 	// export let onClickPopup = true;
+
+	let weather;
+    const unsubscribe = currentWeather.subscribe(value => {
+      weather = value;
+    });
+
+    onDestroy(unsubscribe);
 
 	let imap: LeafletMap;
 	let control: Control.Layers;
@@ -212,7 +220,7 @@
 
 		if (onClickPopup) {
 			const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
-			popup.setContent(popupText);
+			// popup.setContent(popupText);
 			marker.bindPopup(popup);
 
 			// Add an event listener to the marker
@@ -221,6 +229,23 @@
 
 				//fetch weather data
 				await fetchWeatherData(currentClub);
+
+				// popupText += 
+				// Adding weather to popupText
+				popupText += `
+					<br><br><strong>${toSentenceCase(weather.description)}</strong>
+					<br><strong>Temp: </strong><span class="current-temp">${weather.temp}&deg;C</span>
+					<br><strong>Feels like </strong>${weather.feels_like}&deg;C
+					<br><strong>Humidity: </strong>${weather.humidity}%
+				`;
+
+				// popupText += `<br>Temperature: ${weather.temp}
+				// <br>Feels Like: ${weather.feels_like}
+				// <br>Humidity: ${weather.humidity}
+				// <br>Description: ${weather.description}
+				// `;
+
+				popup.setContent(popupText);
 
 				const hideAddressDivs = document.querySelectorAll('div[data-address]');
 				hideAddressDivs.forEach((div) => (div.hidden = true));
@@ -234,7 +259,7 @@
 						top: 825,
 						behavior: 'smooth'
 					});
-				}, 300);
+				}, 1000);
 			});
 		}
 		if (currentClub) {
