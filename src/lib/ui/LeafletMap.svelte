@@ -12,6 +12,8 @@
 	import { currentForecast, currentWeather } from '$lib/stores';
 	import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
     import { toSentenceCase } from "$lib/utilities/toSentenceCase";
+    import WeatherIcon from "$lib/ui/WeatherIcon.svelte"; 
+	import { getWeatherIcon } from "$lib/utilities/getWeatherIcon";
 	import { onDestroy } from 'svelte';
 
 	export const ssr = false;
@@ -225,29 +227,42 @@
 
 			// Add an event listener to the marker
 			marker.on('click', async function () {
-				const hiddenDiv = document.getElementById(currentClub.address);
+				const hiddenID = currentClub.address.toString() + "_" + currentClub._id.toString() 
+				const hiddenDiv = document.getElementById(hiddenID);
 
 				//fetch weather data
 				await fetchWeatherData(currentClub);
 
-				// popupText += 
+				
 				// Adding weather to popupText
+				const weatherIcon = getWeatherIcon(weather.iconCode)
+				
+								
 				popupText += `
-					<br><br><strong>${toSentenceCase(weather.description)}</strong>
-					<br><strong>Temp: </strong><span class="current-temp">${weather.temp}&deg;C</span>
-					<br><strong>Feels like </strong>${weather.feels_like}&deg;C
-					<br><strong>Humidity: </strong>${weather.humidity}%
+					<div class="columns is-centered is-vcentered mt-3">
+						<div class="column is-narrow">
+							<i class="${weatherIcon}" style="font-size: 4em;"></i>
+							<br><strong>${toSentenceCase(weather.description)}</strong>
+						</div>
+						<div class="column">
+							<strong>Temp: </strong><span class="current-temp">${weather.temp}&deg;C</span><br>
+							<strong>Feels like </strong>${weather.feels_like}&deg;C<br>
+							<strong>Humidity: </strong>${weather.humidity}%
+						</div>
+					</div>
 				`;
 
-				// popupText += `<br>Temperature: ${weather.temp}
-				// <br>Feels Like: ${weather.feels_like}
-				// <br>Humidity: ${weather.humidity}
-				// <br>Description: ${weather.description}
+				// popupText += `
+				// 	<i class="${weatherIcon}"></i>
+				// 	<br><br><strong>${toSentenceCase(weather.description)}</strong>
+				// 	<br><strong>Temp: </strong><span class="current-temp">${weather.temp}&deg;C</span>
+				// 	<br><strong>Feels like </strong>${weather.feels_like}&deg;C
+				// 	<br><strong>Humidity: </strong>${weather.humidity}%
 				// `;
 
 				popup.setContent(popupText);
 
-				const hideAddressDivs = document.querySelectorAll('div[data-address]');
+				const hideAddressDivs = document.querySelectorAll('div[data-id]');
 				hideAddressDivs.forEach((div) => (div.hidden = true));
 
 				hiddenDiv.hidden = false;

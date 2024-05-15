@@ -32,7 +32,7 @@
 
 		clubs.forEach((club: Club) => {
 			const popup = `
-                <strong>Club: ${club.club}</strong>
+			<span style="text-transform: uppercase; font-size: 1em;"><strong>${club.club}</strong></span>
                 <br><strong>County:</strong> ${club.address}
                 <br><strong>Phone:</strong> ${club.phone}
                 <br><strong>Email:</strong> ${club.email}
