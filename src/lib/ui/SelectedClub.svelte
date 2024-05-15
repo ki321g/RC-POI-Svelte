@@ -21,6 +21,7 @@
     onMount(() => {   
         // console.log(clubs[0].currentWeather);
         // console.log(clubs[0].currentForecast);
+        //Timeout to ensure maps load before hiding divs
         setTimeout(() => {            
             const hideAddressDivs = document.querySelectorAll('div[data-address]');
             hideAddressDivs.forEach(div => div.hidden = true);
@@ -28,7 +29,7 @@
             const hideEmptySpace = document.getElementById('empty-space');
             hideEmptySpace.hidden = true;
         
-        }, 1000);
+        }, 500);
     });
 </script>
 
