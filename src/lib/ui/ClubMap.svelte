@@ -16,7 +16,7 @@
         // console.log(lat, lng);
         // console.log(id)
         if (club) {
-          popup = ` `;
+          // popup = ` `;
           // popup = `
           //     <h1><strong>${club.club}</strong></h1>
           //     <p>${club.address}</p>
@@ -24,7 +24,7 @@
         }
         
         if (map) {
-              map.addMarker(Number(lat), Number(lng), popup, '', club, false);
+              map.addMarker(Number(lat), Number(lng), popup, '', false);
           }
     });
   </script>
