@@ -85,20 +85,22 @@
                         <h3 class="heading post-category">Description</h3>
                         <p class="post-excerpt">{club.description}</p>
                     </div>
-                </article>
-                <div class="field has-background-light px-6 pb-4">
-                    <div class="has-text-left">
-                        <h2 class="title page-heading is-2 is-uppercase mb-0 pt-4">
-                            Current Weather
-                        </h2>
-                    </div>
-                    <div class="pb-4">
-                        <CurrentTemp />
-                    </div>    
-                        <ForecastTemp />
-                </div>
+                </article>                
             </div>
         </div>
     </div>
-</div> 
+    <div class="box box-link-hover-shadow">
+        <div class="field has-background-light px-6 pb-4">
+            <div class="has-text-left">
+                <h2 class="title page-heading is-2 is-uppercase mb-0 pt-4">
+                    Current Weather
+                </h2>
+            </div>
+            <div class="pb-4">
+                <CurrentTemp />
+            </div>    
+                <ForecastTemp />
+        </div>
+    </div>
+</div>
 {/each}
