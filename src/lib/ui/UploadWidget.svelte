@@ -70,7 +70,7 @@
     eager: [
         { width: "25%", height: "25%", crop: "scale" }
     ]
-}}>	
+}}>
     
     {#if notification !== "" && color !== ""}
     <div class="is-fullwidth p-1 has-text-centered has-text-weight-bold is-size-3 is-uppercase">
@@ -79,7 +79,6 @@
           </div>
     </div>
     {/if}
-
 
 
     <div class="buttons has-addons is-fullwidth">        
