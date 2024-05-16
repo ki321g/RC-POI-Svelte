@@ -2,6 +2,8 @@
 	import { auth, user } from '$lib/firebase/firebase';
 	import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 	import SignupForm from "./SignupForm.svelte";
+  import { redirect } from '@sveltejs/kit';
+  import { goto } from '$app/navigation';
 
   let firstName = '';
 	let lastName = '';
@@ -9,6 +11,7 @@
 	let password = '';
 	let accountType = 'user';
   let newUser: any;
+  let signedUp = false;
 
   function generatePassword(length) {
     const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -51,6 +54,12 @@
 			},
 			body: JSON.stringify({ idToken, newUser })
 		});
+
+    // if (res.ok) {
+    // // If the response was successful, redirect to '/dashboard'
+    // // goto('/dashboard');
+    //   location.reload();
+    // }
 	}
 
 	async function signOutSSR() {
@@ -60,36 +69,38 @@
 </script>
 
     <h1 class="title page-heading is-2 is-uppercase mb-3">Sign Up</h1>
-    <SignupForm />
 
+    {#if $user}
+    <h2 class="card-title">Welcome, {$user.displayName}</h2>
+    <p class="text-center text-success">You are logged in</p>
+    <p class="text-center">Your email is: {$user.email}</p>
+    <p class="text-center">Your user ID is: {$user.uid}</p>
+    <p class="text-center">Your photo URL is: {$user.photoURL}</p>
+    <p class="text-center">Your provider ID is: {$user.providerId}</p>
+    <p class="text-center">Your first name is: {firstName}</p>
+    <p class="text-center">Your last name is: {lastName}</p>
+    <p class="text-center">Your password is: {password}</p>
+    <button class="btn btn-warning google-btn" on:click={signOutSSR}>Sign out</button>
+    {:else}
+    <SignupForm />
 
 	<div class="columns">
 		<div class="column is-2">
 			<!-- First column content goes here -->
 		</div>
 		<div class="column is-8 has-text-centered">
-		{#if $user}
-			<h2 class="card-title">Welcome, {$user.displayName}</h2>
-			<p class="text-center text-success">You are logged in</p>
-			<p class="text-center">Your email is: {$user.email}</p>
-			<p class="text-center">Your user ID is: {$user.uid}</p>
-			<p class="text-center">Your photo URL is: {$user.photoURL}</p>
-			<p class="text-center">Your provider ID is: {$user.providerId}</p>
-			<p class="text-center">Your first name is: {firstName}</p>
-			<p class="text-center">Your last name is: {lastName}</p>
-			<button class="btn btn-warning google-btn" on:click={signOutSSR}>Sign out</button>
-		{:else}
+		
 			<button class="btn btn-primary google-btn" on:click={signInWithGoogle}>
 				<img src="/images/google-logo.png" alt="Google logo" />
 				Signup with Google
 			</button>
-		{/if}	
+		
 		</div>
 		<div class="column is-2">
 			<!-- empty column -->
 		</div>
 	</div>
-
+  {/if}	
 <style>
 	.google-btn {
 		background-color: #4285f4;

@@ -2,6 +2,9 @@ import { adminAuth } from '$lib/server/admin';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
+import bcrypt from 'bcrypt';
+import { dev } from '$app/environment';
+import { currentSession } from '$lib/stores.js';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
 
@@ -11,17 +14,36 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
     const decodedIdToken = await adminAuth.verifyIdToken(idToken);
 
-    console.log(decodedIdToken);
-    console.log(newUser);
+    const unhashedPassword = newUser.password;
+    // Hash the password before storing it
+    const saltRounds = 10;
+    newUser.password = await bcrypt.hash(newUser.password, saltRounds);
+    // const hashedPassword = await bcrypt.hash(newUser.password, saltRounds);	 
+
      const createdUser = await RugbyClubPOIService.signup(newUser);
-     console.log(createdUser);
+     
+    // console.log(decodedIdToken);
+    // console.log(newUser);
+    // console.log(createdUser);
 
     if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
         const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
         const options = { maxAge: expiresIn, httpOnly: true, secure: true, path: '/' };
+        const optionsRugbyClubPOI = { maxAge: expiresIn, httpOnly: true, secure: !dev, path: '/' };
 
-        cookies.set('RugbyClubPOI', cookie, options);
-        // cookies.set('__session', cookie, options);
+        // cookies.set('RugbyClubPOI', cookie, optionsRugbyClubPOI);
+        cookies.set('__session', cookie, options);
+
+        const session = await RugbyClubPOIService.login(newUser.email, unhashedPassword);
+        currentSession.set(session);
+        const userJson = JSON.stringify(session);
+        cookies.set('RugbyClubPOI', userJson, {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: !dev,
+            maxAge: 60 * 60 * 24 * 7 // one week
+        });
 
         return json({ status: 'signedIn' });
     } else {
@@ -32,7 +54,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 };
 
 export const DELETE: RequestHandler = async ({ cookies }) => {
-    // cookies.delete('__session', { path: '/' });
+    cookies.delete('__session', { path: '/' });
     cookies.delete('RugbyClubPOI', { path: '/' });
     return json({ status: 'signedOut' });
 }
