@@ -1,5 +1,5 @@
 import type { Club } from "$lib/types/rugby-club-poi-types";
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import pkg from "mongoose";
 const { models } = pkg;
 
@@ -23,5 +23,5 @@ const clubSchema = new Schema<Club>({
 });
 
   export const ClubMongoose = model('Club', clubSchema);
-  
-  //export const ClubMongoose = models["Club"] || model("Club", clubSchema);
+  // export const ClubMongoose = mongoose.models.Club || model("Club", clubSchema);
+  // export const ClubMongoose = models["Club"] || model("Club", clubSchema);

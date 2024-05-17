@@ -7,24 +7,26 @@ import { dev } from '$app/environment';
 import { currentSession } from '$lib/stores.js';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
-
+    let unhashedPassword = '';
     const { idToken, newUser } = await request.json();
-
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-
     const decodedIdToken = await adminAuth.verifyIdToken(idToken);
-
-    const unhashedPassword = newUser.password;
-    // Hash the password before storing it
-    const saltRounds = 10;
-    newUser.password = await bcrypt.hash(newUser.password, saltRounds);
-    // const hashedPassword = await bcrypt.hash(newUser.password, saltRounds);	 
-
-     const createdUser = await RugbyClubPOIService.signup(newUser);
-     
     // console.log(decodedIdToken);
-    // console.log(newUser);
+    const existingUser = await RugbyClubPOIService.getLoggedInUser(newUser.email);
     // console.log(createdUser);
+
+    if (!existingUser) {
+        unhashedPassword = newUser.password;
+        // Hash the password before storing it
+        const saltRounds = 10;
+        newUser.password = await bcrypt.hash(newUser.password, saltRounds);
+        // const hashedPassword = await bcrypt.hash(newUser.password, saltRounds);	 
+
+        const createdUser = await RugbyClubPOIService.signup(newUser);
+        // console.log(newUser);
+    } else {
+        unhashedPassword = existingUser.password;
+    }
 
     if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
         const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn });

@@ -1,5 +1,5 @@
 import type { Game } from "$lib/types/rugby-club-poi-types";
-import { Schema, model } from "mongoose";
+import mongoose,{ Schema, model } from "mongoose";
 import pkg from "mongoose";
 const { models } = pkg;
 const gameSchema = new Schema<Game>({    
@@ -19,4 +19,5 @@ const gameSchema = new Schema<Game>({
 
 
 export const GameMongoose = model("Game", gameSchema);
+// export const GameMongoose = mongoose.models.Game || model("Game", gameSchema);
 //export const GameMongoose = models["Game"] || model("Game", gameSchema);

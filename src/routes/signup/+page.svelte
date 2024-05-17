@@ -55,6 +55,15 @@
 			body: JSON.stringify({ idToken, newUser })
 		});
 
+    if (res.status === 200) {
+			const data = await res.json();
+			console.log(data);
+			// if (data.success) {
+				await goto('/dashboard');
+				window.location.reload();
+			// }
+		}
+
     // if (res.ok) {
     // // If the response was successful, redirect to '/dashboard'
     // // goto('/dashboard');
@@ -68,7 +77,7 @@
 	}
 </script>
 
-    <h1 class="title page-heading is-2 is-uppercase mb-3">Sign Up</h1>
+    <h1 class="title page-heading is-2 is-uppercase mb-3 has-text-centered">Sign Up</h1>
 
     {#if $user}
     <h2 class="card-title">Welcome, {$user.displayName}</h2>
@@ -83,8 +92,7 @@
     <button class="btn btn-warning google-btn" on:click={signOutSSR}>Sign out</button>
     {:else}
     <SignupForm />
-
-	<div class="columns">
+	<div class="columns">    
 		<div class="column is-2">
 			<!-- First column content goes here -->
 		</div>
