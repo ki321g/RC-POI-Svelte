@@ -14,7 +14,7 @@ let newUser: any;
 	}
 
 	async function updateUser(user: User) {
-		alert('Are you sure you want to update this user?');
+		// alert('Are you sure you want to update this user?');
 		console.log(user);
 
 		newUser = {
