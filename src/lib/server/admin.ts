@@ -4,7 +4,8 @@ import { VITE_FB_CLIENT_EMAIL, VITE_FB_PRIVATE_KEY, VITE_FB_PROJECT_ID } from '$
 import pkg from 'firebase-admin';
 
 // const privateKey = FB_PRIVATE_KEY.replace(/\\n/g, '\n');
-const privateKey = VITE_FB_PROJECT_ID.replace(/\\n/g, '\n');
+// const privateKey = VITE_FB_PROJECT_ID.replace(/\\n/g, '\n');
+VITE_FB_PROJECT_ID: VITE_FB_PROJECT_ID.replace(/\\n/g, '\n');
 
 try {
   pkg.initializeApp({
