@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import { dev } from '$app/environment';
 import { currentSession } from '$lib/stores.js';
 
+let createdUser: any;
 export const POST: RequestHandler = async ({ request, cookies }) => {
     let unhashedPassword = '';
     const { idToken, newUser } = await request.json();
@@ -22,7 +23,10 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
         newUser.password = await bcrypt.hash(newUser.password, saltRounds);
         // const hashedPassword = await bcrypt.hash(newUser.password, saltRounds);	 
 
-        const createdUser = await RugbyClubPOIService.signup(newUser);
+        const result = await RugbyClubPOIService.signup(newUser);
+        if(result) {
+            createdUser = await RugbyClubPOIService.getLoggedInUser(newUser.email);
+        }
         // console.log(newUser);
     } else {
         unhashedPassword = existingUser.password;
@@ -47,7 +51,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
             maxAge: 60 * 60 * 24 * 7 // one week
         });
 
-        return json({ status: 'signedIn' });
+        return json({ status: 'signedIn', user: createdUser});
     } else {
         throw error(401, 'Recent sign in required!');
     }
