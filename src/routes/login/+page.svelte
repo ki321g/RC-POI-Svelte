@@ -2,11 +2,14 @@
 	import { auth, user } from '$lib/firebase/firebase';
 	import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 	import LoginForm from "./LoginForm.svelte";
+	import Message from '$lib/ui/Message.svelte';
   	import { goto } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
 
 	let firstName = '';
 	let lastName = '';
+	let showError = false;
+	let message = '';
 
 	function generatePassword(length) {
 		const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -34,13 +37,19 @@
 			},
 			body: JSON.stringify({ idToken, email })
 		});
+		const data = await res.json();
 		console.log("RETURNED FROM SIGNIN");
-		console.log(res)
+		// console.log(res)
 		// location.reload();
-
+		// console.log("AFTER Fetch");
+		// console.log(data.status);
+		// console.log(data.error)
+		if (data.status === 400) {
+			message = "User with that email does not exist. Visit the Signup page to Register"
+			showError = true;
+			await signOut(auth);
+		} else { 
 		if (res.status === 200) {
-			const data = await res.json();
-			console.log(data);
 			if (data.user.accountType === 'superadmin') {
 				await goto('/admin');
 				window.location.reload();
@@ -49,16 +58,7 @@
 					window.location.reload();
 			}
 			}
-		
-
-		// if (res.status === 200) {
-		// 	const data = await res.json();
-		// 	console.log(data);
-		// 	// if (data.success) {
-		// 		// redirect('/dashboard');
-		// 		goto('/dashboard');
-		// 	// }
-		// }
+		}
 	}
 	
 	async function signOutSSR() {
@@ -68,6 +68,9 @@
 </script>
 
     <h1 class="title page-heading is-2 is-uppercase mb-3 has-text-centered">Log in</h1>
+	{#if showError}
+		<Message message={message}></Message>
+	{/if}
     <LoginForm />
 
 
