@@ -5,8 +5,18 @@ import pkg from 'firebase-admin';
 
 // const privateKey = FB_PRIVATE_KEY.replace(/\\n/g, '\n');
 // const privateKey = VITE_FB_PROJECT_ID.replace(/\\n/g, '\n');
-VITE_FB_PROJECT_ID: VITE_FB_PROJECT_ID.replace(/\\n/g, '\n');
+// VITE_FB_PROJECT_ID: VITE_FB_PROJECT_ID.replace(/\\n/g, '\n');
 
+// const base64PrivateKey = VITE_FB_PRIVATE_KEY; // Your Base64 encoded private key
+// const privateKeyString = Buffer.from(base64PrivateKey, 'base64').toString('utf-8');
+// const privateKeyObject = JSON.parse(privateKeyString);
+// const firebasePrivateKey = privateKeyObject.private_key;
+
+// const privateKey = Buffer.from(base64PrivateKey, 'base64').toString('utf-8');
+// console.log(base64PrivateKey);
+// console.log(privateKey);
+// const privateKeyObject = JSON.parse(privateKey);
+// const firebasePrivateKey = privateKeyObject.private_key;
 try {
   pkg.initializeApp({
     credential: pkg.credential.cert({
