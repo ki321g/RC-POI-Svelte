@@ -5,6 +5,7 @@ import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';
 export let data: any;
 let userForm: any;
 let newUser: any;
+const userAccountTypes = ['superadmin', 'user'];
 
 	function submit(field) {
 		return ({ detail: newValue }) => {
@@ -95,6 +96,7 @@ let newUser: any;
 							  <td>
 								<!-- {user.accountType} on:click={updateUSer(user)}-->
 								<InPlaceEdit bind:value={user.accountType} on:submit={submit('accountType')}/>
+								<!-- <InPlaceEdit bind:value={user.accountType} on:submit={submit('category')} categoryField={true} {userAccountTypes} /> -->
 							  </td>
 							  <td>
 								<a href="#" class="ui icon button" on:click={() => updateUser(user)}>
