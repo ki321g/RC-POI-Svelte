@@ -6,7 +6,6 @@ import { redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 import { dev } from '$app/environment';
 import { currentSession } from '$lib/stores.js';
-import { redirect } from '@sveltejs/kit';
 
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
