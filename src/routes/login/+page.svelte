@@ -4,7 +4,8 @@
 	import LoginForm from "./LoginForm.svelte";
 	import Message from '$lib/ui/Message.svelte';
   	import { goto } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
+	import { redirect } from '@sveltejs/kit';;
+    import { onMount } from 'svelte';
 
 	let firstName = '';
 	let lastName = '';
@@ -65,6 +66,7 @@
 		const res = await fetch('/api/signin', { method: 'DELETE' });
 		await signOut(auth);
 	}
+
 </script>
 
     <h1 class="title page-heading is-2 is-uppercase mb-3 has-text-centered">Log in</h1>

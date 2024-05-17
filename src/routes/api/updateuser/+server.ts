@@ -10,14 +10,23 @@ let createdUser: any;
 export const POST: RequestHandler = async ({ request, cookies }) => {
     let unhashedPassword = '';
     const { newUser } = await request.json();
+    const existingUser = await RugbyClubPOIService.getLoggedInUser(newUser.email);
 
-    unhashedPassword = newUser.password;
+    if (newUser.password === "HASHED_PASSWORD") {
+        newUser.password = existingUser.password
+        createdUser = await RugbyClubPOIService.updateUser(newUser);
+        return json({ status: 200, user: newUser});
+    } else {
+        unhashedPassword = newUser.password;
     
-    // Hash the password before storing it
-    const saltRounds = 10;
-    newUser.password = await bcrypt.hash(newUser.password, saltRounds);	 
+        // Hash the password before storing it
+        const saltRounds = 10;
+        newUser.password = await bcrypt.hash(newUser.password, saltRounds);	 
+        
+        createdUser = await RugbyClubPOIService.updateUser(newUser);
+        return json({ status: 200, user: newUser});
+    }
+
     
-    createdUser = await RugbyClubPOIService.updateUser(newUser);
-    return json({ status: 'userUpdated', user: newUser});
 
 };
