@@ -39,7 +39,6 @@
     </div>
     <div>
       <h3 class="temp">
-        <!-- {Math.round(convertTemp(temp.main.temp, $unit))}&deg;{$unit} -->
       </h3>
       <p class="descr">{toSentenceCase(temp.weather[0].description)}</p>
     </div>
@@ -47,7 +46,7 @@
   
   <style lang="scss">
     
-    @import '$lib/scss/variables.scss';
+    // @import '$lib/scss/variables.scss';
     
     .forecast-item {
       display: flex;

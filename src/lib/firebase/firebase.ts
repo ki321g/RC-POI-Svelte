@@ -20,8 +20,6 @@ export const db = getFirestore();
 export const auth = getAuth();
 export const storage = getStorage();
 
-
-
 /**
  * @returns a store with the current firebase user
  */
@@ -35,18 +33,21 @@ function userStore() {
         subscribe,
       }
     }
-  
-    const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
-      unsubscribe = onAuthStateChanged(auth, (user) => {
-        set(user);
-      });
-  
-      return () => unsubscribe();
+ 
+    /**
+     * * Subscribe to the current user
+     * */
+const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
+    unsubscribe = onAuthStateChanged(auth, (user) => {
+      set(user);
     });
+
+    return () => unsubscribe();
+  });
+
+  return {
+    subscribe,
+};
+}
   
-    return {
-      subscribe,
-    };
-  }
-  
-  export const user = userStore();
+export const user = userStore();

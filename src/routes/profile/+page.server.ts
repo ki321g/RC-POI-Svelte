@@ -27,9 +27,7 @@ export const actions = {
 		const lastName = form.get('lastName') as string;
 		const email = form.get('email') as string;
 		const password = form.get('password') as string;
-		const accountType = form.get('accountType') as string;
-
-		
+		const accountType = form.get('accountType') as string;		
 		const saltRounds = 10;
 		const hashedPassword = await bcrypt.hash(password, saltRounds);
 

@@ -11,17 +11,7 @@
     export let data: any;
     export let clubs: Club[] = data.clubs;  
 
-    
-    
-    // export let currentForecast: any;
-    // export let currentWeather: any; 
-    // export let currentForecast: any = data.currentForecast;
-    // export let currentWeather: any = data.currentWeather;
-
-    onMount(() => {   
-        // console.log(clubs[0].currentWeather);
-        // console.log(clubs[0].currentForecast);
-        //Timeout to ensure maps load before hiding divs
+    onMount(() => {
         setTimeout(() => {            
             const hideAddressDivs = document.querySelectorAll('div[data-address]');
             hideAddressDivs.forEach(div => div.hidden = true);
@@ -59,7 +49,6 @@
                 <article class="columns featured is-multiline py-0">
                     <figure class="image is-520x360">
                         <div class="column">
-                            <!-- <ClubMap club={club} id={club.club} /> -->
                             <ClubMap club={club} id={club._id} lat={club.latitude} lng={club.longitude}/>
                         </div>
                     </figure> 

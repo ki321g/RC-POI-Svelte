@@ -6,7 +6,6 @@ import { imageNotification, imageNotificationColor } from '$lib/stores';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
-// import fs from 'fs';
 
 export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
@@ -21,26 +20,11 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		  };
 
 		const UserId = session._id;
-		// console.log(`UserId: ${UserId}`);
 		const userClub = await RugbyClubPOIService.getClubByUserId(UserId);
-		// console.log("Club");
-		// console.log(userClub);
-		// console.log(`UserId: ${UserId}`);
-		// console.log(userClub);
 		if (userClub) {
 		const userImages = await RugbyClubPOIService.getImagesByClubId(userClub._id);
-		// console.log("Club Images");
-		// console.log(userImages);
-
-		// let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
-		
-		// currentWeather = {
-		// 	date: currentWeather.headers.date,
-		// 	data: currentWeather.data			
-		//   };
 		let currentWeather = await generateReading(userClub.latitude, userClub.longitude);
 		let tempForecast = await generateForecast(userClub.latitude, userClub.longitude);
-
 		const currentForecast = tempForecast.data.list;
 	
 		currentTemp.temp = currentWeather.data.main.temp;
@@ -49,34 +33,10 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 		currentTemp.description = currentWeather.data.weather[0].description;
 		currentTemp.iconCode = currentWeather.data.weather[0].id;
 
-		// console.log("#### Weather ####");
-		// console.log(currentWeather);
-		// console.log(JSON.stringify(currentWeather, null, 2));
-		// console.log("^^^^ Weather ^^^^");
-		// console.log(currentWeather.data.weather);
-
-		// let currentForecast = await generateForecast(userClub.latitude, userClub.longitude);
-		
-		// currentForecast = {
-		// 	date: currentForecast.headers.date,
-		// 	data: currentForecast.data			
-		//   };
-		// console.log("#### Forecast ####");		
-		// console.log(currentForecast);
-		// console.log(JSON.stringify(currentForecast, null, 2));
-		// console.log("^^^^ Forecast ^^^^");
-
-		// fs.writeFile('currentForecast.json', JSON.stringify(currentForecast, null, 2), (err) => {
-		// 	if (err) throw err;
-		// 	console.log('The file has been saved!');
-		//   });
-
 		return {
 			clubs: await RugbyClubPOIService.getClubByUserId(UserId),
 			games: await RugbyClubPOIService.getGamesByClubId(userClub._id),
 			images: await RugbyClubPOIService.getImagesByClubId(userClub._id),
-			// currentForecast: currentForecast,
-			// currentWeather: currentTemp,
 		};
 	}
 	  }	
@@ -115,7 +75,6 @@ export const actions = {
 			userId
 		};
 
-		// console.log(addClub);
 		if (club === '' || address === '' || phone === '' || website === '' || latitude === '' || longitude === '' || email === '' || category === '' || description === '') {
 			throw redirect(307, '/');
 		} else {
@@ -138,18 +97,11 @@ export const actions = {
 		console.log(form);
 		const clubid = form.get('clubid') as string;
 		const img = form.get('img') as string;
-		// const width = form.get('width') as number;
-		// const height = form.get('height') as number;
-		// const thumbnailURL = form.get('thumbnailURL') as string;
 
 		const image = {
 			clubid,
 			img,
-			// width,
-			// height,
-			// thumbnailURL
 		}
-		// console.log(image);
 
   		if (image) {
 			const result = await RugbyClubPOIService.addImage(image);
@@ -177,8 +129,6 @@ export const actions = {
 		const deleteImage = {
 			_id
 		};
-
-		// console.log(deleteClub);
 
   		if (deleteImage) {
 			const result = await RugbyClubPOIService.deleteImage(deleteImage);
@@ -225,16 +175,12 @@ export const actions = {
 			userId
 		}
 
-		// console.log(updateClub);
-
   		if (updateClub) {
 			const result = await RugbyClubPOIService.updateClub(updateClub);
 			if (result) {
 				console.log("Club updated");
-				// throw redirect(303, '/dashboard');
 			} else {
-				console.log("Club updated failed");
-				// throw redirect(307, '/dashboard');
+				console.log("Club updated failed");;
 			}
 		};
 	},
@@ -250,8 +196,6 @@ export const actions = {
 		const deleteClub = {
 			_id
 		};
-
-		// console.log(deleteClub);
 
   		if (deleteClub) {
 			const result = await RugbyClubPOIService.deleteClub(deleteClub);
@@ -275,8 +219,6 @@ export const actions = {
 		const deleteGame = {
 			_id
 		};
-
-		// console.log(deleteGame);
 
   		if (deleteGame) {
 			const result = await RugbyClubPOIService.deleteGame(deleteGame);
@@ -314,21 +256,16 @@ export const actions = {
 			gamelocation,
 			clubid
 		}
-		// console.log("updateGame array");
-		// console.log(updateGame);
 
   		if (updateGame) {
 			const result = await RugbyClubPOIService.updateGame(updateGame);
 			if (result) {
 				console.log("Game updated");
-				// throw redirect(303, '/dashboard');
 			} else {
 				console.log("Game updated failed");
-				// throw redirect(307, '/dashboard');
 			}
 		};
 	},
-
 
 	addgame: async ({ request, cookies }) => {
 		console.log('addgame server');
@@ -353,7 +290,6 @@ export const actions = {
 			clubid
 		};
 
-		// console.log(addClub);
 		if (home === '' || homescore === '' || awayscore === '' || away === '' || gametime === '' || gamelocation === '' || clubid === '') {
 			throw redirect(307, '/');
 		} else {
@@ -367,5 +303,4 @@ export const actions = {
 			}
 		}
 	},
-
 };

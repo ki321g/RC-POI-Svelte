@@ -19,7 +19,6 @@
 	let selectedClub: string;
 	let selectedType: "temperature" | "wind" | "pressure" | "humidity" = "temperature";
 
-	//export let clubs: Club[];
 	export let data: any;
 
 	let forecast;
@@ -50,13 +49,10 @@
 		colors: ['#7cd6fd', '#743ee2'],
 	};
 
-	async function fetchWeatherData(club: Club) {		
-		// fetch forecast data from openweathermap
+	async function fetchWeatherData(club: Club) {	
 		let tempForecast = await generateForecast(club.latitude, club.longitude);
-		// console.log(tempForecast);
-		// set forecast store data
+
 		currentForecast.set(tempForecast.data.list);
-		// console.log(forecast);
 	}
 
 		

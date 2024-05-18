@@ -1,23 +1,7 @@
 <script lang="ts">
-	//import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-	// import { goto } from "$app/navigation";
-	//import { page } from '$app/stores';
-	//import { currentSession } from '$lib/stores';
-
 	let email = '';
 	let password = '';
 	let errorMessage = '';
-
-	// async function login() {
-	// 	let success = await RugbyClubPOIService.login(email, password);
-	// 	if (success) {
-	// 		goto(`/dashboard`);
-	// 	} else {
-	// 		email = '';
-	// 		password = '';
-	// 		errorMessage = 'Invalid Credentials';
-	// 	}
-	// }
 </script>
 
 {#if errorMessage}
@@ -28,7 +12,6 @@
 	</div>
 {/if}
 
-<!-- <form on:submit|preventDefault={login}>  -->
 <form method="POST" action="?/login">
 	<div class="columns">
 		<div class="column is-2">

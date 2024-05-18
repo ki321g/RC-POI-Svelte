@@ -6,14 +6,14 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	export let data: any;
-	export let currentWeather: any;
-	export let currentForecast: any;
+	// export let currentWeather: any;
+	// export let currentForecast: any;
+	export let clubs: Club[] = data.clubs;
+
 	let map: LeafletMap;
 	let location = { lat: 53.1424, lng: -7.6921 }; // replace with your actual location
 	let counties: any;
 	let showButton = false;
-
-	export let clubs: Club[] = data.clubs;
 
 	function scrollToTop() {
 		window.scrollTo({
@@ -46,8 +46,6 @@
 		const centerLat = totalLat / clubs.length;
 		const centerLng = totalLng / clubs.length;
 		location = { lat: centerLat, lng: centerLng };
-		// console.log(location);
-
 		const checkScroll = () => {
 			showButton = window.scrollY > 200;
 		};
@@ -65,8 +63,6 @@ div{#if showButton}
 	<div id="back-to-top" class="button button-font is-uppercase" on:click={scrollToTop}>Back to Top</div>
 {/if}
 <section class="section pt-6">
-	<!-- <pre>{counties}</pre>
-    <pre>{JSON.stringify(counties, null, 2)}</pre> -->
 	<div class="blog-posts">
 		<div class="box box-link-hover-shadow">
 			<div class="columns featured-post is-multiline">

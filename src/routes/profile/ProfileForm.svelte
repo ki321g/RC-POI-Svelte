@@ -16,8 +16,6 @@
 	</div>
 {/if}
 
-<!-- <form action="/register" method="POST"> -->
-<!-- <form on:submit|preventDefault={signup}> -->
 <form method="POST" action="?/update" use:enhance>
     <div class="columns">
     <div class="column is-2">

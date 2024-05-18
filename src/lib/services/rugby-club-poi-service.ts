@@ -1,5 +1,3 @@
-import axios from 'axios';
-//import { user } from "../stores";
 import { userStore } from '$lib/models/mongo/user-store';
 import { clubStore } from '$lib/models/mongo/club-store';
 import { gameStore } from '$lib/models/mongo/game-store';
@@ -23,10 +21,8 @@ export const RugbyClubPOIService = {
 			console.log('email: ', email);
 			console.log('password: ', password);
 			const user = await userStore.findBy(email);
-			//const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
 
-			console.log('user: ', user);
-			// if (user !== null && user.password === password) {				
+			console.log('user: ', user);				
 			if (user !== null) {
 
 				const session: Session = {
@@ -35,7 +31,6 @@ export const RugbyClubPOIService = {
 					email: user.email,
 					accountType: user.accountType,
 					_id: user._id!.toString(),
-					//token: response.data.token
 				};
 				return session;
 			}
@@ -49,7 +44,6 @@ export const RugbyClubPOIService = {
 	async getLoggedInUser(email: string): Promise<User | null> {
 		try {
 			const user = await userStore.findBy(email);
-			// console.log('user: ', user);
 			if (user !== null) {
 				return user;
 			}
@@ -144,8 +138,6 @@ export const RugbyClubPOIService = {
 	
 	async addImage(image: Image): Promise<Image[]> {
 		try {
-			// console.log('addImage function');
-			// console.log(image);
 			const images = await imageStore.add(image);
 			return JSON.parse(JSON.stringify(images));
 		} catch (error) {
@@ -155,7 +147,6 @@ export const RugbyClubPOIService = {
 	
 	async getImagesByClubId(clubId: string): Promise<Image[]> {
 		try {
-			// console.log('getImagesByClubId function');
 			const images = await imageStore.findByClubId(clubId);
 			return JSON.parse(JSON.stringify(images));
 		} catch (error) {
@@ -176,10 +167,7 @@ export const RugbyClubPOIService = {
 	
 	async updateClub(club: Club): Promise<Club[]> {
 		try {
-			// console.log("updateClub function");
-			// console.log("clubID: ", club._id);
 			const updatedClub = await clubStore.update(club);
-			// console.log(updatedClub);
 			if (club !== null) {
 				return updatedClub;
 			}
@@ -250,8 +238,6 @@ export const RugbyClubPOIService = {
 
 	async updateGame(game: Game): Promise<Game[]> {
 		try {
-			// console.log("updateGame function");
-			// console.log("gameID: ", game._id);
 			const updatedGame = await gameStore.update(game);
 			if (game !== null) {
 				return updatedGame;
