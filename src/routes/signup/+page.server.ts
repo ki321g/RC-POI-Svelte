@@ -3,16 +3,17 @@ import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 import { currentSession } from '$lib/stores.js';
 import { redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
-
+import { sanitizeInput } from '$lib/utilities/sanitizeInput';
 
 export const actions = {
 	signup: async ({ request, cookies }) => {
 		const form = await request.formData();
-		const firstName = form.get('firstName') as string;
-		const lastName = form.get('lastName') as string;
-		const email = form.get('email') as string;
-		const password = form.get('password') as string;
-		const accountType = form.get('accountType') as string;
+		const firstName = sanitizeInput(form.get('firstName') as string);
+		const lastName = sanitizeInput(form.get('lastName') as string);
+		const email = sanitizeInput(form.get('email') as string);
+		const password = sanitizeInput(form.get('password') as string);
+		const accountType = sanitizeInput(form.get('accountType') as string);
+
 
 		 // Hash the password before storing it
 		 const saltRounds = 10;

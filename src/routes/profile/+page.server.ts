@@ -5,6 +5,7 @@ import { redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
+import { sanitizeInput } from '$lib/utilities/sanitizeInput';
 
 export const load: PageServerLoad = async ({ request, parent }) => {
 	const { session } = await parent();
@@ -23,11 +24,18 @@ export const load: PageServerLoad = async ({ request, parent }) => {
 export const actions = {
 	update: async ({ request, cookies }) => {
 		const form = await request.formData();
-		const firstName = form.get('firstName') as string;
-		const lastName = form.get('lastName') as string;
-		const email = form.get('email') as string;
-		const password = form.get('password') as string;
-		const accountType = form.get('accountType') as string;		
+        const firstName = sanitizeInput(form.get('firstName') as string);
+        const lastName = sanitizeInput(form.get('lastName') as string);
+        const email = sanitizeInput(form.get('email') as string);
+        let password = sanitizeInput(form.get('password') as string);
+        const accountType = sanitizeInput(form.get('accountType') as string);
+		console.log(`firstName: ${firstName}, lastName: ${lastName}, email: ${email}, password: ${password}, accountType: ${accountType}`);
+
+		if (password === '') {
+			const currentUser = await RugbyClubPOIService.getLoggedInUser(email);
+			password = currentUser.password;
+		}
+			
 		const saltRounds = 10;
 		const hashedPassword = await bcrypt.hash(password, saltRounds);
 

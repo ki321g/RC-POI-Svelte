@@ -6,6 +6,7 @@ import { imageNotification, imageNotificationColor } from '$lib/stores';
 import { goto } from '$app/navigation';
 import cookie from 'cookie';
 import { generateReading, generateForecast } from '$lib/utilities/openweathermap-utils';
+import { sanitizeInput } from '$lib/utilities/sanitizeInput';
 
 export const ssr = false;
 export const load: PageServerLoad = async ({ request, parent }) => {
@@ -52,14 +53,22 @@ export const actions = {
 		const form = await request.formData();
 		console.log(form);
 		const club = form.get('club') as string;
-		const address = form.get('address') as string;
-		const phone = form.get('phone') as string;
-		const website = form.get('website') as string;
-		const latitude = form.get('latitude') as string;
-		const longitude = form.get('longitude') as string;
-		const email = form.get('email') as string;
-		const category = form.get('category') as string;
-		const description = form.get('description') as string;
+		// const address = form.get('address') as string;
+		// const phone = form.get('phone') as string;
+		// const website = form.get('website') as string;
+		// const latitude = form.get('latitude') as string;
+		// const longitude = form.get('longitude') as string;
+		// const email = form.get('email') as string;
+		// const category = form.get('category') as string;
+		// const description = form.get('description') as string;
+		const address = sanitizeInput(form.get('address') as string);
+		const phone = sanitizeInput(form.get('phone') as string);
+		const website = sanitizeInput(form.get('website') as string);
+		const latitude = sanitizeInput(form.get('latitude') as string);
+		const longitude = sanitizeInput(form.get('longitude') as string);
+		const email = sanitizeInput(form.get('email') as string);
+		const category = sanitizeInput(form.get('category') as string);
+		const description = sanitizeInput(form.get('description') as string);
 		const img = '';
 
 		const addClub = {
@@ -95,8 +104,10 @@ export const actions = {
 
 		const form = await request.formData();
 		console.log(form);
-		const clubid = form.get('clubid') as string;
-		const img = form.get('img') as string;
+		// const clubid = form.get('clubid') as string;
+		// const img = form.get('img') as string;		
+		const clubid = sanitizeInput(form.get('clubid') as string);
+		const img = sanitizeInput(form.get('img') as string);
 
 		const image = {
 			clubid,
@@ -124,7 +135,7 @@ export const actions = {
 
 		const form = await request.formData();
 		console.log(form);
-		const _id = form.get('imageid') as string;;
+		const _id = sanitizeInput(form.get('imageid') as string);
 
 		const deleteImage = {
 			_id
@@ -147,18 +158,31 @@ export const actions = {
 
 		const form = await request.formData();
 		console.log(form);
-		const _id = form.get('clubid') as string;
-		const club = form.get('club') as string;
-		const address = form.get('address') as string;
-		const phone = form.get('phone') as string;
-		const website = form.get('website') as string;
-		const latitude = form.get('latitude') as string;
-		const longitude = form.get('longitude') as string;
-		const email = form.get('email') as string;
-		const category = form.get('category') as string;
-		const description = form.get('description') as string;
-		const img = form.get('img') as string;
-		const userId = form.get('userId') as string;
+		// const _id = form.get('clubid') as string;
+		// const club = form.get('club') as string;
+		// const address = form.get('address') as string;
+		// const phone = form.get('phone') as string;
+		// const website = form.get('website') as string;
+		// const latitude = form.get('latitude') as string;
+		// const longitude = form.get('longitude') as string;
+		// const email = form.get('email') as string;
+		// const category = form.get('category') as string;
+		// const description = form.get('description') as string;
+		// const img = form.get('img') as string;
+		// const userId = form.get('userId') as string;
+		
+		const _id = sanitizeInput(form.get('clubid') as string);
+		const club = sanitizeInput(form.get('club') as string);
+		const address = sanitizeInput(form.get('address') as string);
+		const phone = sanitizeInput(form.get('phone') as string);
+		const website = sanitizeInput(form.get('website') as string);
+		const latitude = sanitizeInput(form.get('latitude') as string);
+		const longitude = sanitizeInput(form.get('longitude') as string);
+		const email = sanitizeInput(form.get('email') as string);
+		const category = sanitizeInput(form.get('category') as string);
+		const description = sanitizeInput(form.get('description') as string);
+		const img = sanitizeInput(form.get('img') as string);
+		const userId = sanitizeInput(form.get('userId') as string);
 
 		const updateClub = {
 			_id,
@@ -191,7 +215,7 @@ export const actions = {
 
 		const form = await request.formData();
 		console.log(form);
-		const _id = form.get('clubid') as string;;
+		const _id = sanitizeInput(form.get('clubid') as string);
 
 		const deleteClub = {
 			_id
@@ -214,7 +238,7 @@ export const actions = {
 
 		const form = await request.formData();
 		console.log(form);
-		const _id = form.get('gameid') as string;;
+		const _id = sanitizeInput(form.get('gameid') as string);
 
 		const deleteGame = {
 			_id
@@ -237,14 +261,23 @@ export const actions = {
 
 		const form = await request.formData();
 		console.log(form);
-		const _id = form.get('gameid') as string;
-		const home = form.get('home') as string;
-		const homescore = form.get('homescore') as number;
-		const awayscore = form.get('awayscore') as number;
-		const away = form.get('away') as string;
-		const gametime = form.get('gametime') as string;
-		const gamelocation = form.get('gamelocation') as string;
-		const clubid = form.get('clubid') as string;
+		// const _id = form.get('gameid') as string;
+		// const home = form.get('home') as string;
+		// const homescore = form.get('homescore') as number;
+		// const awayscore = form.get('awayscore') as number;
+		// const away = form.get('away') as string;
+		// const gametime = form.get('gametime') as string;
+		// const gamelocation = form.get('gamelocation') as string;
+		// const clubid = form.get('clubid') as string;
+		
+		const _id = sanitizeInput(form.get('gameid') as string);
+		const home = sanitizeInput(form.get('home') as string);
+		const homescore = sanitizeInput(form.get('homescore') as string);
+		const awayscore = sanitizeInput(form.get('awayscore') as string);
+		const away = sanitizeInput(form.get('away') as string);
+		const gametime = sanitizeInput(form.get('gametime') as string);
+		const gamelocation = sanitizeInput(form.get('gamelocation') as string);
+		const clubid = sanitizeInput(form.get('clubid') as string);
 
 		const updateGame = {
 			_id,
@@ -270,16 +303,22 @@ export const actions = {
 	addgame: async ({ request, cookies }) => {
 		console.log('addgame server');
 
-		const form = await request.formData();
-		console.log(form);		
-		const home = form.get('home') as string;
-		const homescore = form.get('homescore') as number;
-		const awayscore = form.get('awayscore') as number;
-		const away = form.get('away') as string;
-		const gametime = form.get('gametime') as string;
-		const gamelocation = form.get('gamelocation') as string;
-		const clubid = form.get('clubid') as string;
-
+		const form = await request.formData();	
+		// const home = form.get('home') as string;
+		// const homescore = form.get('homescore') as number;
+		// const awayscore = form.get('awayscore') as number;
+		// const away = form.get('away') as string;
+		// const gametime = form.get('gametime') as string;
+		// const gamelocation = form.get('gamelocation') as string;
+		// const clubid = form.get('clubid') as string;
+		const home = sanitizeInput(form.get('home') as string);
+		const homescore = sanitizeInput(form.get('homescore') as string);
+		const awayscore = sanitizeInput(form.get('awayscore') as string);
+		const away = sanitizeInput(form.get('away') as string);
+		const gametime = sanitizeInput(form.get('gametime') as string);
+		const gamelocation = sanitizeInput(form.get('gamelocation') as string);
+		const clubid = sanitizeInput(form.get('clubid') as string);
+		
 		const addGame = {
 			home,
 			homescore,
