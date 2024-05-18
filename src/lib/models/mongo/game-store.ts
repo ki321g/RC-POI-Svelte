@@ -57,7 +57,6 @@ export const gameStore = {
           // console.log('Updating :', game._id );  
           const currentGame = await GameMongoose.findOne({ _id: game._id }).lean();
           game._id = currentGame._id;
-          // console.log(game) 
                   
           const UpdatedGame = GameMongoose.updateOne({ _id: game._id }, { $set: game });    
           return UpdatedGame;

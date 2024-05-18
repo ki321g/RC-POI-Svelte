@@ -50,7 +50,6 @@
 		searchResults = document.getElementById('search-results') as HTMLSelectElement;
 
 		searchBox.addEventListener('keyup', (event: KeyboardEvent) => {
-			//   searchBoxValue = (event.target as HTMLInputElement).value;
 			handleSearch();
 		});
 
@@ -81,8 +80,7 @@
 						placeCounty = countyComponent.long_name.replace('County ', '');
 						break;
 						}
-					}				
-					// club = selectedPlace.club;				
+					}								
 					address = placeCounty ? placeCounty : "";
 					phone = place.formatted_phone_number ? place.formatted_phone_number : "";
 					website =  place.website ? place.website : "";
@@ -122,8 +120,7 @@
 
 
 
-<h1 class="title page-heading is-2 is-uppercase mb-3">No Clubs</h1>
-<!-- <form action="/dashboard/addclub" method="POST"> -->
+<h1 class="title page-heading is-2 is-uppercase mb-3">Add your affiliated Club</h1>
 <form method="POST" action="?/addclub">
 	<div class="field-body">
 		<div class="container">

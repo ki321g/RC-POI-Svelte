@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-ignore
 	import Chart from 'svelte-frappe-charts';
-	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+	import type { Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 	import { currentSession, clubStore } from '$lib/stores';
 	import { getCategoryData, getGamesData, getClubsPerCountyData, getGamesPlayedData } from '$lib/utilities/club-utils';
@@ -18,8 +18,8 @@
 	let chartTypes = ['bar', 'line', 'percentage'];
 	let selectedClub: string;
 	let selectedType: "temperature" | "wind" | "pressure" | "humidity" = "temperature";
+	// let averages: any;
 
-	//export let clubs: Club[];
 	export let data: any;
 
 	let forecast;
@@ -50,13 +50,10 @@
 		colors: ['#7cd6fd', '#743ee2'],
 	};
 
-	async function fetchWeatherData(club: Club) {		
-		// fetch forecast data from openweathermap
+	async function fetchWeatherData(club: Club) {	
 		let tempForecast = await generateForecast(club.latitude, club.longitude);
-		// console.log(tempForecast);
-		// set forecast store data
+
 		currentForecast.set(tempForecast.data.list);
-		// console.log(forecast);
 	}
 
 		
@@ -83,31 +80,63 @@
 
 		const labels = filteredData.map((entry: { dt_txt: string }) => entry.dt_txt);
 		
-		if (selectedType === 'temperature') {
-			values = filteredData.map((entry: { main: { temp: number } }) => entry.main.temp);
-		} else if (selectedType === 'wind') {
-			values = filteredData.map((entry: { wind: { speed: number } }) => entry.wind.speed);
-		} else if (selectedType === 'pressure') {
-			values = filteredData.map((entry: { main: { pressure: number } }) => entry.main.pressure);
-		} else if (selectedType === 'humidity') {
-			values = filteredData.map((entry: { main: { humidity: number } }) => entry.main.humidity);
-		} else {
-			values = [];
-		}
+		// if (selectedType === 'temperature') {
+		// 	values = filteredData.map((entry: { main: { temp: number } }) => entry.main.temp);
+		// } else if (selectedType === 'wind') {
+		// 	values = filteredData.map((entry: { wind: { speed: number } }) => entry.wind.speed);
+		// } else if (selectedType === 'pressure') {
+		// 	values = filteredData.map((entry: { main: { pressure: number } }) => entry.main.pressure);
+		// } else if (selectedType === 'humidity') {
+		// 	values = filteredData.map((entry: { main: { humidity: number } }) => entry.main.humidity);
+		// } else {
+		// 	values = [];
+		// }
+
+		const valueMap = {
+			'temperature': (entry: { main: { temp: number } }) => entry.main.temp,
+			'wind': (entry: { wind: { speed: number } }) => entry.wind.speed,
+			'pressure': (entry: { main: { pressure: number } }) => entry.main.pressure,
+			'humidity': (entry: { main: { humidity: number } }) => entry.main.humidity,
+		};
+
+   		values = filteredData.map(valueMap[selectedType] || (() => []));
+		console.log(values);
+		
+		// // Calculate averages
+		// averages = Object.keys(valueMap).reduce((acc, key) => {
+		// 	const keyValues = filteredData.map(valueMap[key]);
+		// 	const average = calculateAverage(keyValues);
+		// 	return { ...acc, [key]: average };
+		// }, {});
+
+		console.log(averages);
 				
 		weatherData = { labels, datasets: [ { values } ] };
 	}
+
+	
+	// function calculateAverage(data) {
+	// 	const sum = data.reduce((total, item) => total + item, 0);
+	// 	return data.length ? sum / data.length : 0;
+	// }
 
 	function resetData(): void {
 		weatherData = { labels: [], datasets: [{ values: [] }] };
 	}
 
+	/**
+	 * Initializes the chart data when the component is mounted.
+	 * - Fetches the clubs and games data from the `data` object.
+	 * - Sets the initial `selectedClub` and `selectedType` values.
+	 * - Calls the `clubChange` function with the fetched clubs data.
+	 * - Generates the `gamesData`, `categoryData`, `countyData`, and `gamesPlayedData` based on the fetched data.
+	 */
 	onMount(async () => {
 		const fetchedClubs = data.clubs;
 		const fetchedGames = data.games;
 		selectedClub = data.clubs[0]._id;
 		selectedType = 'temperature';
-		clubChange(data.clubs) ;
+		clubChange(data.clubs);
 		// await fetchWeatherData(data.clubs);
 		// console.log('onMount Charts:');
 		// console.log(data.clubs);
@@ -116,7 +145,6 @@
 		categoryData = getCategoryData(fetchedClubs);
 		countyData = getClubsPerCountyData(fetchedClubs);
 		gamesPlayedData = getGamesPlayedData(fetchedClubs, fetchedGames);
-		
 	});
 </script>
 
@@ -142,36 +170,8 @@
 						  </select>
 					</div>
 				</span>
-				<Chart data={weatherData} type="line" />
-				<!-- <Chart data={{
-					labels: [
-					  '12am-3am',
-					  '3am-6am',
-					  '6am-9am',
-					  '9am-12pm',
-					  '12pm-3pm',
-					  '3pm-6pm',
-					  '6pm-9pm',
-					  '9pm-12am'
-					],
-					datasets: [
-					  {
-						title: 'Some Data',
-						color: 'light-blue',
-						values: [25, 40, 30, 35, 8, 52, 17, -4]
-					  },
-					  {
-						title: 'Another Set',
-						color: 'violet',
-						values: [25, 50, -10, 15, 18, 32, 27, 14]
-					  },
-					  {
-						title: 'Yet Another',
-						color: 'blue',
-						values: [15, 20, -3, -15, 58, 12, -17, 37]
-					  }
-					]
-				  }} type="line" /> -->
+				<Chart data={weatherData} type="line" />	
+				
 			</Card>
 			
 			<Card title="Club Type">

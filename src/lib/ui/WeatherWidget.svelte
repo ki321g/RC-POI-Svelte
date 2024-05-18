@@ -1,6 +1,6 @@
 
 <script lang="ts">
-    import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
+    import type { Club } from '$lib/types/rugby-club-poi-types';
     import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
     import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
 	import { currentForecast, currentWeather } from '$lib/stores';
@@ -8,8 +8,7 @@
  	import { onMount } from 'svelte';
 
 	let showWeather = false;
-    // export let currentForecast: any;
-    // export let currentWeather: any;
+
 	export let club: Club[] = [];
 
     function toggleWeather() {
@@ -68,10 +67,8 @@
 	<div class="has-text-left">
 		<h2 class="title page-heading is-2 is-uppercase mb-0 pt-4">
 			Current Weather
-			<!-- {club.club} -->
 		</h2>
 	</div>
-    <!-- <span class="is-uppercase has-text-weight-bold">Weather</span>span class="is-uppercase has-text-weight-bold">Weather</span> -->
 	<div class="pb-4">
         <CurrentTemp currentWeather={currentWeather}/>
     </div>    

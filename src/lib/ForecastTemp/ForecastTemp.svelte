@@ -19,7 +19,7 @@
   </section>
   
   <style lang="scss">
-    @import '$lib/scss/variables.scss';
+    // @import '$lib/scss/variables.scss';
 
     .header {
       display: flex;

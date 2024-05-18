@@ -9,8 +9,6 @@ export let data: any;
 	{#if data.clubs}
 	
 	<ListClub club={data.clubs} games={data.games} images={data.images} currentWeather={data.currentWeather} currentForecast={data.currentForecast}/>
-	
-	<!-- {data.clubs._id} -->
 	{:else}
 	<AddClub />
 	{/if}

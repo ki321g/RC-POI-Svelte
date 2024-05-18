@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-	import type { User, Club, Game } from '$lib/types/rugby-club-poi-types';	  
+	import type { Club } from '$lib/types/rugby-club-poi-types';	  
     import { imageNotification, imageNotificationColor } from '$lib/stores';  
 	import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';		
 	import ImageGallery from '$lib/ui/ImageGallery.svelte';	
@@ -13,19 +13,15 @@
 	export let info: any;
 	export let showButtons = true;
 
-
 	let imageForm: any;
 	let imageDelete: any;
     let imageURL: String;    
     let notification: any;
     let color: any;  
-	let showImageForm = false;
-	
+	let showImageForm = false;	
 	let error: any;
-	// let selectedImage = '';
 	let selectedImage = images.length > 0 ? images[0].img : '';
 	let imageID = images.length > 0 ? images[0]._id : '';
-
 
 	function handleImageChange(event) {
 		selectedImage = event.target.value;
@@ -41,8 +37,7 @@
 
 	async function deleteImage(imageID: string) {
         const confirmDelete = confirm('Deleting the IMage is irreversible. Please click OK to delete the Image?');
-		
-		// console.log(imageID);
+
         if (confirmDelete) {
 			try {
                 
@@ -71,14 +66,9 @@
             imageForm.elements.img.value = info.secure_url;
 
             // Submit the form
-            imageForm.submit();	            	
-            
-            // imageNotificationColor = "is-primary";
-            // imageNotification = "Image Uploaded Successfully!"	
+            imageForm.submit();	  	
 		}else if(result.event === "error"){	
 			error = result.error;	
-            // imageNotificationColor = "is-primary";
-            // imageNotification = "Image Upload Error!"
 			console.log(error);
 		}
 		widget.close();
@@ -149,7 +139,7 @@
 		  </div>
 		</div>
 		<div class="tile is-child">
-		  <a class="button imgBtn is-danger is-fullwidth is-medium is-uppercase has-text-grey" on:click={handleDeleteClick}>Delete Image</a>
+		  <button class="button imgBtn is-danger is-fullwidth is-medium is-uppercase has-text-grey" on:click={handleDeleteClick}>Delete Image</button>
 		</div>
 	  </div>
 	</div>
@@ -167,44 +157,6 @@
 	  </div>
 	</div>
   </div>
-<!-- <div class="columns is-vcentered">
-	<div class="column">
-	<div class="tile is-parent is-vertical">
-		<div class="tile is-child">
-	   
-		<a class="button imgBtn is-warning is-fullwidth is-medium is-uppercase has-text-grey mr-2" href="" on:click={open} >Add Image</a>
-		</div>
-		<div class="tile is-child">
-		
-		<a class="button imgBtn is-danger is-fullwidth is-medium is-uppercase has-text-grey" href="/dashboard/deleteimage/">Delete Image</a>
-		</div>
-	</div>
-	</div>
-	<div class="column">
-	<div class="tile is-parent">
-		<div class="tile is-child">
-		
-		<figure class="image is-520x360">                                                    
-			<div class="column">										
-				{#if error}
-				<div style="position: relative;">
-					<img src="/images/club-image.png" alt="">
-					<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
-					<p class="has-text-danger" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; padding: 10px;">{error.status}</p>
-				  </div>
-				{/if}
-				{#if info}
-				<img width={info.width} height={info.height} src={info.secure_url} 
-				alt="Uploaded Asset" />	 				
-				{:else}
-					<img src="/images/club-image.png" alt="">						
-				{/if}
-			</div>                                
-		</figure>
-		</div>
-	</div>
-	</div>
-</div>  -->
 {/if}
 
 </CldUploadWidget>
@@ -219,11 +171,7 @@
     <input bind:value={imageID} class="input mb-3" type="hidden" id="image-id" placeholder="Image Id" name="imageid" />
 </form>
 
-	<!-- <UploadWidget {club} />	 -->
-	
-<!-- <UploadWidget {club} /> -->
 <ImageGallery images={images}/>
-
 
 <style>
 	.image-container img {

@@ -12,16 +12,7 @@
 
     onMount(async () => {        	
 		    let popup = ""
-        const leaflet = await import("leaflet");
-        // console.log(lat, lng);
-        // console.log(id)
-        if (club) {
-          // popup = ` `;
-          // popup = `
-          //     <h1><strong>${club.club}</strong></h1>
-          //     <p>${club.address}</p>
-          // `;
-        }
+        const leaflet = await import("leaflet");        
         
         if (map) {
               map.addMarker(Number(lat), Number(lng), popup, '', false);

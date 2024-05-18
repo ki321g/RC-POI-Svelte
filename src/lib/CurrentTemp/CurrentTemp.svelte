@@ -1,24 +1,18 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    // import axios from "axios";
-    // import { location, unit } from "$src/stores";
     import type { CurrentTemp } from "./curr_temp";
-    // import { convertTemp } from "$lib/utilities/convertTemp";
     import { toSentenceCase } from "$lib/utilities/toSentenceCase";
     import WeatherIcon from "$lib/ui/WeatherIcon.svelte"; 
     import { currentForecast, currentWeather } from '$lib/stores';	
     import { onDestroy } from 'svelte';
 
     let weather;
+    // unsubscribe from the store
     const unsubscribe = currentWeather.subscribe(value => {
       weather = value;
     });
-
-    onDestroy(unsubscribe);  
     
-    onMount(() => {      
-
-    });
+    onDestroy(unsubscribe); // unsubscribe from the store
 
   </script>
   
