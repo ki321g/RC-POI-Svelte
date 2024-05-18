@@ -1,7 +1,6 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import type { Club } from "$lib/types/rugby-club-poi-types";    
-    // import ClubMap from "$lib/ui/header/ClubMap.svelte";
+    import type { Club } from "$lib/types/rugby-club-poi-types";   
     import ClubMap from "$lib/ui/ClubMap.svelte";
   
     export let clubs: Club[];
@@ -30,22 +29,18 @@
         <a class="button mb-0" href="/clubs/junior">JUNIOR</a>
         <a class="button mb-0" href="/clubs/senior">SENIOR</a>
         <span class="title select-label is-4 mb-0 mr-2">Filter by County:</span>
-        <div class="select custom-select">
-            <select name="county">
-                <option value="">ALL</option>
-                {#each clubCounties as county}
-                    <option value={county}>{county}</option>
-                {/each}
-            </select>
-        </div>         
+            <div class="select custom-select">
+                <select name="county">
+                    <option value="">ALL</option>
+                    {#each clubCounties as county}
+                        <option value={county}>{county}</option>
+                    {/each}
+                </select>
+            </div>         
         <span class="title select-label number-of-clubs ml-auto is-uppercase is-4 mb-0 mr-2 ">Clubs: 
-            <!-- {{clubs.length}} -->
         </span>
     </div>
-    <!-- {{> club-results }} -->
 </section>
-<!-- {#each clubs as club} -->
-<!-- Use filteredClubs instead of clubs -->
 {#each filteredClubs as club (club._id)}
 <div class="blog-posts" data-address="{club.address}">
     <div class="box box-link-hover-shadow">
@@ -64,29 +59,11 @@
         <div class="columns featured-post is-multiline">
             <div class="column is-12 post">
                 <article class="columns featured is-multiline pt-0">
-                    <!-- <figure class="image is-520x360">
-                        <div class="column">
-                            <LeafletMap height={36} bind:this={map} />
-                        </div>
-                    </figure>   -->
                     <figure class="image is-520x360">
                         <div class="column">
                             <ClubMap club={club} id={club.club} />
                         </div>
                     </figure> 
-                    <!-- {#if club.latitude && club.longitude}
-                    <figure class="image is-520x360">
-                        <div class="column">
-                            <img src={club.img.toString()} alt="">                            
-                        </div>
-                    </figure>                                
-                    {:else} 
-                    <figure class="image is-520x360">                                                    
-                        <div class="column">
-                            <img src="/images/club-image.png" alt="">
-                        </div>                                
-                    </figure>   
-                    {/if} -->
                     <div class="column featured-content va">
                         <div>
                             <h3 class="heading post-category">County</h3>

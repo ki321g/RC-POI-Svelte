@@ -28,7 +28,7 @@
 	export let activeLayer = 'Satellite';
 	export let allowCategories = false;
 	export let centerOnMarker = false;
-	// export let onClickPopup = true;
+
 
 	let weather;
     const unsubscribe = currentWeather.subscribe(value => {
@@ -107,23 +107,10 @@
 				Satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 					attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 				}),
-				// SatelliteOther: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}', {
-				//   minZoom: 0,
-				//   maxZoom: 20,
-				//   attribution: '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				//   ext: 'jpg'
-				// }),
 				OpenMap: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 					maxZoom: 17,
 					attribution:
 						'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-				}),
-				SmoothDark: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
-					minZoom: 0,
-					maxZoom: 20,
-					attribution:
-						'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-					ext: 'png'
 				}),
 				RoadMap: L.tileLayer('http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png', {
 					attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &amp; USGS'
@@ -146,7 +133,7 @@
 				center: [location.lat, location.lng],
 				zoom: zoom,
 				minZoom: minZoom,
-				layers: [defaultLayer, openWeatherLayer.Precipitation, openWeatherLayer.Clouds, openWeatherLayer.Wind]
+				layers: [defaultLayer, openWeatherLayer.Rain, openWeatherLayer.Precipitation, openWeatherLayer.Clouds, openWeatherLayer.Wind]
 			});
 
 			let groupedOverlays = {
@@ -174,7 +161,7 @@
 				for (let category in categoryLayers) {
 					groupedOverlays.SelectCategory[category] = categoryLayers[category];
 				}
-				// console.log (countyLayers)
+				
 				for (let county in countyLayers) {
 					groupedOverlays.SelectCounty[county] = countyLayers[county];
 				}
@@ -209,7 +196,6 @@
 		const marker = leaflet.marker([lat, lng], {
 			icon: iconDefault
 		});
-		// console.log(popupText);
 
 		marker.addTo(imap);
 
@@ -222,7 +208,6 @@
 
 		if (onClickPopup) {
 			const popup = leaflet.popup({ autoClose: true, closeOnClick: false });
-			// popup.setContent(popupText);
 			marker.bindPopup(popup);
 
 			// Add an event listener to the marker
@@ -251,14 +236,6 @@
 						</div>
 					</div>
 				`;
-
-				// popupText += `
-				// 	<i class="${weatherIcon}"></i>
-				// 	<br><br><strong>${toSentenceCase(weather.description)}</strong>
-				// 	<br><strong>Temp: </strong><span class="current-temp">${weather.temp}&deg;C</span>
-				// 	<br><strong>Feels like </strong>${weather.feels_like}&deg;C
-				// 	<br><strong>Humidity: </strong>${weather.humidity}%
-				// `;
 
 				popup.setContent(popupText);
 

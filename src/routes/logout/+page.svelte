@@ -10,7 +10,6 @@
 		await signOut(auth);
 	}
 
-
 	onMount(async () => {    
 		signOutSSR();
 		currentSession.set({ firstName: '', lastName: '', email: '', accountType: '', _id: '', token: '' });

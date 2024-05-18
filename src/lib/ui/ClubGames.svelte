@@ -16,16 +16,13 @@
 	}
 	function submit(field) {
 		return ({ detail: newValue }) => {
-			// IRL: POST value to server here
 			console.log(`updated ${field}, new value is: "${newValue}"`);
 		};
 	}
 
 	async function gameUpdate(game: Game) {
 		const confirmUpdate = confirm('Your Updating this Game. Please click OK to continue?');
-		// editedClub = club;
-		// console.log(editedClub);
-		// Set the values of the form inputs
+
 		if (confirmUpdate) {
 			try {
 				console.log('Updating game...gameUpdate');
@@ -174,12 +171,12 @@
 				</td>
 				
 				<td>
-					<a href="#" class="ui icon button" on:click={() => gameUpdate(game)}>
+					<button class="ui icon button" on:click={() => gameUpdate(game)}>
 						<i class="fas fa-edit"></i>
-					</a>
-					<a href="#" class="ui icon button" on:click={() => gameDelete(game._id)}>
+					</button>
+					<button class="ui icon button" on:click={() => gameDelete(game._id)}>
 						<i class="fas fa-trash"></i>
-					</a>
+					</button>
 				</td>				
 			</tr>	
 			{:else}
@@ -207,8 +204,7 @@
 
 			<form bind:this={deleteGame} method="POST" action="?/deletegame">
 				<input bind:value={game._id} class="input mb-3" type="hidden" id="gameid" placeholder="game id" name="gameid" />
-			</form>
-			
+			</form>			
 
 			<form bind:this={updateGame} method="POST" action="?/updategame">
 				<input bind:value={game._id} class="input mb-3" type="hidden" id="gameid" placeholder="game id" name="gameid" />

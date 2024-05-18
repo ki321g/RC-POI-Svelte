@@ -12,9 +12,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     const { idToken, newUser } = await request.json();
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
     const decodedIdToken = await adminAuth.verifyIdToken(idToken);
-    // console.log(decodedIdToken);
     const existingUser = await RugbyClubPOIService.getLoggedInUser(newUser.email);
-    // console.log(createdUser);
 
     if (!existingUser) {
         unhashedPassword = newUser.password;
@@ -27,7 +25,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
         if(result) {
             createdUser = await RugbyClubPOIService.getLoggedInUser(newUser.email);
         }
-        // console.log(newUser);
     } else {
         unhashedPassword = existingUser.password;
     }
@@ -37,7 +34,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
         const options = { maxAge: expiresIn, httpOnly: true, secure: true, path: '/' };
         const optionsRugbyClubPOI = { maxAge: expiresIn, httpOnly: true, secure: !dev, path: '/' };
 
-        // cookies.set('RugbyClubPOI', cookie, optionsRugbyClubPOI);
         cookies.set('__session', cookie, options);
 
         const session = await RugbyClubPOIService.login(newUser.email, unhashedPassword);

@@ -8,22 +8,13 @@
     import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';   
     import WeatherWidget from '$lib/ui/WeatherWidget.svelte'; 
 
-    // let renderMAP: boolean = false;
-
     export let data: any;
-    console.log(data.club.club);
-    console.log(data.games);
-    console.log(data.images);
-    // export let club: Club[] = [];
-    // export let games: Game[] = [];
-    // export let images: Image[] = [];
     export let currentForecast: any;
     export let currentWeather: any;
-	let currentTab = 'Club Details';
-
 
     const clubCategories = ['JUNIOR', 'SENIOR'];
-
+    
+	let currentTab = 'Club Details';
     let clubForm: any;
     let deleteClub: any;
     let map: LeafletMap;
@@ -32,10 +23,8 @@
 
     onMount(async () => {       
         const leaflet = await import("leaflet");
-        // renderMAP = true;
         lat = Number(data.club.latitude);
         lng = Number(data.club.longitude);
-        // console.log(lat, lng);
         const popup = `
             <h1><strong>${data.club.club}</strong></h1>
             <p>${data.club.address}</p>
@@ -52,7 +41,6 @@
 
 <div class="blog-posts">
     <div class="box box-link-hover-shadow">
-        <!-- <WeatherWidget currentWeather={currentWeather} currentForecast={currentForecast} /> -->
         <div class="columns is-fullwidth p-0 mb-0">
             <div class="column has-text-left">
                 <h2 class="title page-heading is-2 is-uppercase mb-0">                    
@@ -114,16 +102,12 @@
                         <br />
                     </div>
                     <div class="column is-12 pt-0">
-                        
-                        <!-- <ClubGames games={games}/> : <h1>No Games</h1> -->
                         <ClubGames games={data.games} club={data.club} showButtons={false}/>                        
                         <ClubGallery images={data.images} club={data.club} showButtons={false}/>
-                        <!-- <ImageGallery images={images}/> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 </section>

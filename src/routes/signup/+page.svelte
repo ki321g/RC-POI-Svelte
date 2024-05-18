@@ -61,10 +61,6 @@
 			console.log(data);
 			console.log("USER CREATED");
 			console.log(data.user);
-			// if (data.success) {
-				// await goto('/dashboard');
-				// window.location.reload();
-			// }
 		}
 	}
 	async function updatePassword() {
@@ -94,15 +90,6 @@
 
     {#if $user}
 	<h1 class="title page-heading is-2 is-uppercase mb-3 has-text-centered">Change Your Password</h1>
-    <!-- <h2 class="card-title">Welcome, {$user.displayName}</h2>
-    <p class="text-center text-success">You are logged in</p>
-    <p class="text-center">Your email is: {$user.email}</p>
-    <p class="text-center">Your user ID is: {$user.uid}</p>
-    <p class="text-center">Your photo URL is: {$user.photoURL}</p>
-    <p class="text-center">Your provider ID is: {$user.providerId}</p>
-    <p class="text-center">Your first name is: {firstName}</p>
-    <p class="text-center">Your last name is: {lastName}</p>
-    <p class="text-center">Your password is: {password}</p> -->
 	
 	<div class="columns">
 		<div class="column is-2">
@@ -127,14 +114,11 @@
 					</div>
 				</div>
 			</div>
-			<!-- <input type="text" placeholder="Enter New Password" bind:value={newPassword} />
-			<button class="btn btn-warning" on:click={updatePassword}>Update Password</button> -->
 		</div>
 		<div class="column is-2">
 			<!-- empty column -->
 		</div>
 	</div>	
-    <!-- <button class="btn btn-warning google-btn" on:click={signOutSSR}>Sign out</button> -->
     {:else}
 	<h1 class="title page-heading is-2 is-uppercase mb-3 has-text-centered">Sign Up</h1>
     <SignupForm />

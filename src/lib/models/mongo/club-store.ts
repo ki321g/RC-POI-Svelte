@@ -64,11 +64,9 @@ export const clubStore = {
         }
       },
 
-      async update(club: Club): Promise<Club | null> {        
-        // console.log('Updating :', club._id );  
+      async update(club: Club): Promise<Club | null> {    
         const currentClub = await ClubMongoose.findOne({ _id: club._id }).lean();
         club._id = currentClub._id;
-        // console.log(club)            
         const UpdatedUser = ClubMongoose.updateOne({ _id: club._id }, { $set: club });    
         return UpdatedUser;
       },

@@ -40,11 +40,6 @@
 		});
 		const data = await res.json();
 		console.log("RETURNED FROM SIGNIN");
-		// console.log(res)
-		// location.reload();
-		// console.log("AFTER Fetch");
-		// console.log(data.status);
-		// console.log(data.error)
 		if (data.status === 400) {
 			message = "User with that email does not exist. Visit the Signup page to Register"
 			showError = true;
@@ -80,23 +75,11 @@
 		<div class="column is-2">
 			<!-- First column content goes here -->
 		</div>
-		<div class="column is-8 has-text-centered">
-		<!-- {#if $user}
-			<h2 class="card-title">Welcome, {$user.displayName}</h2>
-			<p class="text-center text-success">You are logged in</p>
-			<p class="text-center">Your email is: {$user.email}</p>
-			<p class="text-center">Your user ID is: {$user.uid}</p>
-			<p class="text-center">Your photo URL is: {$user.photoURL}</p>
-			<p class="text-center">Your provider ID is: {$user.providerId}</p>
-			<p class="text-center">Your first name is: {firstName}</p>
-			<p class="text-center">Your last name is: {lastName}</p>
-			<button class="btn btn-warning google-btn" on:click={signOutSSR}>Sign out</button>
-		{:else} -->
+		<div class="column is-8 has-text-centered">		
 			<button class="btn btn-primary google-btn" on:click={signInWithGoogle}>
 				<img src="/images/google-logo.png" alt="Google logo" />
 				Login in with Google
 			</button>
-		<!-- {/if}	 -->
 		</div>
 		<div class="column is-2">
 			<!-- empty column -->

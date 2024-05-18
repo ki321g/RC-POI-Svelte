@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	// import AnimatedRoute from '$lib/components/AnimatedRoute.svelte';
-	// import AuthCheck from '$lib/components/AuthCheck.svelte';
 </script>
-
 
 <section class="section pt-6">
 	<div class="blog-posts">
@@ -16,4 +13,5 @@
 		</div>
 	</div>
 </section>
+
 

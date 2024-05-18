@@ -27,7 +27,7 @@
   
   <style lang="scss">
     
-    @import '$lib/scss/variables.scss';
+    // @import '$lib/scss/variables.scss';
 
     .wrapper {
       display: flex;

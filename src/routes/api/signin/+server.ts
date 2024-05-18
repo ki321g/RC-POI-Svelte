@@ -17,17 +17,11 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
      console.log("INSIDE POST");
      console.log(existingUser);
 
-    // if (existingUser) {
-       
-    // } else {    
-    //     return json({ status: 'noUserFound' });
-    // }
     if (existingUser) {
         if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
             const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
             const options = { maxAge: expiresIn, httpOnly: true, secure: true, path: '/' };
-    
-            // cookies.set('RugbyClubPOI', cookie, options);
+
             cookies.set('__session', cookie, options);
     
             const session = existingUser;
@@ -53,12 +47,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
             status: 400,
             error: 'User does not exist'
         });
-    }
-    
-
-
+    }   
 };
-
 export const DELETE: RequestHandler = async ({ cookies }) => {
     cookies.delete('__session', { path: '/' });
     cookies.delete('RugbyClubPOI', { path: '/' });

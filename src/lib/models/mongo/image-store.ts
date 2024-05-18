@@ -19,8 +19,6 @@ export const imageStore = {
 
   async findByClubId(clubId: string): Promise<Image | null> {
     try{
-      // console.log('findByClubId image-store function');
-      // console.log(clubId);
       const images = await ImageMongoose.find({ clubid: clubId }).lean() as Image | null;
       
       return images;
@@ -33,12 +31,8 @@ export const imageStore = {
   
   async add(image: Image): Promise<Image | null> {
     try {
-      // console.log('addImage image-store function');
-			// console.log(image);
       const newImage = new ImageMongoose(image);
       const imageObj = await newImage.save();
-      // console.log('Saved image');
-      // console.log(imageObj)
       return imageObj;
     } catch (error) {
       console.log(error);
@@ -48,8 +42,6 @@ export const imageStore = {
 
   async deleteOne(id: string) {
     try {
-      // console.log('deleteOne image-store function');  
-      // console.log("id: ", + id )
       await ImageMongoose.deleteOne({ _id: id });
     } catch (error) {
       console.log("Error deleting image:", error.message);

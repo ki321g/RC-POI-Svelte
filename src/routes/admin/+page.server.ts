@@ -14,7 +14,6 @@ export const load: PageServerLoad = async ({ request, parent }) => {
         console.log(users);
 
 		return {
-			// users: await RugbyClubPOIService.getUsers(),
 			users: users,
 		};
 	}

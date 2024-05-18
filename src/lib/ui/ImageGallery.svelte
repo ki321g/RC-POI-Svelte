@@ -16,18 +16,13 @@
 	}	
 
 	function HandleClick(e) {
-		// console.log(
-		// 	`src: ${e.detail.src}, alt: ${e.detail.alt}, loading: ${e.detail.loading}, class: ${e.detail.class}`
-		// );
 		const image = e.detail.src;
 		showModal(image);
 	}
 	
 </script>
 
-
 <Modal on:close={closeModal} show={$imageModal} styleWindow={{ width: 'fit-content', maxWidth: "800px"}} />
-
 
 <Gallery
 	gap={15}
@@ -37,7 +32,7 @@
 	loading="lazy"
 >
 {#each images as image}
-	<img src={image.img} id={image._id} />
+	<img src={image.img} id={image._id} alt={image.id} />
 {/each}
 </Gallery>
 
