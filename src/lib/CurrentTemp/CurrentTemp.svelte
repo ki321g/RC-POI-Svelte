@@ -7,15 +7,12 @@
     import { onDestroy } from 'svelte';
 
     let weather;
+    // unsubscribe from the store
     const unsubscribe = currentWeather.subscribe(value => {
       weather = value;
     });
-
-    onDestroy(unsubscribe);  
     
-    onMount(() => {      
-
-    });
+    onDestroy(unsubscribe); // unsubscribe from the store
 
   </script>
   

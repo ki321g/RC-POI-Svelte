@@ -1,11 +1,11 @@
 <script lang="ts">
-import type { User } from '$lib/types/rugby-club-poi-types';
-import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';
+	import type { User } from '$lib/types/rugby-club-poi-types';
+	import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';
 
-export let data: any;
-let userForm: any;
-let newUser: any;
-const userAccountTypes = ['superadmin', 'user'];
+	export let data: any;
+	let userForm: any;
+	let newUser: any;
+	const userAccountTypes = ['superadmin', 'user'];
 
 	function submit(field) {
 		return ({ detail: newValue }) => {
@@ -17,12 +17,12 @@ const userAccountTypes = ['superadmin', 'user'];
 		console.log(user);
 
 		newUser = {
-				firstName: user.firstName,
-				lastName: user.lastName,
-				email: user.email,
-				password: user.password,
-				accountType: user.accountType
-			};
+			firstName: user.firstName,
+			lastName: user.lastName,
+			email: user.email,
+			password: user.password,
+			accountType: user.accountType
+		};
 		// console.log(newUser);
 		const res = await fetch('/api/updateuser', {
 			method: 'POST',
@@ -39,15 +39,15 @@ const userAccountTypes = ['superadmin', 'user'];
 			alert('Error updating user');
 		}
 		console.log(updatedData);
-		window.location.reload()
-		
-	} 
-	
+		window.location.reload();
+	}
+
 	async function deleteUser(gameId: String) {
 		alert('Are you sure you want to delete this game?');
-	console.console.log(gameId);	
-	} 
+		console.console.log(gameId);
+	}
 </script>
+
 
 
 

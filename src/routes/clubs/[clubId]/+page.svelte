@@ -94,7 +94,7 @@
                     </div>
                 </article>
                 <div class="columns is-multiline is-fullwidth pt-0">                    
-                    <div class="column is-6 pb-0 pl-6">
+                    <div class="column is-12 pb-0 pl-6">
                         <h3 class="heading post-category">Description</h3>
                         <p class="post-excerpt">
                             {data.club.description}

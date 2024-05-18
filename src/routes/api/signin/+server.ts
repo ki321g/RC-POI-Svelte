@@ -8,46 +8,53 @@ import { dev } from '$app/environment';
 import { currentSession } from '$lib/stores.js';
 
 
+/**
+ * Handles the POST request for signing in a user.
+ *
+ * @param {Object} request - The incoming request object.
+ * @param {Object} cookies - The cookies object for the current request.
+ * @returns {Promise<Object>} - A JSON response with the status and user information.
+ * @throws {Error} - Throws a 401 Unauthorized error if the user's sign-in is not recent enough.
+ */
 export const POST: RequestHandler = async ({ request, cookies }) => {
-    let unhashedPassword = '';
-    const { idToken, email } = await request.json();
-    const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-    const decodedIdToken = await adminAuth.verifyIdToken(idToken);
-    const existingUser = await RugbyClubPOIService.getLoggedInUser(email);
-     console.log("INSIDE POST");
-     console.log(existingUser);
+	let unhashedPassword = '';
+	const { idToken, email } = await request.json();
+	const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
+	const decodedIdToken = await adminAuth.verifyIdToken(idToken);
+	const existingUser = await RugbyClubPOIService.getLoggedInUser(email);
+	console.log('INSIDE POST');
+	console.log(existingUser);
 
-    if (existingUser) {
-        if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
-            const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
-            const options = { maxAge: expiresIn, httpOnly: true, secure: true, path: '/' };
+	if (existingUser) {
+		if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
+			const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
+			const options = { maxAge: expiresIn, httpOnly: true, secure: true, path: '/' };
 
-            cookies.set('__session', cookie, options);
-    
-            const session = existingUser;
-            console.log("SESSION");
-            console.log(session);
-            currentSession.set(session);
-            const userJson = JSON.stringify(session);
-            cookies.set('RugbyClubPOI', userJson, {
-                path: '/',
-                httpOnly: true,
-                sameSite: 'strict',
-                    secure: !dev,
-                               maxAge: 60 * 60 * 24 * 7 // one week
-            });
-            
-            return json({ status: 'signedIn', user: existingUser});
-           
-        } else {
-            throw error(401, 'Recent sign in required!');
-        }   
-    } else {
-        return json({
-            status: 400,
-            error: 'User does not exist'
-        });
-    }   
+			cookies.set('__session', cookie, options);
+
+			const session = existingUser;
+			console.log('SESSION');
+			console.log(session);
+			currentSession.set(session);
+			const userJson = JSON.stringify(session);
+			cookies.set('RugbyClubPOI', userJson, {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'strict',
+				secure: !dev,
+				maxAge: 60 * 60 * 24 * 7 // one week
+			});
+
+			return json({ status: 'signedIn', user: existingUser });
+		} else {
+			throw error(401, 'Recent sign in required!');
+		}
+	} else {
+		return json({
+			status: 400,
+			error: 'User does not exist'
+		});
+	}
 };
 export const DELETE: RequestHandler = async ({ cookies }) => {
     cookies.delete('__session', { path: '/' });
