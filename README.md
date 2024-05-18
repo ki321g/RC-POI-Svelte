@@ -1,38 +1,56 @@
-# create-svelte
+<div align="center">
+  <h1 align="center">Full Stack Development Assignment#2</h1>
+</div>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+# Rugby Game POI Svelte Kit APP
 
-## Creating a project
+## About The Project
 
-If you're seeing this, you've probably already done this step. Congrats!
+RugbyClubPOI is my submission for my Full Stack Development Assignment 2 which was to develop A point of interest (POI) web application. This document outlines my submission for this Assignment.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+<!-- LIVE DEMO -->
+## Youtube Video
 
-# create a new project in my-app
-npm create svelte@latest my-app
+URL: [https://youtu.be/yoAGBopDWaw](https://youtu.be/yoAGBopDWaw)
+
+## Live Demo
+
+Vercel Link: [https://rugbyclubpoi.vercel.app/](https://rugbyclubpoi.vercel.app/)
+
+### Installation
+
+Clone this Repository
+
+```
+  git clone https://github.com/ki321g/Rugby-Club-POI.git
 ```
 
-## Developing
+To get a copy of the project running on your system, navigate to the project directory in a command prompt/shell and run the following:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```
+  npm install
+```
 
-```bash
+This will install all dependencies in package-lock.json
+
+After dependency installation has completed run
+
+```
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
+or
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+This will load the application and start a local server on port 3000.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```
+http://localhost:5713/
+```
+
+<!-- CONTACT -->
+
+## Contact
+
+Your Name - Kieron Garvey
+
+Project Link: [https://github.com/ki321g/Rugby-Club-POI](https://github.com/ki321g/Rugby-Club-POI)
