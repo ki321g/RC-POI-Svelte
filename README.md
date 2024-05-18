@@ -22,7 +22,7 @@ Vercel Link: [https://rugbyclubpoi.vercel.app/](https://rugbyclubpoi.vercel.app/
 Clone this Repository
 
 ```
-  git clone https://github.com/ki321g/Rugby-Club-POI.git
+  git clone https://github.com/ki321g/RC-POI-Svelte.git
 ```
 
 To get a copy of the project running on your system, navigate to the project directory in a command prompt/shell and run the following:
