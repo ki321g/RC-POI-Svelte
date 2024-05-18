@@ -59,6 +59,15 @@ export const RugbyClubPOIService = {
 			return null;
 		}
 	},
+	async getUsers(): Promise<User[] | null> {
+		try {
+			const users = await userStore.find();
+			return JSON.parse(JSON.stringify(users));
+		} catch (error) {
+			console.log(error);
+			return null;
+		}
+	},
 
 	async updateUser(user: User): Promise<boolean> {
 		try {

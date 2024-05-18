@@ -1,5 +1,5 @@
 import type { User } from "$lib/types/rugby-club-poi-types";
-import { Schema, model } from "mongoose";
+import mongoose,{ Schema, model } from "mongoose";
 import pkg from "mongoose";
 const { models } = pkg;
 
@@ -13,6 +13,8 @@ const userSchema = new Schema<User>({
 });
 
 export const UserMongoose = model("User", userSchema);
+// export const UserMongoose = mongoose.models.User || model("User", userSchema);
+
 // export const UserMongoose = models["User"] || model("User", userSchema);
 
 //export const UserMongoose = models["User"] || model("User", userSchema);

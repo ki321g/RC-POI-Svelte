@@ -43,7 +43,10 @@ export const actions = {
 			}
 		  } else {
 			// The passwords do not match, throw an error
-			throw new Error('Invalid password');
+			// throw new Error('Invalid password');
+			return {
+				message: 'Invalid password'
+			};
 		  }
 		} else {
 		  // The user does not exist, throw an error

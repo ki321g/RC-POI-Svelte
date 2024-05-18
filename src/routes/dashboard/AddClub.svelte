@@ -122,7 +122,7 @@
 
 
 
-<h1 class="title page-heading is-2 is-uppercase mb-3">No Clubs</h1>
+<h1 class="title page-heading is-2 is-uppercase mb-3">Add your affiliated Club</h1>
 <!-- <form action="/dashboard/addclub" method="POST"> -->
 <form method="POST" action="?/addclub">
 	<div class="field-body">

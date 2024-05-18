@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
     // @ts-ignore
     import PhotoSwipeLightbox from 'photoswipe/lightbox'; 
     import 'photoswipe/style.css'    
@@ -31,4 +31,4 @@
         {/each}
         {/if}
         </div>
-    
+     -->
