@@ -49,7 +49,7 @@
 				'Content-Type': 'application/json'
 				// 'CSRF-Token': csrfToken  // HANDLED by sveltekit automatically
 			},
-			body: JSON.stringify({ userId })
+			body: JSON.stringify({ userId }) 
 		});
 		const deletedData = await res.json();
 		if (deletedData.status === 200) {
