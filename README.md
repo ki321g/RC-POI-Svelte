@@ -53,4 +53,4 @@ http://localhost:5713/
 
 Your Name - Kieron Garvey
 
-Project Link: [https://github.com/ki321g/Rugby-Club-POI](https://github.com/ki321g/Rugby-Club-POI)
+Project Link: [https://github.com/ki321g/RC-POI-Svelte/](https://github.com/ki321g/RC-POI-Svelte/)
