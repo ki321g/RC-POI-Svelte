@@ -109,7 +109,7 @@
 		// 	return { ...acc, [key]: average };
 		// }, {});
 
-		console.log(averages);
+		// console.log(averages);
 				
 		weatherData = { labels, datasets: [ { values } ] };
 	}
