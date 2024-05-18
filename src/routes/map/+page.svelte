@@ -1,6 +1,6 @@
 <script lang="ts">
 	import LeafletMap from '$lib/ui/LeafletMap.svelte';
-	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+	import type { Club } from '$lib/types/rugby-club-poi-types';
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 	import SelectedClub from '$lib/ui/SelectedClub.svelte';
 	import { onMount, onDestroy } from 'svelte';

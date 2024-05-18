@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-	import type { User, Club, Game } from '$lib/types/rugby-club-poi-types';
+	import type { Club, Game } from '$lib/types/rugby-club-poi-types';
 	import InPlaceEdit from '$lib/ui/InPlaceEdit.svelte';
 
 	export let games: Game[] = [];

@@ -1,6 +1,6 @@
 <script lang="ts">    
     import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-    import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
+    import type { Club } from '$lib/types/rugby-club-poi-types';
     import ClubGames from '$lib/ui/ClubGames.svelte'
     import ClubGallery from '$lib/ui/ClubGallery.svelte'
     import LeafletMap from '$lib/ui/LeafletMap.svelte';

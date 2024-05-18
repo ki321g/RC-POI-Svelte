@@ -1,6 +1,7 @@
 <script lang="ts">
     import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-    import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
+    // import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';    
+    import type { Club, Game, Image } from '$lib/types/rugby-club-poi-types';
     import UploadWidget from './UploadWidget.svelte';
     import ClubGames from '$lib/ui/ClubGames.svelte'
     import ClubGallery from '$lib/ui/ClubGallery.svelte'

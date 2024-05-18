@@ -105,6 +105,7 @@
                     <figure class="image is-520x360">
                         <div class="column">
                             <ClubMap club={club} id={club._id} lat={club.latitude} lng={club.longitude}/>
+                            <!-- <ClubMap club={club} id={club._id} lat={club.latitude} lng={club.longitude}/> -->
                         </div>
                     </figure> 
                     <div class="column featured-content va">

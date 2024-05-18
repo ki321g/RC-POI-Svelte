@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-ignore
 	import Chart from 'svelte-frappe-charts';
-	import type { User, Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
+	import type { Club, Game, DataSet, DataSetGames } from '$lib/types/rugby-club-poi-types';
 	import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
 	import { currentSession, clubStore } from '$lib/stores';
 	import { getCategoryData, getGamesData, getClubsPerCountyData, getGamesPlayedData } from '$lib/utilities/club-utils';

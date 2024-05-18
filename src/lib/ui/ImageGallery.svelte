@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Gallery from "$lib/ui/Gallery.svelte";	  
 	import ImageModal from "$lib/ui/ImageModal.svelte";  
-    import type { User, Club, Game, Image } from "$lib/types/rugby-club-poi-types";   	
+    import type { Image } from "$lib/types/rugby-club-poi-types";   	
 	import Modal, { bind } from "svelte-simple-modal";  	
 	import { imageModal } from "$lib/stores.js";
     

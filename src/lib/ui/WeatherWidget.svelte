@@ -1,6 +1,6 @@
 
 <script lang="ts">
-    import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';
+    import type { Club } from '$lib/types/rugby-club-poi-types';
     import ForecastTemp from "$lib/ForecastTemp/ForecastTemp.svelte";
     import CurrentTemp from "$lib/CurrentTemp/CurrentTemp.svelte";  
 	import { currentForecast, currentWeather } from '$lib/stores';

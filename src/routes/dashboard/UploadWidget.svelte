@@ -1,6 +1,6 @@
 <script lang="ts">
     import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-    import type { User, Club, Game, Image } from "$lib/types/rugby-club-poi-types";  
+    import type { Club } from "$lib/types/rugby-club-poi-types";  
     import { imageNotification, imageNotificationColor } from '$lib/stores';   
 	import { CldUploadWidget } from 'svelte-cloudinary';
 	import { env } from '$env/dynamic/public';
