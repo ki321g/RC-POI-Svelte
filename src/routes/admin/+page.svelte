@@ -14,7 +14,7 @@
 	}
 
 	async function updateUser(user: User) {
-		console.log(user);
+		// console.log(user);
 
 		newUser = {
 			firstName: user.firstName,
@@ -42,63 +42,73 @@
 		window.location.reload();
 	}
 
-	async function deleteUser(gameId: String) {
-		alert('Are you sure you want to delete this game?');
-		console.console.log(gameId);
+	async function deleteUser(userId: String) {
+		const res = await fetch('/api/deleteuser', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+				// 'CSRF-Token': csrfToken  // HANDLED by sveltekit automatically
+			},
+			body: JSON.stringify({ userId })
+		});
+		const deletedData = await res.json();
+		if (deletedData.status === 200) {
+			alert('User Deleted');
+		} else {
+			alert('Error deleting user');
+		}
+		window.location.reload();
 	}
 </script>
-
-
-
 
 <section class="section pt-6">
 	<div class="blog-posts">
 		<div class="box box-link-hover-shadow">
 			<div class="columns featured-post is-multiline">
 				<div class="column is-12 post">
-					<h1 class="title page-heading is-2 is-uppercase mb-3">USER ADMIN</h1>		
+					<h1 class="title page-heading is-2 is-uppercase mb-3">USER ADMIN</h1>
 					<table class="table is-fullwidth is-striped is-hoverable is-fullwidth">
 						<thead>
-						  <tr class="is-uppercase">
-							<th>FirstName</th>
-							<th>LastName</th>
-							<th>eMail</th>
-							<th>password</th>
-							<th>accountType</th>
-							<th>Action</th>
-						  </tr>
+							<tr class="is-uppercase">
+								<th>FirstName</th>
+								<th>LastName</th>
+								<th>eMail</th>
+								<th>password</th>
+								<th>accountType</th>
+								<th>Action</th>
+							</tr>
 						</thead>
 						<tbody>
 							{#each data.users as user (user._id)}
-							<tr>
-							  <td>		
-								<InPlaceEdit bind:value={user.firstName} on:submit={submit('firstName')}/>
-							  </td>
-							  <td>
-								<InPlaceEdit bind:value={user.lastName} on:submit={submit('lastName')}/>
-							  </td>
-							  <td>
-								<InPlaceEdit bind:value={user.email} on:submit={submit('email')}/>
-							  </td>
-							  <td>
-								<InPlaceEdit bind:value={user.password} on:submit={submit('password')}/>
-							  </td>
-							  <td>
-								<InPlaceEdit bind:value={user.accountType} on:submit={submit('accountType')}/>
-								<!-- <InPlaceEdit bind:value={user.accountType} on:submit={submit('category')} categoryField={true} {userAccountTypes} /> -->
-							  </td>
-							  <td>
-								<a href="#" class="ui icon button" on:click={() => updateUser(user)}>
-									<i class="fas fa-edit"></i>
-								</a>
-								<a href="#" class="ui icon button" on:click={() => deleteUser(user._id)}>
-									<i class="fas fa-trash"></i>
-								</a>
-							  </td>
-							</tr>
-						  {/each}
+								<tr>
+									<td>
+										<InPlaceEdit bind:value={user.firstName} on:submit={submit('firstName')} />
+									</td>
+									<td>
+										<InPlaceEdit bind:value={user.lastName} on:submit={submit('lastName')} />
+									</td>
+									<td>
+										<InPlaceEdit bind:value={user.email} on:submit={submit('email')} />
+									</td>
+									<td>
+										<InPlaceEdit bind:value={user.password} on:submit={submit('password')} />
+									</td>
+									<td>
+										<InPlaceEdit bind:value={user.accountType} on:submit={submit('accountType')} />
+										<!-- <InPlaceEdit bind:value={user.accountType} on:submit={submit('category')} categoryField={true} {userAccountTypes} /> -->
+									</td>
+									<td>
+										<a href="#" class="ui icon button" on:click={() => updateUser(user)}>
+											<i class="fas fa-edit"></i>
+										</a>
+										<a href="#" class="ui icon button" on:click={() => deleteUser(user._id)}>
+											<i class="fas fa-trash"></i>
+										</a>
+									</td>
+								</tr>
+							{/each}
 						</tbody>
-					  </table>
+					</table>
 				</div>
 			</div>
 		</div>
