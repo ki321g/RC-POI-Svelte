@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';
-    // import type { User, Club, Game, Image } from '$lib/types/rugby-club-poi-types';    
+    import { RugbyClubPOIService } from '$lib/services/rugby-club-poi-service';   
     import type { Club, Game, Image } from '$lib/types/rugby-club-poi-types';
     import UploadWidget from './UploadWidget.svelte';
     import ClubGames from '$lib/ui/ClubGames.svelte'
@@ -13,8 +12,6 @@
     export let club: Club[] = [];
     export let games: Game[] = [];
     export let images: Image[] = [];
-    // export let currentForecast: any;
-    // export let currentWeather: any;
 
     const clubCategories = ['JUNIOR', 'SENIOR'];
 

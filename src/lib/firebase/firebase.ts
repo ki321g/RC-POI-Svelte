@@ -1,3 +1,9 @@
+/**
+ * This class handles openweathermap API
+ *
+ * @author Kieron Garvey
+ * @version 0.1
+ */
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, type User } from "firebase/auth";

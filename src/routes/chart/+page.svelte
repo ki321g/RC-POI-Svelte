@@ -98,12 +98,19 @@
 		weatherData = { labels: [], datasets: [{ values: [] }] };
 	}
 
+	/**
+	 * Initializes the chart data when the component is mounted.
+	 * - Fetches the clubs and games data from the `data` object.
+	 * - Sets the initial `selectedClub` and `selectedType` values.
+	 * - Calls the `clubChange` function with the fetched clubs data.
+	 * - Generates the `gamesData`, `categoryData`, `countyData`, and `gamesPlayedData` based on the fetched data.
+	 */
 	onMount(async () => {
 		const fetchedClubs = data.clubs;
 		const fetchedGames = data.games;
 		selectedClub = data.clubs[0]._id;
 		selectedType = 'temperature';
-		clubChange(data.clubs) ;
+		clubChange(data.clubs);
 		// await fetchWeatherData(data.clubs);
 		// console.log('onMount Charts:');
 		// console.log(data.clubs);
@@ -112,7 +119,6 @@
 		categoryData = getCategoryData(fetchedClubs);
 		countyData = getClubsPerCountyData(fetchedClubs);
 		gamesPlayedData = getGamesPlayedData(fetchedClubs, fetchedGames);
-		
 	});
 </script>
 

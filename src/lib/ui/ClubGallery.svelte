@@ -23,7 +23,6 @@
 	let selectedImage = images.length > 0 ? images[0].img : '';
 	let imageID = images.length > 0 ? images[0]._id : '';
 
-
 	function handleImageChange(event) {
 		selectedImage = event.target.value;
 		let selectedImageObject = images.find(image => image.img === selectedImage);
